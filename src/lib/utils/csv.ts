@@ -37,7 +37,7 @@ function escapeCell(value: unknown): string {
  *   the supplied headers.
  * - Otherwise every key found in the first row is used, with the key as header.
  */
-export function exportToCsv<T extends Record<string, unknown>>(
+export function exportToCsv<T extends object>(
 	rows: T[],
 	filename: string,
 	columns?: { key: keyof T; header: string }[]
