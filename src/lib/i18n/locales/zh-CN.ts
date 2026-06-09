@@ -35,6 +35,7 @@ export default {
 		dashboard: '仪表盘',
 		users: '用户',
 		components: '组件',
+		icons: '图标',
 		forms: '表单',
 		tables: '表格',
 		charts: '图表',

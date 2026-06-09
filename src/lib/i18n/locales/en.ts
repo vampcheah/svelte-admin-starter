@@ -35,6 +35,7 @@ export default {
 		dashboard: 'Dashboard',
 		users: 'Users',
 		components: 'Components',
+		icons: 'Icons',
 		forms: 'Forms',
 		tables: 'Tables',
 		charts: 'Charts',

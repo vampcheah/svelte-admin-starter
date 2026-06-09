@@ -7,6 +7,7 @@ import Table from '@lucide/svelte/icons/table';
 import ClipboardList from '@lucide/svelte/icons/clipboard-list';
 import ComponentIcon from '@lucide/svelte/icons/component';
 import ChartLine from '@lucide/svelte/icons/chart-line';
+import Sparkles from '@lucide/svelte/icons/sparkles';
 import User from '@lucide/svelte/icons/user';
 import Settings from '@lucide/svelte/icons/settings';
 import CalendarDays from '@lucide/svelte/icons/calendar-days';
@@ -61,6 +62,7 @@ export const navGroups: NavGroup[] = [
 		label: 'Showcase',
 		items: [
 			{ title: 'Components', href: '/components', icon: ComponentIcon },
+			{ title: 'Icons', href: '/icons', icon: Sparkles },
 			{ title: 'Charts', href: '/charts', icon: ChartLine }
 		]
 	},
