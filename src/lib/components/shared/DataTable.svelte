@@ -40,6 +40,7 @@
 	import { buttonVariants } from '$lib/components/ui/button';
 	import { usePagination } from '$lib/hooks/use-pagination.svelte';
 	import { cn } from '$lib/utils';
+	import { config } from '$lib/config';
 	import EmptyState from './EmptyState.svelte';
 	import SearchInput from './SearchInput.svelte';
 
@@ -68,7 +69,7 @@
 		searchable = false,
 		selectable = false,
 		loading = false,
-		pageSize = 10,
+		pageSize = config.ui.pageSize,
 		emptyTitle = 'No results',
 		emptyDescription = 'There is nothing to show here yet.',
 		selected = $bindable([]),
@@ -127,6 +128,8 @@
 
 	// Reset to the first page whenever the search query changes.
 	$effect(() => {
+		// Bare reference registers `search` as a reactive dependency of this effect.
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 		search;
 		pagination.setPage(1);
 	});
@@ -138,9 +141,7 @@
 	const sliceEnd = $derived(Math.min(sliceStart + pagination.pageSize, sorted.length));
 	const pageRows = $derived(sorted.slice(sliceStart, sliceEnd));
 
-	const columnCount = $derived(
-		columns.length + (selectable ? 1 : 0) + (actions ? 1 : 0)
-	);
+	const columnCount = $derived(columns.length + (selectable ? 1 : 0) + (actions ? 1 : 0));
 
 	const allOnPageSelected = $derived(
 		pageRows.length > 0 && pageRows.every((row) => selected.includes(row.id))
@@ -240,7 +241,10 @@
 												<ArrowDown class="size-3.5 text-muted-foreground" aria-hidden="true" />
 											{/if}
 										{:else}
-											<ChevronsUpDown class="size-3.5 text-muted-foreground/60" aria-hidden="true" />
+											<ChevronsUpDown
+												class="size-3.5 text-muted-foreground/60"
+												aria-hidden="true"
+											/>
 										{/if}
 									</button>
 								{:else}
@@ -278,9 +282,7 @@
 								<EmptyState
 									icon={Inbox}
 									title={search ? 'No matches' : emptyTitle}
-									description={search
-										? 'Try adjusting your search terms.'
-										: emptyDescription}
+									description={search ? 'Try adjusting your search terms.' : emptyDescription}
 									class="rounded-none border-0"
 								/>
 							</Table.Cell>

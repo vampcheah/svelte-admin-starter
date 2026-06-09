@@ -3,6 +3,7 @@
   never reveals whether the account exists. Purely mock — no email is sent.
 -->
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import MailCheck from '@lucide/svelte/icons/mail-check';
 	import * as Card from '$lib/components/ui/card';
@@ -62,9 +63,7 @@
 	{:else}
 		<Card.Header class="space-y-1 text-center">
 			<Card.Title class="text-xl">Forgot your password?</Card.Title>
-			<Card.Description>
-				Enter your email and we'll send you a link to reset it.
-			</Card.Description>
+			<Card.Description>Enter your email and we'll send you a link to reset it.</Card.Description>
 		</Card.Header>
 
 		<Card.Content>
@@ -97,7 +96,7 @@
 
 		<Card.Footer class="justify-center">
 			<a
-				href="/login"
+				href={resolve('/login')}
 				class="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 			>
 				<ArrowLeft class="size-4" aria-hidden="true" />

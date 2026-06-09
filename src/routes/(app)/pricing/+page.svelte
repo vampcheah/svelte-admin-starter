@@ -192,10 +192,7 @@
 				Annual
 				<Badge
 					variant="secondary"
-					class={cn(
-						'border-transparent',
-						billing === 'annual' && 'bg-primary/10 text-primary'
-					)}
+					class={cn('border-transparent', billing === 'annual' && 'bg-primary/10 text-primary')}
 				>
 					Save 20%
 				</Badge>
@@ -218,9 +215,7 @@
 				)}
 			>
 				{#if plan.popular}
-					<Badge
-						class="absolute -top-3 left-1/2 -translate-x-1/2 gap-1 shadow-sm"
-					>
+					<Badge class="absolute -top-3 left-1/2 -translate-x-1/2 gap-1 shadow-sm">
 						<Sparkles class="size-3" aria-hidden="true" />
 						Most popular
 					</Badge>

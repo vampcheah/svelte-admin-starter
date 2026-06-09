@@ -293,7 +293,11 @@
 							<ShoppingCart class="size-4" aria-hidden="true" />
 							Checkout
 						</Button>
-						<Button href="/tables" variant="link" class="text-muted-foreground hover:text-foreground">
+						<Button
+							href="/tables"
+							variant="link"
+							class="text-muted-foreground hover:text-foreground"
+						>
 							Continue shopping
 						</Button>
 					</Card.Footer>

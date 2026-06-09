@@ -19,7 +19,6 @@
 	} from '$lib/components/shared';
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
-	import { Separator } from '$lib/components/ui/separator';
 	import { Progress } from '$lib/components/ui/progress';
 
 	import { formatCurrency, formatDate } from '$lib/utils/formatters';
@@ -152,7 +151,10 @@
 </svelte:head>
 
 <PageContainer>
-	<PageHeader title="Billing" description="Manage your plan, usage, payment method, and invoices." />
+	<PageHeader
+		title="Billing"
+		description="Manage your plan, usage, payment method, and invoices."
+	/>
 
 	<!-- Plan + payment method row -->
 	<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
@@ -238,9 +240,7 @@
 							<p class="font-medium tracking-[0.2em] tabular-nums text-foreground">
 								•••• •••• •••• {paymentMethod.last4}
 							</p>
-							<div
-								class="mt-2 flex items-center justify-between text-xs text-muted-foreground"
-							>
+							<div class="mt-2 flex items-center justify-between text-xs text-muted-foreground">
 								<span class="truncate">{paymentMethod.holder}</span>
 								<span class="tabular-nums">Exp {paymentMethod.expiry}</span>
 							</div>

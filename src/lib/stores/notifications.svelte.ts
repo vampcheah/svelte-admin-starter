@@ -57,9 +57,7 @@ class NotificationsStore {
 	}
 
 	markRead(id: string): void {
-		this.#items = this.#items.map((item) =>
-			item.id === id ? { ...item, read: true } : item
-		);
+		this.#items = this.#items.map((item) => (item.id === id ? { ...item, read: true } : item));
 	}
 
 	markAllRead(): void {

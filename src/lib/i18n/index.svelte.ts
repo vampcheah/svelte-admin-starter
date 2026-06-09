@@ -3,6 +3,7 @@
 // No external i18n library — just plain dictionaries.
 
 import { browser } from '$app/environment';
+import { config } from '$lib/config';
 import en from './locales/en';
 import zhCN from './locales/zh-CN';
 
@@ -47,7 +48,7 @@ function interpolate(template: string, vars?: Record<string, string | number>): 
 	);
 }
 
-let current = $state<Locale>('en');
+let current = $state<Locale>(config.i18n.defaultLocale);
 
 /**
  * Translate a dot-path key for the active locale. Falls back to the `en`

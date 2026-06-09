@@ -7,7 +7,9 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
+	import { config } from '$lib/config';
 	import { ThemeToggle, LanguageToggle } from '$lib/components/shared';
 	import Check from '@lucide/svelte/icons/check';
 
@@ -22,7 +24,7 @@
 
 	onMount(() => {
 		auth.init();
-		if (auth.isAuthenticated) goto('/dashboard');
+		if (auth.isAuthenticated) goto(resolve(config.auth.afterLogin));
 	});
 </script>
 
@@ -33,24 +35,30 @@
 	>
 		<!-- Decorative depth: soft glows + a subtle sheen, all token-driven. -->
 		<div class="pointer-events-none absolute inset-0" aria-hidden="true">
-			<div class="bg-primary-foreground/10 absolute -top-24 -left-24 size-80 rounded-full blur-3xl"></div>
-			<div class="bg-primary-foreground/10 absolute right-0 -bottom-32 size-96 rounded-full blur-3xl"></div>
-			<div class="from-primary-foreground/10 absolute inset-0 bg-gradient-to-br to-transparent"></div>
+			<div
+				class="bg-primary-foreground/10 absolute -top-24 -left-24 size-80 rounded-full blur-3xl"
+			></div>
+			<div
+				class="bg-primary-foreground/10 absolute right-0 -bottom-32 size-96 rounded-full blur-3xl"
+			></div>
+			<div
+				class="from-primary-foreground/10 absolute inset-0 bg-gradient-to-br to-transparent"
+			></div>
 		</div>
 
-		<a href="/" class="relative flex items-center gap-2.5">
+		<a href={resolve('/')} class="relative flex items-center gap-2.5">
 			<div
 				class="bg-primary-foreground/15 flex size-9 items-center justify-center rounded-lg text-base font-bold backdrop-blur"
 			>
-				A
+				{config.app.logo}
 			</div>
-			<span class="text-lg font-semibold tracking-tight">Admin Starter</span>
+			<span class="text-lg font-semibold tracking-tight">{config.app.name}</span>
 		</a>
 
 		<div class="relative max-w-md space-y-8">
 			<div class="space-y-3">
 				<h1 class="text-3xl font-semibold tracking-tight text-balance xl:text-4xl">
-					Everything you need to ship an admin.
+					{config.app.tagline}
 				</h1>
 				<p class="text-primary-foreground/80 text-base leading-relaxed">
 					A polished SvelteKit starter — auth, dashboard, tables, forms and charts, fully wired and
@@ -71,7 +79,9 @@
 			</ul>
 		</div>
 
-		<p class="text-primary-foreground/60 relative text-xs">Svelte 5 · Tailwind v4 · shadcn-svelte</p>
+		<p class="text-primary-foreground/60 relative text-xs">
+			Svelte 5 · Tailwind v4 · shadcn-svelte
+		</p>
 	</aside>
 
 	<!-- Form side -->
@@ -84,13 +94,13 @@
 
 		<div class="w-full max-w-sm space-y-6">
 			<!-- Compact brand mark (small screens, where the panel is hidden) -->
-			<a href="/" class="flex items-center justify-center gap-2 lg:hidden">
+			<a href={resolve('/')} class="flex items-center justify-center gap-2 lg:hidden">
 				<div
 					class="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md text-base font-bold shadow-sm"
 				>
-					A
+					{config.app.logo}
 				</div>
-				<span class="text-lg font-semibold tracking-tight">Admin Starter</span>
+				<span class="text-lg font-semibold tracking-tight">{config.app.name}</span>
 			</a>
 
 			{@render children()}

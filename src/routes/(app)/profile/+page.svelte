@@ -53,7 +53,10 @@
 </svelte:head>
 
 <PageContainer>
-	<PageHeader title="Profile" description="Manage your personal information and account preferences." />
+	<PageHeader
+		title="Profile"
+		description="Manage your personal information and account preferences."
+	/>
 
 	<div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
 		<!-- Left: avatar card -->
@@ -126,7 +129,12 @@
 
 					<div class="space-y-2">
 						<Label for="bio">Bio</Label>
-						<Textarea id="bio" bind:value={bio} rows={4} placeholder="Tell us a little about yourself" />
+						<Textarea
+							id="bio"
+							bind:value={bio}
+							rows={4}
+							placeholder="Tell us a little about yourself"
+						/>
 					</div>
 				</Card.Content>
 				<Card.Footer class="justify-end gap-2">

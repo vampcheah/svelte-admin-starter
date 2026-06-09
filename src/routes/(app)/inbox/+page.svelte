@@ -69,7 +69,8 @@
 			id: 'm2',
 			from: { name: 'GitHub', email: 'noreply@github.example' },
 			subject: '[acme/dashboard] 3 new pull requests need review',
-			preview: 'You have been requested as a reviewer on three open pull requests in acme/dashboard.',
+			preview:
+				'You have been requested as a reviewer on three open pull requests in acme/dashboard.',
 			body: [
 				'Hello,',
 				'You have been requested as a reviewer on three open pull requests in acme/dashboard. Two are ready to merge and one is still marked as a draft.',
@@ -84,7 +85,8 @@
 			id: 'm3',
 			from: { name: 'Marcus Bell', email: 'marcus@northwind.example' },
 			subject: 'Re: Contract renewal terms',
-			preview: 'Thanks for the quick turnaround. Legal signed off on the revised terms this morning.',
+			preview:
+				'Thanks for the quick turnaround. Legal signed off on the revised terms this morning.',
 			body: [
 				'Hi,',
 				'Thanks for the quick turnaround on the redline. Legal signed off on the revised terms this morning, so we are good to proceed with the two-year option.',
@@ -129,7 +131,8 @@
 			id: 'm6',
 			from: { name: 'Sofia Ramirez', email: 'sofia.r@acme.example' },
 			subject: 'Design tokens are merged 🎉',
-			preview: 'The new color and spacing tokens are live on main — please pull before your next build.',
+			preview:
+				'The new color and spacing tokens are live on main — please pull before your next build.',
 			body: [
 				'Team,',
 				'The new color and spacing tokens are merged to main. Please pull the latest before your next build so everyone is rendering against the same values.',
@@ -174,7 +177,8 @@
 			id: 'm9',
 			from: { name: 'Figma', email: 'updates@figma.example' },
 			subject: 'New comments on “Inbox redesign”',
-			preview: 'Three teammates left comments on frames you are watching in the Inbox redesign file.',
+			preview:
+				'Three teammates left comments on frames you are watching in the Inbox redesign file.',
 			body: [
 				'Hello,',
 				'Three teammates left comments on frames you are watching in the Inbox redesign file. Most relate to the message list density and the read/unread treatment.',
@@ -189,7 +193,8 @@
 			id: 'm10',
 			from: { name: 'Theo Lindqvist', email: 'theo@acme.example' },
 			subject: 'Onboarding checklist for the new hires',
-			preview: 'I drafted a checklist for the two engineers joining in July — can you sanity check it?',
+			preview:
+				'I drafted a checklist for the two engineers joining in July — can you sanity check it?',
 			body: [
 				'Hi,',
 				'I drafted an onboarding checklist for the two engineers joining in July. It covers access requests, the first-week buddy system, and their starter tasks.',
@@ -259,7 +264,9 @@
 		{/snippet}
 	</PageHeader>
 
-	<div class="h-[calc(100vh-13rem)] min-h-[520px] overflow-hidden rounded-xl border border-border bg-card shadow-sm">
+	<div
+		class="h-[calc(100vh-13rem)] min-h-[520px] overflow-hidden rounded-xl border border-border bg-card shadow-sm"
+	>
 		<Resizable.PaneGroup direction="horizontal" class="h-full">
 			<!-- LEFT: message list -->
 			<Resizable.Pane defaultSize={38} minSize={28} maxSize={55} class="flex flex-col">
@@ -328,9 +335,7 @@
 													{email.from.name}
 												</p>
 												{#if !email.read}
-													<span
-														class="size-2 shrink-0 rounded-full bg-primary"
-														aria-label="Unread"
+													<span class="size-2 shrink-0 rounded-full bg-primary" aria-label="Unread"
 													></span>
 												{/if}
 												<span class="shrink-0 text-xs text-muted-foreground tabular-nums">
@@ -378,10 +383,7 @@
 											class="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-background hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
 										>
 											<Star
-												class={cn(
-													'size-4',
-													email.starred && 'fill-amber-400 text-amber-400'
-												)}
+												class={cn('size-4', email.starred && 'fill-amber-400 text-amber-400')}
 												aria-hidden="true"
 											/>
 										</span>
@@ -413,11 +415,7 @@
 								<Archive class="size-4" aria-hidden="true" />
 								Archive
 							</Button>
-							<Button
-								variant="ghost"
-								size="sm"
-								class="text-destructive hover:text-destructive"
-							>
+							<Button variant="ghost" size="sm" class="text-destructive hover:text-destructive">
 								<Trash2 class="size-4" aria-hidden="true" />
 								Delete
 							</Button>

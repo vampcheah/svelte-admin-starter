@@ -5,6 +5,7 @@
 -->
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { toast } from 'svelte-sonner';
 	import Eye from '@lucide/svelte/icons/eye';
 	import EyeOff from '@lucide/svelte/icons/eye-off';
@@ -15,9 +16,10 @@
 	import { Spinner } from '$lib/components/shared';
 	import { auth } from '$lib/auth';
 	import { loginSchema, fieldError } from '$lib/utils/validators';
+	import { config } from '$lib/config';
 
-	let email = $state('admin@example.com');
-	let password = $state('password');
+	let email = $state(config.auth.demo.email);
+	let password = $state(config.auth.demo.password);
 	let showPassword = $state(false);
 	let submitting = $state(false);
 
@@ -45,7 +47,7 @@
 
 		if (result.ok) {
 			toast.success('Welcome back!');
-			goto('/dashboard');
+			goto(resolve('/dashboard'));
 		} else {
 			formError = result.error ?? 'Unable to sign in. Please try again.';
 			toast.error(formError);
@@ -53,8 +55,8 @@
 	}
 
 	function fillDemo() {
-		email = 'admin@example.com';
-		password = 'password';
+		email = config.auth.demo.email;
+		password = config.auth.demo.password;
 		errors = {};
 		formError = '';
 	}
@@ -78,7 +80,8 @@
 			class="mb-5 w-full rounded-lg border border-dashed border-border bg-muted/50 px-3 py-2.5 text-left text-xs text-muted-foreground transition-colors hover:bg-muted"
 		>
 			<span class="font-medium text-foreground">Demo credentials</span> — click to autofill:
-			<span class="font-mono">admin@example.com</span> / <span class="font-mono">password</span>
+			<span class="font-mono">{config.auth.demo.email}</span> /
+			<span class="font-mono">{config.auth.demo.password}</span>
 		</button>
 
 		<form class="space-y-4" onsubmit={handleSubmit} novalidate>
@@ -101,7 +104,7 @@
 				<div class="flex items-center justify-between">
 					<Label for="password">Password</Label>
 					<a
-						href="/forgot-password"
+						href={resolve('/forgot-password')}
 						class="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 					>
 						Forgot password?
@@ -154,7 +157,7 @@
 		<p class="text-sm text-muted-foreground">
 			Don't have an account?
 			<a
-				href="/register"
+				href={resolve('/register')}
 				class="font-medium text-foreground underline-offset-4 hover:underline"
 			>
 				Sign up

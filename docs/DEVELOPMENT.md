@@ -28,20 +28,20 @@
 
 ### 技术栈（版本取自 `package.json`）
 
-| 技术 | 包名 | 版本 | 说明 |
-| --- | --- | --- | --- |
-| SvelteKit 2 | `@sveltejs/kit` | `^2.50.1` | 应用框架、路由、SSR |
-| Svelte 5 | `svelte` | `^5.48.2` | 组件框架，使用 runes（`$state`/`$derived`/`$props` 等） |
-| Tailwind CSS v4 | `tailwindcss` / `@tailwindcss/vite` | `^4.1.18` | 原子化 CSS，通过 Vite 插件接入（无 `tailwind.config.js`） |
-| shadcn-svelte | （源码内置，registry: `shadcn-svelte.com`） | — | UI 组件以源码形式 vendored 在 `src/lib/components/ui/` |
-| bits-ui | `bits-ui` | `^2.18.1` | shadcn-svelte 底层无样式原语 |
-| Lucide 图标 | `@lucide/svelte` | `^1.17.0` | 图标库，按 `@lucide/svelte/icons/<kebab>` 单独导入 |
-| 主题切换 | `mode-watcher` | `^1.1.0` | light/dark/system 模式管理 |
-| Toast 通知 | `svelte-sonner` | `^1.0.7` | toast 提示 |
-| 图表 | `layerchart` | `^2.0.0-next.48` | 图表库（部分页面用纯 SVG + 设计 token 手绘） |
-| 表单校验 | `zod` | `^3.25.76` | schema 校验 |
-| 表单增强 | `sveltekit-superforms` / `formsnap` | `^2.30.1` / `^2.0.1` | 表单状态/绑定（可选使用） |
-| 类名合并 | `clsx` / `tailwind-merge` / `tailwind-variants` | — | `cn()` 工具的底层依赖 |
+| 技术            | 包名                                            | 版本                 | 说明                                                      |
+| --------------- | ----------------------------------------------- | -------------------- | --------------------------------------------------------- |
+| SvelteKit 2     | `@sveltejs/kit`                                 | `^2.50.1`            | 应用框架、路由、SSR                                       |
+| Svelte 5        | `svelte`                                        | `^5.48.2`            | 组件框架，使用 runes（`$state`/`$derived`/`$props` 等）   |
+| Tailwind CSS v4 | `tailwindcss` / `@tailwindcss/vite`             | `^4.1.18`            | 原子化 CSS，通过 Vite 插件接入（无 `tailwind.config.js`） |
+| shadcn-svelte   | （源码内置，registry: `shadcn-svelte.com`）     | —                    | UI 组件以源码形式 vendored 在 `src/lib/components/ui/`    |
+| bits-ui         | `bits-ui`                                       | `^2.18.1`            | shadcn-svelte 底层无样式原语                              |
+| Lucide 图标     | `@lucide/svelte`                                | `^1.17.0`            | 图标库，按 `@lucide/svelte/icons/<kebab>` 单独导入        |
+| 主题切换        | `mode-watcher`                                  | `^1.1.0`             | light/dark/system 模式管理                                |
+| Toast 通知      | `svelte-sonner`                                 | `^1.0.7`             | toast 提示                                                |
+| 图表            | `layerchart`                                    | `^2.0.0-next.48`     | 图表库（部分页面用纯 SVG + 设计 token 手绘）              |
+| 表单校验        | `zod`                                           | `^3.25.76`           | schema 校验                                               |
+| 表单增强        | `sveltekit-superforms` / `formsnap`             | `^2.30.1` / `^2.0.1` | 表单状态/绑定（可选使用）                                 |
+| 类名合并        | `clsx` / `tailwind-merge` / `tailwind-variants` | —                    | `cn()` 工具的底层依赖                                     |
 
 其它：`@internationalized/date`（calendar）、`embla-carousel-svelte`（carousel）、`paneforge`（resizable）、`vaul-svelte`（drawer）、`date-fns`、`tw-animate-css`。
 
@@ -82,26 +82,26 @@ npm run dev      # 启动开发服务器（Vite），默认 http://localhost:517
 
 ```jsonc
 {
-  "dev": "vite dev",
-  "build": "vite build",
-  "preview": "vite preview",
-  "prepare": "svelte-kit sync || echo ''",
-  "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-  "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-  "lint": "prettier --check . && eslint .",
-  "format": "prettier --write ."
+	"dev": "vite dev",
+	"build": "vite build",
+	"preview": "vite preview",
+	"prepare": "svelte-kit sync || echo ''",
+	"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+	"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+	"lint": "prettier --check . && eslint .",
+	"format": "prettier --write ."
 }
 ```
 
-| 命令 | 作用 |
-| --- | --- |
-| `npm run dev` | 启动 Vite 开发服务器（HMR） |
-| `npm run build` | 生产构建（输出由 adapter 决定，默认 `adapter-auto`） |
-| `npm run preview` | 本地预览生产构建产物 |
-| `npm run check` | 先 `svelte-kit sync` 生成类型，再用 `svelte-check` 做一次性类型检查 |
-| `npm run check:watch` | 同上，watch 模式 |
-| `npm run lint` | Prettier 检查格式 + ESLint 检查代码（不修改文件） |
-| `npm run format` | Prettier 自动格式化全仓库 |
+| 命令                  | 作用                                                                |
+| --------------------- | ------------------------------------------------------------------- |
+| `npm run dev`         | 启动 Vite 开发服务器（HMR）                                         |
+| `npm run build`       | 生产构建（输出由 adapter 决定，默认 `adapter-auto`）                |
+| `npm run preview`     | 本地预览生产构建产物                                                |
+| `npm run check`       | 先 `svelte-kit sync` 生成类型，再用 `svelte-check` 做一次性类型检查 |
+| `npm run check:watch` | 同上，watch 模式                                                    |
+| `npm run lint`        | Prettier 检查格式 + ESLint 检查代码（不修改文件）                   |
+| `npm run format`      | Prettier 自动格式化全仓库                                           |
 
 > `prepare` 是 npm 生命周期钩子，`npm install` 后自动执行 `svelte-kit sync`（生成 `.svelte-kit/` 下的类型与 `$lib`/`$app` 别名），通常无需手动调用。
 
@@ -236,19 +236,19 @@ src/
 
 ```svelte
 <script lang="ts">
-  import '../app.css';
-  import { onMount } from 'svelte';
-  import { ModeWatcher } from 'mode-watcher';
-  import { Toaster } from '$lib/components/ui/sonner';
-  import { auth } from '$lib/auth';
-  import { initLocale } from '$lib/i18n';
+	import '../app.css';
+	import { onMount } from 'svelte';
+	import { ModeWatcher } from 'mode-watcher';
+	import { Toaster } from '$lib/components/ui/sonner';
+	import { auth } from '$lib/auth';
+	import { initLocale } from '$lib/i18n';
 
-  let { children } = $props();
+	let { children } = $props();
 
-  onMount(() => {
-    auth.init();
-    initLocale();
-  });
+	onMount(() => {
+		auth.init();
+		initLocale();
+	});
 </script>
 
 <ModeWatcher />
@@ -267,7 +267,7 @@ src/
 import { redirect } from '@sveltejs/kit';
 
 export function load(): never {
-  throw redirect(307, '/dashboard');
+	throw redirect(307, '/dashboard');
 }
 ```
 
@@ -297,23 +297,23 @@ onMount(() => {
   authenticated, otherwise renders the children inside the AppShell.
 -->
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
-  import { auth } from '$lib/auth';
-  import { AppShell } from '$lib/shell';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	import { auth } from '$lib/auth';
+	import { AppShell } from '$lib/shell';
 
-  let { children } = $props();
-  let ready = $state(false);
+	let { children } = $props();
+	let ready = $state(false);
 
-  onMount(() => {
-    auth.init();
-    if (!auth.isAuthenticated) goto('/login');
-    else ready = true;
-  });
+	onMount(() => {
+		auth.init();
+		if (!auth.isAuthenticated) goto('/login');
+		else ready = true;
+	});
 </script>
 
 {#if ready}
-  <AppShell>{@render children()}</AppShell>
+	<AppShell>{@render children()}</AppShell>
 {/if}
 ```
 
@@ -323,13 +323,13 @@ onMount(() => {
 
 ```svelte
 <Sidebar.Provider>
-  <AppSidebar />
-  <Sidebar.Inset>
-    <AppHeader />
-    <main class="flex flex-1 flex-col">
-      {@render children()}
-    </main>
-  </Sidebar.Inset>
+	<AppSidebar />
+	<Sidebar.Inset>
+		<AppHeader />
+		<main class="flex flex-1 flex-col">
+			{@render children()}
+		</main>
+	</Sidebar.Inset>
 </Sidebar.Provider>
 ```
 
@@ -368,10 +368,10 @@ onMount(() => {
 - `$props()`：声明组件 props，配合 TS `interface Props` 使用。
   ```ts
   interface Props {
-    title: string;
-    description?: string;
-    actions?: Snippet;   // snippet 作为「插槽」传入
-    class?: string;
+  	title: string;
+  	description?: string;
+  	actions?: Snippet; // snippet 作为「插槽」传入
+  	class?: string;
   }
   let { title, description, actions, class: className }: Props = $props();
   ```
@@ -435,26 +435,26 @@ onMount(() => {
 ```svelte
 <!-- src/routes/(app)/reports/+page.svelte -->
 <script lang="ts">
-  import Download from '@lucide/svelte/icons/download';
-  import { PageContainer, PageHeader } from '$lib/components/shared';
-  import { Button } from '$lib/components/ui/button';
+	import Download from '@lucide/svelte/icons/download';
+	import { PageContainer, PageHeader } from '$lib/components/shared';
+	import { Button } from '$lib/components/ui/button';
 </script>
 
 <svelte:head>
-  <title>Reports · Admin Starter</title>
+	<title>Reports · Admin Starter</title>
 </svelte:head>
 
 <PageContainer>
-  <PageHeader title="Reports" description="Generated reports and exports.">
-    {#snippet actions()}
-      <Button>
-        <Download class="size-4" aria-hidden="true" />
-        Export
-      </Button>
-    {/snippet}
-  </PageHeader>
+	<PageHeader title="Reports" description="Generated reports and exports.">
+		{#snippet actions()}
+			<Button>
+				<Download class="size-4" aria-hidden="true" />
+				Export
+			</Button>
+		{/snippet}
+	</PageHeader>
 
-  <!-- 页面内容 -->
+	<!-- 页面内容 -->
 </PageContainer>
 ```
 
@@ -469,15 +469,15 @@ onMount(() => {
 
 当前 `navGroups`（顺序与条目均取自 `nav.ts`）：
 
-| 分组 | 条目（title → href） |
-| --- | --- |
-| **Overview** | Dashboard → `/dashboard` |
-| **Management** | Users → `/users`，Tables → `/tables`，Forms → `/forms` |
-| **Apps** | Calendar → `/calendar`，Inbox → `/inbox`，Board → `/kanban` |
-| **Commerce** | Sales Orders → `/orders`，Cart → `/cart` |
-| **Showcase** | Components → `/components`，Charts → `/charts` |
-| **Billing** | Pricing → `/pricing`，Billing → `/billing` |
-| **Account** | Profile → `/profile`，Settings → `/settings` |
+| 分组           | 条目（title → href）                                        |
+| -------------- | ----------------------------------------------------------- |
+| **Overview**   | Dashboard → `/dashboard`                                    |
+| **Management** | Users → `/users`，Tables → `/tables`，Forms → `/forms`      |
+| **Apps**       | Calendar → `/calendar`，Inbox → `/inbox`，Board → `/kanban` |
+| **Commerce**   | Sales Orders → `/orders`，Cart → `/cart`                    |
+| **Showcase**   | Components → `/components`，Charts → `/charts`              |
+| **Billing**    | Pricing → `/pricing`，Billing → `/billing`                  |
+| **Account**    | Profile → `/profile`，Settings → `/settings`                |
 
 > `users/[id]` 没有自己的导航项——它由 Users 列表里点击姓名进入；活动态由 `findNavItem()` 按「最长 href 前缀」匹配回落到 `/users`。
 
@@ -485,15 +485,15 @@ onMount(() => {
 
 ```ts
 export interface NavItem {
-  title: string;
-  href: string;
-  icon: Component;      // 来自 @lucide/svelte/icons/*
-  badge?: string | number;
+	title: string;
+	href: string;
+	icon: Component; // 来自 @lucide/svelte/icons/*
+	badge?: string | number;
 }
 
 export interface NavGroup {
-  label: string;
-  items: NavItem[];
+	label: string;
+	items: NavItem[];
 }
 ```
 
@@ -549,7 +549,7 @@ toast.success(next ? 'Compact density enabled' : 'Comfortable density enabled');
 ```ts
 import { t } from '$lib/i18n';
 
-t('common.search');                          // -> "Search"
+t('common.search'); // -> "Search"
 t('dashboard.greeting', { name: firstName }); // -> "Welcome back, <name>"
 ```
 
@@ -574,8 +574,8 @@ import { demoUsers } from '$lib/data/users';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ params }) => {
-  const user = demoUsers.find((u) => u.id === params.id);
-  return { breadcrumb: user?.name };
+	const user = demoUsers.find((u) => u.id === params.id);
+	return { breadcrumb: user?.name };
 };
 ```
 
@@ -601,11 +601,11 @@ export const load: PageLoad = ({ params }) => {
 
 ```ts
 export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: 'admin' | 'editor' | 'viewer';
-  avatarUrl?: string;
+	id: string;
+	name: string;
+	email: string;
+	role: 'admin' | 'editor' | 'viewer';
+	avatarUrl?: string;
 }
 ```
 
@@ -613,18 +613,36 @@ export interface User {
 
 ### 如何接入真实后端
 
-1. **替换 `src/lib/auth/auth.svelte.ts` 的 `login` / `register` / `logout`**：把派生 `User` 的逻辑改为 `fetch` 调用后端鉴权接口，成功后用返回的真实用户信息 `#persist(user)`。保持 `auth.user` / `auth.isAuthenticated` 等 getter 的对外契约不变，调用方（守卫、侧边栏、顶栏）无需改动。建议把 API 基址放到环境变量，例如 SvelteKit 的 `import.meta.env.PUBLIC_API_URL`（`PUBLIC_` 前缀的变量可在客户端读取；定义在 `.env` 中）。
-2. **增加服务端守卫**：当前守卫是纯客户端的，会有「先渲染再跳转」的闪烁，且不安全。改为服务端校验更稳妥——在 `(app)/` 下新增 `+layout.server.ts`，在 `load` 中读取 cookie/session 并在未认证时 `throw redirect(302, '/login')`：
+后端接入围绕**三个 seam**，互不耦合、各管一摊：
+
+| 配置/接缝            | 文件                       | 职责                                                                            |
+| -------------------- | -------------------------- | ------------------------------------------------------------------------------- |
+| `config.api.baseUrl` | `src/lib/config/index.ts`  | 「后端在哪」——空字符串 = 全 mock 模式；非空时下面两个 provider 自动切到真实请求 |
+| `AuthProvider`       | `src/lib/auth/provider.ts` | 「怎么认证」——login / register / logout 的实现                                  |
+| `db`                 | `src/lib/server/db.ts`     | 「数据从哪来」——仅服务端，业务页面经 `+page.server.ts` 的 `load` 读取           |
+
+> 命名上刻意把「地址」与「策略」分开：`config.api.baseUrl` 被 auth 与数据层**共用**；`config.auth` 只放认证策略（session key、跳转、密码规则、demo 凭据）。
+
+1. **配置后端地址**：把 `config.api.baseUrl` 指向你的 API。生产环境通常从环境变量取，而非硬编码——例如 `import { env } from '$env/dynamic/public'` 后 `baseUrl: env.PUBLIC_API_URL ?? ''`（`PUBLIC_` 前缀的变量可在客户端读取，定义在 `.env`）。`baseUrl` 一旦非空，`provider.ts` 与 `db.ts` 内置的分支就自动走真实 `fetch`，无须改其它代码。
+
+2. **实现认证 `AuthProvider`**（`src/lib/auth/provider.ts`）：文件已内置 `apiAuthProvider`（打 `config.api.baseUrl` 的 `/auth/*` 端点）与 `mockAuthProvider`，底部导出 `authProvider` 按 `baseUrl` 是否配置自动二选一。把 `apiAuthProvider` 里的端点路径与请求/响应 JSON 形状改成你后端的契约即可。`auth.svelte.ts` 只消费 `authProvider`，无须改动；`auth.user` / `auth.isAuthenticated` 等对外 getter 契约不变，守卫、侧边栏、顶栏都不用动。
+
+3. **实现数据层 `db`**（`src/lib/server/db.ts`，**仅服务端**）：业务页面通过 `+page.server.ts` 的 `load` 调用 `db`（参考 `src/routes/(app)/tables/+page.server.ts`：`{ products: await db.products.list() }`）。把每个方法体换成真实数据库/API 查询、保持签名不变，页面就不用改。`products.list` 已示范「有 `baseUrl` 就 `fetch`，否则回退 mock」的形态。此文件在 `$lib/server/`，连同它 import 的任何 DB 凭据都**不会**进浏览器包。
+
+4. **增加服务端守卫**：当前守卫是纯客户端的，会有「先渲染再跳转」的闪烁，且不安全。改为服务端校验更稳妥——在 `(app)/` 下新增 `+layout.server.ts`，在 `load` 中读取 cookie/session 并在未认证时 `throw redirect(302, '/login')`：
+
    ```ts
    // src/routes/(app)/+layout.server.ts （示例）
    import { redirect } from '@sveltejs/kit';
    export const load = async ({ locals }) => {
-     if (!locals.user) throw redirect(302, '/login');
-     return { user: locals.user };
+   	if (!locals.user) throw redirect(302, '/login');
+   	return { user: locals.user };
    };
    ```
+
    配合 `src/hooks.server.ts` 解析 cookie 并写入 `event.locals.user`。届时可考虑把根布局 `+layout.ts` 中的 `prerender`/`ssr` 策略一并调整。
-3. **环境变量约定**：用 `PUBLIC_API_URL` 之类的 `PUBLIC_` 前缀变量保存后端地址；敏感值（如服务端密钥）用不带前缀的私有变量，仅在 `*.server.ts` 中通过 `$env/static/private` 或 `$env/dynamic/private` 读取。
+
+5. **环境变量约定**：用 `PUBLIC_API_URL` 之类的 `PUBLIC_` 前缀变量保存后端地址（供 `config.api.baseUrl` 取用）；敏感值（如服务端密钥）用不带前缀的私有变量，仅在 `*.server.ts`（如 `db.ts`）中通过 `$env/static/private` 或 `$env/dynamic/private` 读取。
 
 ---
 
@@ -682,22 +700,22 @@ npm run preview   # 本地预览生产构建
 import adapter from '@sveltejs/adapter-auto';
 
 const config = {
-  preprocess: vitePreprocess(),
-  kit: {
-    // adapter-auto detects the deployment target. Swap for a specific
-    // adapter (node, static, vercel, ...) when you know where this runs.
-    adapter: adapter()
-  }
+	preprocess: vitePreprocess(),
+	kit: {
+		// adapter-auto detects the deployment target. Swap for a specific
+		// adapter (node, static, vercel, ...) when you know where this runs.
+		adapter: adapter()
+	}
 };
 ```
 
 `adapter-auto` 会在受支持的平台（Vercel/Netlify/Cloudflare 等）上自动选择适配器，**但不安装它们**。一旦确定部署目标，建议换成明确的 adapter：
 
-| 目标 | adapter | 安装 |
-| --- | --- | --- |
-| Node 服务器 | `@sveltejs/adapter-node` | `npm i -D @sveltejs/adapter-node` |
-| 纯静态站点 | `@sveltejs/adapter-static` | `npm i -D @sveltejs/adapter-static` |
-| Vercel | `@sveltejs/adapter-vercel` | `npm i -D @sveltejs/adapter-vercel` |
+| 目标        | adapter                    | 安装                                |
+| ----------- | -------------------------- | ----------------------------------- |
+| Node 服务器 | `@sveltejs/adapter-node`   | `npm i -D @sveltejs/adapter-node`   |
+| 纯静态站点  | `@sveltejs/adapter-static` | `npm i -D @sveltejs/adapter-static` |
+| Vercel      | `@sveltejs/adapter-vercel` | `npm i -D @sveltejs/adapter-vercel` |
 
 换法（以 Node 为例）：
 
@@ -705,7 +723,9 @@ const config = {
 // svelte.config.js
 import adapter from '@sveltejs/adapter-node';
 // ...
-kit: { adapter: adapter() }
+kit: {
+	adapter: adapter();
+}
 ```
 
 > 注意：当前根布局 `+layout.ts` 设了 `ssr = true` 且鉴权守卫在客户端运行。若要用 `adapter-static` 完全静态化，需要确保没有依赖服务端的 `load`，并把整站 `prerender = true`（同时 mock 守卫的客户端跳转仍然有效，因为它在浏览器运行）。若接入真实后端的服务端守卫（第 8 节），则应使用 `adapter-node`/`adapter-vercel` 等支持 SSR 的适配器。

@@ -478,15 +478,9 @@
 				<Button variant="outline" onclick={() => toast.success('Saved successfully')}>
 					Success
 				</Button>
-				<Button variant="outline" onclick={() => toast.error('Something went wrong')}>
-					Error
-				</Button>
-				<Button variant="outline" onclick={() => toast.info('Heads up — new update')}>
-					Info
-				</Button>
-				<Button variant="outline" onclick={() => toast.warning('Low disk space')}>
-					Warning
-				</Button>
+				<Button variant="outline" onclick={() => toast.error('Something went wrong')}>Error</Button>
+				<Button variant="outline" onclick={() => toast.info('Heads up — new update')}>Info</Button>
+				<Button variant="outline" onclick={() => toast.warning('Low disk space')}>Warning</Button>
 			</Card.Content>
 		</Card.Root>
 

@@ -19,8 +19,13 @@
 	} from '$lib/components/shared';
 	import * as Card from '$lib/components/ui/card';
 
-	import { demoProducts, type DemoProduct } from '$lib/data/products';
+	import type { DemoProduct } from '$lib/data/products';
 	import { formatCurrency, formatNumber } from '$lib/utils/formatters';
+	import type { PageData } from './$types';
+
+	// Products are loaded on the server via `+page.server.ts` (the `db` data seam),
+	// not imported directly — this is the pattern to follow for real data.
+	let { data }: { data: PageData } = $props();
 
 	type Status = DemoProduct['status'];
 
@@ -77,8 +82,8 @@
 			<Card.Description>
 				<code class="rounded bg-muted px-1 py-0.5 text-xs">DataTable</code> is a generic,
 				client-side table. Pass <code class="rounded bg-muted px-1 py-0.5 text-xs">data</code> and a
-				<code class="rounded bg-muted px-1 py-0.5 text-xs">columns</code> schema; opt into search,
-				sorting, selection and pagination with simple props.
+				<code class="rounded bg-muted px-1 py-0.5 text-xs">columns</code> schema; opt into search, sorting,
+				selection and pagination with simple props.
 			</Card.Description>
 		</Card.Header>
 		<Card.Content>
@@ -98,7 +103,7 @@
 	</Card.Root>
 
 	<DataTable
-		data={demoProducts}
+		data={data.products}
 		{columns}
 		searchable
 		pageSize={8}
@@ -108,7 +113,7 @@
 		{#snippet toolbar()}
 			<div class="flex items-center gap-2 text-sm text-muted-foreground">
 				<Table class="size-4" />
-				<span>{demoProducts.length} products · sort, search and paginate below</span>
+				<span>{data.products.length} products · sort, search and paginate below</span>
 			</div>
 		{/snippet}
 

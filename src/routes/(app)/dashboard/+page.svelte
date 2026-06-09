@@ -101,9 +101,7 @@
 				<h1 class="text-2xl font-semibold tracking-tight">
 					{t('dashboard.greeting', { name: firstName })}
 				</h1>
-				<p class="text-muted-foreground">
-					Here is what is happening across your workspace today.
-				</p>
+				<p class="text-muted-foreground">Here is what is happening across your workspace today.</p>
 			</div>
 			<Button onclick={downloadReport} class="shrink-0">
 				<Download class="size-4" aria-hidden="true" />
@@ -167,7 +165,9 @@
 				<!-- X axis labels -->
 				<div class="mt-2 flex justify-between text-xs text-muted-foreground">
 					{#each revenueSeries as d (d.date)}
-						<span class="flex-1 text-center first:text-left last:text-right">{monthLabel(d.date)}</span>
+						<span class="flex-1 text-center first:text-left last:text-right"
+							>{monthLabel(d.date)}</span
+						>
 					{/each}
 				</div>
 			</Card.Content>

@@ -60,7 +60,9 @@
 		<span class="text-sm font-semibold tracking-tight">Admin Starter</span>
 	</div>
 
-	<p class="text-primary relative mt-8 text-7xl font-bold tracking-tighter tabular-nums sm:text-8xl">
+	<p
+		class="text-primary relative mt-8 text-7xl font-bold tracking-tighter tabular-nums sm:text-8xl"
+	>
 		{page.status}
 	</p>
 

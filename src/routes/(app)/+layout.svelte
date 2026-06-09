@@ -6,15 +6,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
 	import { AppShell } from '$lib/shell';
+	import { config } from '$lib/config';
 
 	let { children } = $props();
 	let ready = $state(false);
 
 	onMount(() => {
 		auth.init();
-		if (!auth.isAuthenticated) goto('/login');
+		if (!auth.isAuthenticated) goto(resolve(config.auth.afterLogout));
 		else ready = true;
 	});
 </script>

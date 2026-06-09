@@ -7,6 +7,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import type { Pathname } from '$app/types';
 	import * as Command from '$lib/components/ui/command';
 	import { navGroups } from '$lib/shell/nav';
 
@@ -16,9 +18,9 @@
 
 	let { open = $bindable(false) }: Props = $props();
 
-	function runCommand(href: string) {
+	function runCommand(href: Pathname) {
 		open = false;
-		goto(href);
+		goto(resolve(href));
 	}
 
 	function onKeydown(event: KeyboardEvent) {

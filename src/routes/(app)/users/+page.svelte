@@ -12,6 +12,7 @@
 	import Trash2 from '@lucide/svelte/icons/trash-2';
 	import Pencil from '@lucide/svelte/icons/pencil';
 	import Eye from '@lucide/svelte/icons/eye';
+	import { resolve } from '$app/paths';
 
 	import {
 		PageContainer,
@@ -138,7 +139,13 @@
 		if (editingId) {
 			users = users.map((u) =>
 				u.id === editingId
-					? { ...u, name: result.data.name, email: result.data.email, role: result.data.role, status }
+					? {
+							...u,
+							name: result.data.name,
+							email: result.data.email,
+							role: result.data.role,
+							status
+						}
 					: u
 			);
 			toast.success('User updated');
@@ -191,9 +198,7 @@
 			{ key: 'status', header: 'Status' },
 			{ key: 'createdAt', header: 'Joined' }
 		]);
-		toast.success(
-			`Exported ${rows.length} ${rows.length === 1 ? 'user' : 'users'} to CSV`
-		);
+		toast.success(`Exported ${rows.length} ${rows.length === 1 ? 'user' : 'users'} to CSV`);
 	}
 
 	function confirmBulkDelete() {
@@ -251,7 +256,7 @@
 						{initials(row.name)}
 					</span>
 					<a
-						href={`/users/${row.id}`}
+						href={resolve(`/users/${row.id}`)}
 						class="hover:text-primary font-medium text-foreground hover:underline"
 					>
 						{row.name}
@@ -364,7 +369,8 @@
 							<Select.Trigger class="w-full capitalize">{statusTriggerLabel}</Select.Trigger>
 							<Select.Content>
 								{#each STATUSES as status (status.value)}
-									<Select.Item value={status.value} label={status.label}>{status.label}</Select.Item>
+									<Select.Item value={status.value} label={status.label}>{status.label}</Select.Item
+									>
 								{/each}
 							</Select.Content>
 						</Select.Root>
@@ -401,7 +407,9 @@
 					<div class="min-w-0 space-y-2">
 						<p class="truncate text-lg font-semibold">{viewingUser.name}</p>
 						<div class="flex flex-wrap gap-2">
-							<StatusBadge tone={roleTone(viewingUser.role)}>{roleLabel(viewingUser.role)}</StatusBadge>
+							<StatusBadge tone={roleTone(viewingUser.role)}
+								>{roleLabel(viewingUser.role)}</StatusBadge
+							>
 							<StatusBadge tone={statusTone(viewingUser.status)}>
 								{statusLabel(viewingUser.status)}
 							</StatusBadge>

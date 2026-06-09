@@ -35,14 +35,62 @@ export const recentActivity: {
 	target: string;
 	time: string;
 }[] = [
-	{ id: 'act_1', user: 'Olivia Martin', action: 'created', target: 'Invoice #INV-2043', time: '2 minutes ago' },
-	{ id: 'act_2', user: 'Liam Johnson', action: 'updated', target: 'Product “Aurora Lamp”', time: '18 minutes ago' },
-	{ id: 'act_3', user: 'Sophia Miller', action: 'invited', target: 'emma.williams@example.com', time: '1 hour ago' },
-	{ id: 'act_4', user: 'Noah Brown', action: 'archived', target: 'Order #ORD-1187', time: '2 hours ago' },
-	{ id: 'act_5', user: 'Charlotte Anderson', action: 'commented on', target: 'Ticket #SUP-552', time: '4 hours ago' },
-	{ id: 'act_6', user: 'Daniel Martinez', action: 'exported', target: 'Q2 Revenue Report', time: 'Yesterday' },
-	{ id: 'act_7', user: 'Abigail Lewis', action: 'deleted', target: 'Draft “Spring Campaign”', time: 'Yesterday' },
-	{ id: 'act_8', user: 'Sebastian Lee', action: 'changed role of', target: 'Mia Moore', time: '2 days ago' }
+	{
+		id: 'act_1',
+		user: 'Olivia Martin',
+		action: 'created',
+		target: 'Invoice #INV-2043',
+		time: '2 minutes ago'
+	},
+	{
+		id: 'act_2',
+		user: 'Liam Johnson',
+		action: 'updated',
+		target: 'Product “Aurora Lamp”',
+		time: '18 minutes ago'
+	},
+	{
+		id: 'act_3',
+		user: 'Sophia Miller',
+		action: 'invited',
+		target: 'emma.williams@example.com',
+		time: '1 hour ago'
+	},
+	{
+		id: 'act_4',
+		user: 'Noah Brown',
+		action: 'archived',
+		target: 'Order #ORD-1187',
+		time: '2 hours ago'
+	},
+	{
+		id: 'act_5',
+		user: 'Charlotte Anderson',
+		action: 'commented on',
+		target: 'Ticket #SUP-552',
+		time: '4 hours ago'
+	},
+	{
+		id: 'act_6',
+		user: 'Daniel Martinez',
+		action: 'exported',
+		target: 'Q2 Revenue Report',
+		time: 'Yesterday'
+	},
+	{
+		id: 'act_7',
+		user: 'Abigail Lewis',
+		action: 'deleted',
+		target: 'Draft “Spring Campaign”',
+		time: 'Yesterday'
+	},
+	{
+		id: 'act_8',
+		user: 'Sebastian Lee',
+		action: 'changed role of',
+		target: 'Mia Moore',
+		time: '2 days ago'
+	}
 ];
 
 export const trafficByChannel: { channel: string; visitors: number }[] = [

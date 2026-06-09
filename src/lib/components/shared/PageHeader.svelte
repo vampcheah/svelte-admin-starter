@@ -16,12 +16,7 @@
 	let { title, description, actions, class: className }: Props = $props();
 </script>
 
-<div
-	class={cn(
-		'flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between',
-		className
-	)}
->
+<div class={cn('flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between', className)}>
 	<div class="space-y-1">
 		<h1 class="text-2xl font-semibold tracking-tight text-foreground">
 			{title}

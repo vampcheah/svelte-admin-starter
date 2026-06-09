@@ -4,9 +4,11 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
 	import { initials } from '$lib/utils/formatters';
 	import { navGroups } from './nav';
+	import { config } from '$lib/config';
 	import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
 	import UserIcon from '@lucide/svelte/icons/user';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
@@ -26,14 +28,14 @@
 			<Sidebar.MenuItem>
 				<Sidebar.MenuButton size="lg">
 					{#snippet child({ props })}
-						<a href="/dashboard" {...props}>
+						<a href={resolve('/dashboard')} {...props}>
 							<div
 								class="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg text-base font-semibold"
 							>
-								A
+								{config.app.logo}
 							</div>
 							<div class="grid flex-1 text-left text-sm leading-tight">
-								<span class="truncate font-semibold">Admin Starter</span>
+								<span class="truncate font-semibold">{config.app.name}</span>
 								<span class="text-muted-foreground truncate text-xs">Dashboard</span>
 							</div>
 						</a>
@@ -56,7 +58,7 @@
 								class="relative transition-colors data-active:text-sidebar-primary data-active:before:absolute data-active:before:inset-y-1.5 data-active:before:left-0 data-active:before:w-0.5 data-active:before:rounded-full data-active:before:bg-sidebar-primary data-active:before:content-['']"
 							>
 								{#snippet child({ props })}
-									<a href={item.href} {...props}>
+									<a href={resolve(item.href)} {...props}>
 										<item.icon />
 										<span>{item.title}</span>
 									</a>
@@ -127,7 +129,7 @@
 						<DropdownMenu.Group>
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
-									<a href="/profile" {...props}>
+									<a href={resolve('/profile')} {...props}>
 										<UserIcon />
 										Profile
 									</a>
@@ -135,7 +137,7 @@
 							</DropdownMenu.Item>
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
-									<a href="/settings" {...props}>
+									<a href={resolve('/settings')} {...props}>
 										<SettingsIcon />
 										Settings
 									</a>

@@ -6,6 +6,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
+	import type { Pathname } from '$app/types';
 	import { PageContainer, PageHeader } from '$lib/components/shared';
 	import { cn } from '$lib/utils';
 	import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
@@ -21,7 +23,7 @@
 
 	interface SettingsNavItem {
 		title: string;
-		href: string;
+		href: Pathname;
 		icon: Component;
 	}
 
@@ -55,14 +57,12 @@
 			{#each navItems as item (item.href)}
 				{@const active = isActive(item.href)}
 				<a
-					href={item.href}
+					href={resolve(item.href)}
 					aria-current={active ? 'page' : undefined}
 					class={cn(
 						'inline-flex shrink-0 items-center gap-2 rounded-md px-3 py-2 text-sm font-medium whitespace-nowrap transition-colors',
 						'hover:bg-accent hover:text-accent-foreground',
-						active
-							? 'bg-accent text-accent-foreground'
-							: 'text-muted-foreground'
+						active ? 'bg-accent text-accent-foreground' : 'text-muted-foreground'
 					)}
 				>
 					<item.icon class="size-4" />

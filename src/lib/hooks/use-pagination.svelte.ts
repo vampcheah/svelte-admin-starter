@@ -64,10 +64,7 @@ function buildPages(current: number, totalPages: number, siblings = 1): number[]
 		return [first, -1, ...right];
 	}
 
-	const middle = Array.from(
-		{ length: rightSibling - leftSibling + 1 },
-		(_, i) => leftSibling + i
-	);
+	const middle = Array.from({ length: rightSibling - leftSibling + 1 }, (_, i) => leftSibling + i);
 	return [first, -1, ...middle, -1, last];
 }
 

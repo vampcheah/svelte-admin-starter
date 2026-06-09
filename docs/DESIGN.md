@@ -49,9 +49,9 @@ token 在 `src/app.css` 中分两步声明：
 ```css
 /* src/app.css */
 @theme inline {
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  /* …其余 token 同理 */
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	/* …其余 token 同理 */
 }
 ```
 
@@ -63,31 +63,31 @@ token 在 `src/app.css` 中分两步声明：
 
 下表为每个 token 的用途、light/dark 的真实 OKLCH 取值（抄自 `src/app.css`），以及生成的 Tailwind 工具类。
 
-| token | 用途 | Light (`:root`) | Dark (`.dark`) | Tailwind 类 |
-|---|---|---|---|---|
-| `background` | 页面整体背景（`body` 默认） | `oklch(0.99 0.003 269)` | `oklch(0.17 0.008 269)` | `bg-background` |
-| `foreground` | 页面正文文字（`body` 默认） | `oklch(0.21 0.025 269)` | `oklch(0.96 0.004 269)` | `text-foreground` |
-| `card` | 卡片/面板背景 | `oklch(1 0 0)` | `oklch(0.205 0.01 269)` | `bg-card` |
-| `card-foreground` | 卡片内文字 | `oklch(0.21 0.025 269)` | `oklch(0.96 0.004 269)` | `text-card-foreground` |
-| `popover` | 弹出层（菜单/下拉/Tooltip）背景 | `oklch(1 0 0)` | `oklch(0.205 0.01 269)` | `bg-popover` |
-| `popover-foreground` | 弹出层内文字 | `oklch(0.21 0.025 269)` | `oklch(0.96 0.004 269)` | `text-popover-foreground` |
-| `primary` | 主操作色（主按钮、激活态、强调） | `oklch(0.545 0.205 269)` | `oklch(0.62 0.19 269)` | `bg-primary` |
-| `primary-foreground` | 主色背景上的文字 | `oklch(0.985 0.002 269)` | `oklch(0.99 0.003 269)` | `text-primary-foreground` |
-| `secondary` | 次操作色（次级按钮/徽章） | `oklch(0.965 0.006 269)` | `oklch(0.26 0.012 269)` | `bg-secondary` |
-| `secondary-foreground` | 次色背景上的文字 | `oklch(0.25 0.03 269)` | `oklch(0.96 0.004 269)` | `text-secondary-foreground` |
-| `muted` | 弱化背景（TabsList、占位块、头像底色） | `oklch(0.967 0.005 269)` | `oklch(0.26 0.012 269)` | `bg-muted` |
-| `muted-foreground` | 次要/辅助文字（描述、占位） | `oklch(0.552 0.026 269)` | `oklch(0.705 0.025 269)` | `text-muted-foreground` |
-| `accent` | 悬停/选中高亮背景 | `oklch(0.95 0.015 269)` | `oklch(0.28 0.02 269)` | `bg-accent` |
-| `accent-foreground` | accent 背景上的文字 | `oklch(0.42 0.16 269)` | `oklch(0.96 0.004 269)` | `text-accent-foreground` |
-| `destructive` | 危险/删除操作色 | `oklch(0.585 0.22 25)` | `oklch(0.7 0.19 22)` | `bg-destructive` / `text-destructive` |
-| `border` | 边框、分隔线 | `oklch(0.925 0.006 269)` | `oklch(1 0 0 / 9%)` | `border-border` |
-| `input` | 输入框背景 | `oklch(1 0 0)` | `oklch(1 0 0 / 12%)` | `bg-input` |
-| `ring` | 聚焦轮廓（focus ring） | `oklch(0.545 0.205 269 / 50%)` | `oklch(0.62 0.19 269 / 55%)` | `ring-ring` |
-| `chart-1` | 图表系列 1（靛蓝 indigo） | `oklch(0.545 0.205 269)` | `oklch(0.66 0.18 269)` | 见[第 7 节](#7-图表配色) |
-| `chart-2` | 图表系列 2（天蓝 azure） | `oklch(0.62 0.16 232)` | `oklch(0.7 0.15 232)` | — |
-| `chart-3` | 图表系列 3（青色 cyan） | `oklch(0.7 0.13 195)` | `oklch(0.76 0.12 195)` | — |
-| `chart-4` | 图表系列 4（紫罗兰 violet） | `oklch(0.6 0.2 305)` | `oklch(0.68 0.18 305)` | — |
-| `chart-5` | 图表系列 5（粉色 pink） | `oklch(0.64 0.21 350)` | `oklch(0.7 0.19 350)` | — |
+| token                  | 用途                                   | Light (`:root`)                | Dark (`.dark`)               | Tailwind 类                           |
+| ---------------------- | -------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------- |
+| `background`           | 页面整体背景（`body` 默认）            | `oklch(0.99 0.003 269)`        | `oklch(0.17 0.008 269)`      | `bg-background`                       |
+| `foreground`           | 页面正文文字（`body` 默认）            | `oklch(0.21 0.025 269)`        | `oklch(0.96 0.004 269)`      | `text-foreground`                     |
+| `card`                 | 卡片/面板背景                          | `oklch(1 0 0)`                 | `oklch(0.205 0.01 269)`      | `bg-card`                             |
+| `card-foreground`      | 卡片内文字                             | `oklch(0.21 0.025 269)`        | `oklch(0.96 0.004 269)`      | `text-card-foreground`                |
+| `popover`              | 弹出层（菜单/下拉/Tooltip）背景        | `oklch(1 0 0)`                 | `oklch(0.205 0.01 269)`      | `bg-popover`                          |
+| `popover-foreground`   | 弹出层内文字                           | `oklch(0.21 0.025 269)`        | `oklch(0.96 0.004 269)`      | `text-popover-foreground`             |
+| `primary`              | 主操作色（主按钮、激活态、强调）       | `oklch(0.545 0.205 269)`       | `oklch(0.62 0.19 269)`       | `bg-primary`                          |
+| `primary-foreground`   | 主色背景上的文字                       | `oklch(0.985 0.002 269)`       | `oklch(0.99 0.003 269)`      | `text-primary-foreground`             |
+| `secondary`            | 次操作色（次级按钮/徽章）              | `oklch(0.965 0.006 269)`       | `oklch(0.26 0.012 269)`      | `bg-secondary`                        |
+| `secondary-foreground` | 次色背景上的文字                       | `oklch(0.25 0.03 269)`         | `oklch(0.96 0.004 269)`      | `text-secondary-foreground`           |
+| `muted`                | 弱化背景（TabsList、占位块、头像底色） | `oklch(0.967 0.005 269)`       | `oklch(0.26 0.012 269)`      | `bg-muted`                            |
+| `muted-foreground`     | 次要/辅助文字（描述、占位）            | `oklch(0.552 0.026 269)`       | `oklch(0.705 0.025 269)`     | `text-muted-foreground`               |
+| `accent`               | 悬停/选中高亮背景                      | `oklch(0.95 0.015 269)`        | `oklch(0.28 0.02 269)`       | `bg-accent`                           |
+| `accent-foreground`    | accent 背景上的文字                    | `oklch(0.42 0.16 269)`         | `oklch(0.96 0.004 269)`      | `text-accent-foreground`              |
+| `destructive`          | 危险/删除操作色                        | `oklch(0.585 0.22 25)`         | `oklch(0.7 0.19 22)`         | `bg-destructive` / `text-destructive` |
+| `border`               | 边框、分隔线                           | `oklch(0.925 0.006 269)`       | `oklch(1 0 0 / 9%)`          | `border-border`                       |
+| `input`                | 输入框背景                             | `oklch(1 0 0)`                 | `oklch(1 0 0 / 12%)`         | `bg-input`                            |
+| `ring`                 | 聚焦轮廓（focus ring）                 | `oklch(0.545 0.205 269 / 50%)` | `oklch(0.62 0.19 269 / 55%)` | `ring-ring`                           |
+| `chart-1`              | 图表系列 1（靛蓝 indigo）              | `oklch(0.545 0.205 269)`       | `oklch(0.66 0.18 269)`       | 见[第 7 节](#7-图表配色)              |
+| `chart-2`              | 图表系列 2（天蓝 azure）               | `oklch(0.62 0.16 232)`         | `oklch(0.7 0.15 232)`        | —                                     |
+| `chart-3`              | 图表系列 3（青色 cyan）                | `oklch(0.7 0.13 195)`          | `oklch(0.76 0.12 195)`       | —                                     |
+| `chart-4`              | 图表系列 4（紫罗兰 violet）            | `oklch(0.6 0.2 305)`           | `oklch(0.68 0.18 305)`       | —                                     |
+| `chart-5`              | 图表系列 5（粉色 pink）                | `oklch(0.64 0.21 350)`         | `oklch(0.7 0.19 350)`        | —                                     |
 
 > **靛蓝品牌色（light 与 dark 不同）**：`--primary` 在亮色下为 `oklch(0.545 0.205 269)`，在暗色下**提亮**为 `oklch(0.62 0.19 269)`（L 0.545 → 0.62）——同一靛蓝 hue 269，但在深色背景上调亮以保证按钮/链接的对比度与可见度。两套取值都必须保留：暗色直接复用亮色那一档会显得发暗、缺乏存在感。
 
@@ -97,16 +97,16 @@ token 在 `src/app.css` 中分两步声明：
 
 侧边栏拥有独立的一组 token，以便在视觉上与主内容区轻微区分：亮色下是一块略带冷调的浅灰面板（区别于纯白内容卡片），暗色下比 `background` / `card` 更深一档（`oklch(0.185 …)`），形成一个微微凹陷的导航区。
 
-| token | 用途 | Light (`:root`) | Dark (`.dark`) | Tailwind 类 |
-|---|---|---|---|---|
-| `sidebar` | 侧栏背景 | `oklch(0.985 0.004 269)` | `oklch(0.185 0.009 269)` | `bg-sidebar` |
-| `sidebar-foreground` | 侧栏文字 | `oklch(0.32 0.02 269)` | `oklch(0.86 0.01 269)` | `text-sidebar-foreground` |
-| `sidebar-primary` | 侧栏激活项主色 | `oklch(0.545 0.205 269)` | `oklch(0.62 0.19 269)` | `bg-sidebar-primary` |
-| `sidebar-primary-foreground` | 侧栏激活项文字 | `oklch(0.985 0.002 269)` | `oklch(0.99 0.003 269)` | `text-sidebar-primary-foreground` |
-| `sidebar-accent` | 侧栏悬停/选中高亮 | `oklch(0.94 0.018 269)` | `oklch(0.28 0.025 269)` | `bg-sidebar-accent` |
-| `sidebar-accent-foreground` | 侧栏高亮项文字 | `oklch(0.42 0.16 269)` | `oklch(0.92 0.02 269)` | `text-sidebar-accent-foreground` |
-| `sidebar-border` | 侧栏边框/分隔 | `oklch(0.925 0.006 269)` | `oklch(1 0 0 / 7%)` | `border-sidebar-border` |
-| `sidebar-ring` | 侧栏内 focus ring | `oklch(0.545 0.205 269 / 50%)` | `oklch(0.62 0.19 269 / 55%)` | `ring-sidebar-ring` |
+| token                        | 用途              | Light (`:root`)                | Dark (`.dark`)               | Tailwind 类                       |
+| ---------------------------- | ----------------- | ------------------------------ | ---------------------------- | --------------------------------- |
+| `sidebar`                    | 侧栏背景          | `oklch(0.985 0.004 269)`       | `oklch(0.185 0.009 269)`     | `bg-sidebar`                      |
+| `sidebar-foreground`         | 侧栏文字          | `oklch(0.32 0.02 269)`         | `oklch(0.86 0.01 269)`       | `text-sidebar-foreground`         |
+| `sidebar-primary`            | 侧栏激活项主色    | `oklch(0.545 0.205 269)`       | `oklch(0.62 0.19 269)`       | `bg-sidebar-primary`              |
+| `sidebar-primary-foreground` | 侧栏激活项文字    | `oklch(0.985 0.002 269)`       | `oklch(0.99 0.003 269)`      | `text-sidebar-primary-foreground` |
+| `sidebar-accent`             | 侧栏悬停/选中高亮 | `oklch(0.94 0.018 269)`        | `oklch(0.28 0.025 269)`      | `bg-sidebar-accent`               |
+| `sidebar-accent-foreground`  | 侧栏高亮项文字    | `oklch(0.42 0.16 269)`         | `oklch(0.92 0.02 269)`       | `text-sidebar-accent-foreground`  |
+| `sidebar-border`             | 侧栏边框/分隔     | `oklch(0.925 0.006 269)`       | `oklch(1 0 0 / 7%)`          | `border-sidebar-border`           |
+| `sidebar-ring`               | 侧栏内 focus ring | `oklch(0.545 0.205 269 / 50%)` | `oklch(0.62 0.19 269 / 55%)` | `ring-sidebar-ring`               |
 
 ### 2.3 Chart token
 
@@ -134,9 +134,9 @@ token 在 `src/app.css` 中分两步声明：
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script lang="ts">
-  import '../app.css';
-  import { ModeWatcher } from 'mode-watcher';
-  // …
+	import '../app.css';
+	import { ModeWatcher } from 'mode-watcher';
+	// …
 </script>
 
 <ModeWatcher />
@@ -154,17 +154,25 @@ token 在 `src/app.css` 中分两步声明：
 ```svelte
 <!-- src/lib/components/shared/ThemeToggle.svelte -->
 <script lang="ts">
-  import Sun from '@lucide/svelte/icons/sun';
-  import Moon from '@lucide/svelte/icons/moon';
-  import { toggleMode, mode } from 'mode-watcher';
-  import { Button } from '$lib/components/ui/button';
+	import Sun from '@lucide/svelte/icons/sun';
+	import Moon from '@lucide/svelte/icons/moon';
+	import { toggleMode, mode } from 'mode-watcher';
+	import { Button } from '$lib/components/ui/button';
 
-  const label = $derived(mode.current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+	const label = $derived(
+		mode.current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
+	);
 </script>
 
 <Button variant="ghost" size="icon" onclick={toggleMode} aria-label={label} title={label}>
-  <Sun class="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" aria-hidden="true" />
-  <Moon class="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" aria-hidden="true" />
+	<Sun
+		class="size-4 scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90"
+		aria-hidden="true"
+	/>
+	<Moon
+		class="absolute size-4 scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0"
+		aria-hidden="true"
+	/>
 </Button>
 ```
 
@@ -175,30 +183,30 @@ token 在 `src/app.css` 中分两步声明：
 ```svelte
 <!-- settings/appearance/+page.svelte（节选） -->
 <script lang="ts">
-  import { setMode, mode } from 'mode-watcher';
-  import { persisted } from '$lib/stores/persisted.svelte';
+	import { setMode, mode } from 'mode-watcher';
+	import { persisted } from '$lib/stores/persisted.svelte';
 
-  type ThemeMode = 'light' | 'dark' | 'system';
+	type ThemeMode = 'light' | 'dark' | 'system';
 
-  const selectedMode = persisted<ThemeMode>('admin-starter:theme-pref', 'system');
+	const selectedMode = persisted<ThemeMode>('admin-starter:theme-pref', 'system');
 
-  function selectMode(value: ThemeMode): void {
-    selectedMode.current = value;
-    setMode(value);
-  }
+	function selectMode(value: ThemeMode): void {
+		selectedMode.current = value;
+		setMode(value);
+	}
 
-  // 用于驱动实时预览的解析后外观
-  const resolved = $derived(mode.current ?? 'light');
+	// 用于驱动实时预览的解析后外观
+	const resolved = $derived(mode.current ?? 'light');
 </script>
 ```
 
 切换 API 速查：
 
-| API | 来自 | 作用 |
-|---|---|---|
-| `toggleMode()` | `mode-watcher` | 在 light / dark 间翻转 |
-| `setMode('light' \| 'dark' \| 'system')` | `mode-watcher` | 显式设定模式 |
-| `mode.current` | `mode-watcher` | 当前**解析后**模式（`'light'` / `'dark'`，响应式） |
+| API                                      | 来自           | 作用                                               |
+| ---------------------------------------- | -------------- | -------------------------------------------------- |
+| `toggleMode()`                           | `mode-watcher` | 在 light / dark 间翻转                             |
+| `setMode('light' \| 'dark' \| 'system')` | `mode-watcher` | 显式设定模式                                       |
+| `mode.current`                           | `mode-watcher` | 当前**解析后**模式（`'light'` / `'dark'`，响应式） |
 
 ---
 
@@ -211,26 +219,26 @@ token 在 `src/app.css` 中分两步声明：
 ```css
 /* src/app.css */
 :root {
-  --radius: 0.625rem;
+	--radius: 0.625rem;
 }
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px); /* 6px  */
-  --radius-md: calc(var(--radius) - 2px); /* 8px  */
-  --radius-lg: var(--radius);             /* 10px */
-  --radius-xl: calc(var(--radius) + 4px); /* 14px */
+	--radius-sm: calc(var(--radius) - 4px); /* 6px  */
+	--radius-md: calc(var(--radius) - 2px); /* 8px  */
+	--radius-lg: var(--radius); /* 10px */
+	--radius-xl: calc(var(--radius) + 4px); /* 14px */
 }
 ```
 
 对应 Tailwind 类与典型用途：
 
-| 类 | 解析值 | 典型用途 |
-|---|---|---|
-| `rounded-sm` | 6px | 小标签、嵌套元素 |
-| `rounded-md` | 8px | 分段控件内的按钮、下拉项 |
-| `rounded-lg` | 10px | 卡片、按钮、对话框、输入框（默认主圆角） |
-| `rounded-xl` | 14px | 较大的容器/面板 |
-| `rounded-full` | — | 头像、圆点徽章（如用户头像 `size-8 rounded-full`） |
+| 类             | 解析值 | 典型用途                                           |
+| -------------- | ------ | -------------------------------------------------- |
+| `rounded-sm`   | 6px    | 小标签、嵌套元素                                   |
+| `rounded-md`   | 8px    | 分段控件内的按钮、下拉项                           |
+| `rounded-lg`   | 10px   | 卡片、按钮、对话框、输入框（默认主圆角）           |
+| `rounded-xl`   | 14px   | 较大的容器/面板                                    |
+| `rounded-full` | —      | 头像、圆点徽章（如用户头像 `size-8 rounded-full`） |
 
 调整 `--radius` 这一个值即可整体改变全站圆润度。
 
@@ -241,7 +249,7 @@ token 在 `src/app.css` 中分两步声明：
 ```svelte
 <!-- src/lib/components/shared/PageContainer.svelte -->
 <div class={cn('mx-auto w-full max-w-7xl p-4 sm:p-6 space-y-6', className)}>
-  {@render children()}
+	{@render children()}
 </div>
 ```
 
@@ -256,8 +264,8 @@ token 在 `src/app.css` 中分两步声明：
 
 ```svelte
 <PageContainer>
-  <PageHeader title="Users" description="Manage team members, their roles and access." />
-  <!-- 页面内容 -->
+	<PageHeader title="Users" description="Manage team members, their roles and access." />
+	<!-- 页面内容 -->
 </PageContainer>
 ```
 
@@ -274,8 +282,8 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap"
-  rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap"
+	rel="stylesheet"
 />
 ```
 
@@ -284,10 +292,10 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 ```css
 /* src/app.css */
 @theme inline {
-  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
-    monospace;
+	--font-sans:
+		'Geist', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
+		sans-serif;
+	--font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 ```
 
@@ -302,25 +310,25 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 ```svelte
 <!-- src/lib/components/shared/PageHeader.svelte -->
 <div class="space-y-1">
-  <h1 class="text-2xl font-semibold tracking-tight text-foreground">
-    {title}
-  </h1>
-  {#if description}
-    <p class="text-sm text-muted-foreground">{description}</p>
-  {/if}
+	<h1 class="text-2xl font-semibold tracking-tight text-foreground">
+		{title}
+	</h1>
+	{#if description}
+		<p class="text-sm text-muted-foreground">{description}</p>
+	{/if}
 </div>
 ```
 
 常用排版刻度：
 
-| 场景 | 类 | 说明 |
-|---|---|---|
-| 页面主标题 | `text-2xl font-semibold tracking-tight text-foreground` | 见 `PageHeader` |
-| 页面描述/副文案 | `text-sm text-muted-foreground` | 次要信息一律用 `text-muted-foreground` |
-| 正文/默认文字 | 继承 `body` 的 `text-foreground` | 见 `app.css` 的 `body { @apply bg-background text-foreground; }` |
-| 强调正文（如表格主字段） | `font-medium text-foreground` | 见 users 页姓名单元格 |
-| 小标签/字段说明 | `text-xs` / `text-xs font-medium` | 如徽章、预览标签 |
-| 表单内联校验错误 | `text-xs text-red-500` | 见 users 页 `fieldError` 提示 |
+| 场景                     | 类                                                      | 说明                                                             |
+| ------------------------ | ------------------------------------------------------- | ---------------------------------------------------------------- |
+| 页面主标题               | `text-2xl font-semibold tracking-tight text-foreground` | 见 `PageHeader`                                                  |
+| 页面描述/副文案          | `text-sm text-muted-foreground`                         | 次要信息一律用 `text-muted-foreground`                           |
+| 正文/默认文字            | 继承 `body` 的 `text-foreground`                        | 见 `app.css` 的 `body { @apply bg-background text-foreground; }` |
+| 强调正文（如表格主字段） | `font-medium text-foreground`                           | 见 users 页姓名单元格                                            |
+| 小标签/字段说明          | `text-xs` / `text-xs font-medium`                       | 如徽章、预览标签                                                 |
+| 表单内联校验错误         | `text-xs text-red-500`                                  | 见 users 页 `fieldError` 提示                                    |
 
 排版准则：
 
@@ -337,26 +345,25 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 ```css
 /* src/app.css */
 @theme inline {
-  --shadow-2xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.04);
-  --shadow-xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.05);
-  --shadow-sm: 0 1px 2px -1px oklch(0.21 0.03 269 / 0.08),
-    0 1px 3px 0 oklch(0.21 0.03 269 / 0.05);
-  --shadow-md: 0 2px 4px -2px oklch(0.21 0.03 269 / 0.07),
-    0 4px 8px -2px oklch(0.21 0.03 269 / 0.06);
-  --shadow-lg: 0 4px 8px -3px oklch(0.21 0.03 269 / 0.08),
-    0 12px 20px -4px oklch(0.21 0.03 269 / 0.07);
-  --shadow-xl: 0 8px 16px -4px oklch(0.21 0.03 269 / 0.09),
-    0 20px 32px -8px oklch(0.21 0.03 269 / 0.09);
+	--shadow-2xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.04);
+	--shadow-xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.05);
+	--shadow-sm: 0 1px 2px -1px oklch(0.21 0.03 269 / 0.08), 0 1px 3px 0 oklch(0.21 0.03 269 / 0.05);
+	--shadow-md:
+		0 2px 4px -2px oklch(0.21 0.03 269 / 0.07), 0 4px 8px -2px oklch(0.21 0.03 269 / 0.06);
+	--shadow-lg:
+		0 4px 8px -3px oklch(0.21 0.03 269 / 0.08), 0 12px 20px -4px oklch(0.21 0.03 269 / 0.07);
+	--shadow-xl:
+		0 8px 16px -4px oklch(0.21 0.03 269 / 0.09), 0 20px 32px -8px oklch(0.21 0.03 269 / 0.09);
 }
 ```
 
-| 类 | 层级 | 典型用途 |
-|---|---|---|
+| 类                         | 层级         | 典型用途                   |
+| -------------------------- | ------------ | -------------------------- |
 | `shadow-2xs` / `shadow-xs` | 极轻（单层） | 贴地元素、输入框、细微抬起 |
-| `shadow-sm` | 轻（双层） | 卡片、按钮的默认抬起 |
-| `shadow-md` | 中（双层） | 悬浮态、下拉触发器 |
-| `shadow-lg` | 高（双层） | 弹出层、菜单、对话框 |
-| `shadow-xl` | 最高（双层） | 模态、需要明显悬浮感的浮层 |
+| `shadow-sm`                | 轻（双层）   | 卡片、按钮的默认抬起       |
+| `shadow-md`                | 中（双层）   | 悬浮态、下拉触发器         |
+| `shadow-lg`                | 高（双层）   | 弹出层、菜单、对话框       |
+| `shadow-xl`                | 最高（双层） | 模态、需要明显悬浮感的浮层 |
 
 约定：
 
@@ -372,30 +379,30 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 
 色带取值（hue 固定，明暗仅调明度/彩度）：
 
-| token | 含义 | Light | Dark |
-|---|---|---|---|
+| token     | 含义                    | Light                    | Dark                   |
+| --------- | ----------------------- | ------------------------ | ---------------------- |
 | `chart-1` | 靛蓝 indigo（品牌锚点） | `oklch(0.545 0.205 269)` | `oklch(0.66 0.18 269)` |
-| `chart-2` | 天蓝 azure | `oklch(0.62 0.16 232)` | `oklch(0.7 0.15 232)` |
-| `chart-3` | 青 cyan | `oklch(0.7 0.13 195)` | `oklch(0.76 0.12 195)` |
-| `chart-4` | 紫罗兰 violet | `oklch(0.6 0.2 305)` | `oklch(0.68 0.18 305)` |
-| `chart-5` | 粉 pink | `oklch(0.64 0.21 350)` | `oklch(0.7 0.19 350)` |
+| `chart-2` | 天蓝 azure              | `oklch(0.62 0.16 232)`   | `oklch(0.7 0.15 232)`  |
+| `chart-3` | 青 cyan                 | `oklch(0.7 0.13 195)`    | `oklch(0.76 0.12 195)` |
+| `chart-4` | 紫罗兰 violet           | `oklch(0.6 0.2 305)`     | `oklch(0.68 0.18 305)` |
+| `chart-5` | 粉 pink                 | `oklch(0.64 0.21 350)`   | `oklch(0.7 0.19 350)`  |
 
 图表组件通过 CSS 变量 `var(--chart-N)` 引用，而非 Tailwind 类。真实用法见 `src/routes/(app)/charts/+page.svelte`：
 
 ```svelte
 <!-- charts/+page.svelte（节选） -->
 <script lang="ts">
-  const palette = [
-    'var(--chart-1)',
-    'var(--chart-2)',
-    'var(--chart-3)',
-    'var(--chart-4)',
-    'var(--chart-5)'
-  ];
+	const palette = [
+		'var(--chart-1)',
+		'var(--chart-2)',
+		'var(--chart-3)',
+		'var(--chart-4)',
+		'var(--chart-5)'
+	];
 
-  const revenueConfig = {
-    revenue: { label: 'Revenue', color: 'var(--chart-1)' }
-  };
+	const revenueConfig = {
+		revenue: { label: 'Revenue', color: 'var(--chart-1)' }
+	};
 </script>
 
 <!-- 给某条系列指定颜色 -->
@@ -421,31 +428,35 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 ```ts
 // src/routes/(app)/users/+page.svelte（节选）
 function statusClass(status: Status): string {
-  switch (status) {
-    case 'active':
-      return 'border-transparent bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-    case 'invited':
-      return 'border-transparent bg-amber-500/15 text-amber-600 dark:text-amber-400';
-    case 'suspended':
-      return 'border-transparent bg-red-500/15 text-red-600 dark:text-red-400';
-  }
+	switch (status) {
+		case 'active':
+			return 'border-transparent bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
+		case 'invited':
+			return 'border-transparent bg-amber-500/15 text-amber-600 dark:text-amber-400';
+		case 'suspended':
+			return 'border-transparent bg-red-500/15 text-red-600 dark:text-red-400';
+	}
 }
 ```
 
-| 状态 | 语义 | 背景 | 文字（light → dark） |
-|---|---|---|---|
-| success / active | 正常、成功 | `bg-emerald-500/15` | `text-emerald-600` → `dark:text-emerald-400` |
-| warning / invited | 待处理、警告 | `bg-amber-500/15` | `text-amber-600` → `dark:text-amber-400` |
-| danger / suspended | 错误、危险 | `bg-red-500/15` | `text-red-600` → `dark:text-red-400` |
+| 状态               | 语义         | 背景                | 文字（light → dark）                         |
+| ------------------ | ------------ | ------------------- | -------------------------------------------- |
+| success / active   | 正常、成功   | `bg-emerald-500/15` | `text-emerald-600` → `dark:text-emerald-400` |
+| warning / invited  | 待处理、警告 | `bg-amber-500/15`   | `text-amber-600` → `dark:text-amber-400`     |
+| danger / suspended | 错误、危险   | `bg-red-500/15`     | `text-red-600` → `dark:text-red-400`         |
 
 > 对照：同一页面里 **角色（role）徽章**走中性/主色 token 路线，证明两套体系各司其职：
+>
 > ```ts
 > function roleClass(role: Role): string {
->   switch (role) {
->     case 'admin':  return 'border-transparent bg-primary text-primary-foreground';
->     case 'editor': return 'border-transparent bg-secondary text-secondary-foreground';
->     case 'viewer': return 'text-foreground';
->   }
+> 	switch (role) {
+> 		case 'admin':
+> 			return 'border-transparent bg-primary text-primary-foreground';
+> 		case 'editor':
+> 			return 'border-transparent bg-secondary text-secondary-foreground';
+> 		case 'viewer':
+> 			return 'text-foreground';
+> 	}
 > }
 > ```
 
@@ -476,24 +487,31 @@ function statusClass(status: Status): string {
 ```css
 /* src/app.css（节选） */
 @layer base {
-  * {
-    /* Firefox */
-    scrollbar-width: thin;
-    scrollbar-color: color-mix(in srgb, var(--muted-foreground) 35%, transparent) transparent;
-  }
-  /* WebKit/Blink */
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background-color: transparent; }
-  ::-webkit-scrollbar-thumb {
-    background-color: color-mix(in srgb, var(--muted-foreground) 35%, transparent);
-    border: 2px solid transparent;       /* 透明内边距 → 视觉更纤细 */
-    border-radius: 9999px;
-    background-clip: content-box;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: color-mix(in srgb, var(--muted-foreground) 55%, transparent);
-  }
-  ::-webkit-scrollbar-corner { background-color: transparent; }
+	* {
+		/* Firefox */
+		scrollbar-width: thin;
+		scrollbar-color: color-mix(in srgb, var(--muted-foreground) 35%, transparent) transparent;
+	}
+	/* WebKit/Blink */
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+	::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+	::-webkit-scrollbar-thumb {
+		background-color: color-mix(in srgb, var(--muted-foreground) 35%, transparent);
+		border: 2px solid transparent; /* 透明内边距 → 视觉更纤细 */
+		border-radius: 9999px;
+		background-clip: content-box;
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background-color: color-mix(in srgb, var(--muted-foreground) 55%, transparent);
+	}
+	::-webkit-scrollbar-corner {
+		background-color: transparent;
+	}
 }
 ```
 
@@ -504,9 +522,9 @@ function statusClass(status: Status): string {
 ```css
 /* src/app.css */
 @layer base {
-  html {
-    scrollbar-gutter: stable;
-  }
+	html {
+		scrollbar-gutter: stable;
+	}
 }
 ```
 
@@ -523,12 +541,12 @@ function statusClass(status: Status): string {
 ```css
 /* src/app.css */
 :root {
-  --primary: oklch(0.545 0.205 269);          /* 改成你的品牌色 */
-  --primary-foreground: oklch(0.985 0.002 269);
+	--primary: oklch(0.545 0.205 269); /* 改成你的品牌色 */
+	--primary-foreground: oklch(0.985 0.002 269);
 }
 .dark {
-  --primary: oklch(0.62 0.19 269);            /* 暗色通常需提亮一档 */
-  --primary-foreground: oklch(0.99 0.003 269);
+	--primary: oklch(0.62 0.19 269); /* 暗色通常需提亮一档 */
+	--primary-foreground: oklch(0.99 0.003 269);
 }
 ```
 
@@ -540,10 +558,10 @@ function statusClass(status: Status): string {
 
 ```json
 {
-  "tailwind": {
-    "css": "src/app.css",
-    "baseColor": "slate"
-  }
+	"tailwind": {
+		"css": "src/app.css",
+		"baseColor": "slate"
+	}
 }
 ```
 
@@ -554,9 +572,11 @@ function statusClass(status: Status): string {
 ### 无障碍注意点（Accessibility）
 
 - **聚焦轮廓（focus ring）**：交互元素必须保留基于 `ring` token 的 `focus-visible` 轮廓，便于键盘用户定位。button 组件已内建（`focus-visible:border-ring focus-visible:ring-ring/50 ... focus-visible:ring-3`）；自定义交互元素请参照外观页分段控件的写法：
+
   ```svelte
   class="… focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-none …"
   ```
+
   不要用 `outline-none` 去掉聚焦反馈而不补回 ring。
 
 - **对比度**：始终成对使用 `X` + `X-foreground`（如 `bg-primary text-primary-foreground`），这些配对已按对比度设计。自定义新色时，请在 light 与 dark 两种主题下验证文字对比度达标（建议正文 ≥ 4.5:1）。状态色已为暗色单独提供更亮的 `dark:text-*-400` 变体即为此目的。

@@ -110,11 +110,7 @@
 
 				<div class="grid gap-2">
 					<Label for="language">Language</Label>
-					<Select.Root
-						type="single"
-						value={language}
-						onValueChange={onLanguageChange}
-					>
+					<Select.Root type="single" value={language} onValueChange={onLanguageChange}>
 						<Select.Trigger id="language" class="w-full">
 							{languageLabel}
 						</Select.Trigger>

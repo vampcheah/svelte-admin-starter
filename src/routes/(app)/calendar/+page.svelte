@@ -106,6 +106,9 @@
 
 	// Index events by their date key for O(1) lookups while building the grid.
 	const eventsByDay = $derived.by(() => {
+		// Transient local rebuilt on each derivation — reactivity comes from $derived,
+		// not the Map itself, so a plain Map is correct here (not SvelteMap).
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const map = new Map<string, CalendarEvent[]>();
 		for (const ev of events) {
 			const key = dateKey(ev.date);
@@ -132,11 +135,14 @@
 	const grid = $derived.by<DayCell[]>(() => {
 		const firstOfMonth = new Date(viewYear, viewMonth, 1);
 		// Sunday-based offset: how many leading days to borrow from the prev month.
+		// Transient locals inside $derived — plain Date is correct (not SvelteDate).
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const start = new Date(firstOfMonth);
 		start.setDate(start.getDate() - firstOfMonth.getDay());
 
 		const cells: DayCell[] = [];
 		for (let i = 0; i < 42; i++) {
+			// eslint-disable-next-line svelte/prefer-svelte-reactivity
 			const date = new Date(start);
 			date.setDate(start.getDate() + i);
 			const key = dateKey(date);
@@ -239,12 +245,7 @@
 					>
 						<ChevronLeft class="size-4" aria-hidden="true" />
 					</Button>
-					<Button
-						variant="outline"
-						size="sm"
-						onclick={goToday}
-						disabled={isViewingCurrentMonth}
-					>
+					<Button variant="outline" size="sm" onclick={goToday} disabled={isViewingCurrentMonth}>
 						Today
 					</Button>
 					<Button
@@ -272,7 +273,9 @@
 				</div>
 
 				<!-- Month grid: 6 weeks × 7 days -->
-				<div class="border-border bg-border grid grid-cols-7 gap-px overflow-hidden rounded-lg border">
+				<div
+					class="border-border bg-border grid grid-cols-7 gap-px overflow-hidden rounded-lg border"
+				>
 					{#each grid as cell (cell.key)}
 						{@const overflow = cell.dayEvents.length - MAX_CHIPS}
 						<div
@@ -328,9 +331,7 @@
 				<div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
 					{#each CATEGORY_ORDER as category (category)}
 						<div class="flex items-center gap-1.5">
-							<span
-								class={cn('size-2.5 rounded-full', CATEGORIES[category].dot)}
-								aria-hidden="true"
+							<span class={cn('size-2.5 rounded-full', CATEGORIES[category].dot)} aria-hidden="true"
 							></span>
 							<span class="text-muted-foreground text-xs">{CATEGORIES[category].label}</span>
 						</div>
@@ -392,7 +393,11 @@
 						{/each}
 					</ul>
 
-					<Button variant="ghost" size="sm" class="text-muted-foreground mt-3 w-full justify-center">
+					<Button
+						variant="ghost"
+						size="sm"
+						class="text-muted-foreground mt-3 w-full justify-center"
+					>
 						View all events
 						<ArrowRight class="size-4" aria-hidden="true" />
 					</Button>

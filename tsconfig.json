@@ -9,7 +9,10 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"moduleResolution": "bundler"
+		"moduleResolution": "bundler",
+		// Vite resolves side-effect CSS imports (e.g. @fontsource-variable/*) that ship
+		// no type declarations; TS 6 turns this check on by default, so opt back out.
+		"noUncheckedSideEffectImports": false
 	}
 	// Path aliases ($lib) are handled by SvelteKit; see svelte.config.js.
 	// To add aliases, extend the generated .svelte-kit/tsconfig.json via kit.alias.

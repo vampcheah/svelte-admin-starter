@@ -121,9 +121,7 @@
 						<span class="bg-primary text-primary-foreground rounded-md px-3 py-1.5 text-xs">
 							Primary
 						</span>
-						<span
-							class="border-border text-foreground rounded-md border px-3 py-1.5 text-xs"
-						>
+						<span class="border-border text-foreground rounded-md border px-3 py-1.5 text-xs">
 							Outline
 						</span>
 						<span class="bg-muted text-muted-foreground rounded-md px-3 py-1.5 text-xs">
@@ -175,9 +173,7 @@
 		<div class="flex items-center justify-between gap-4">
 			<div class="space-y-0.5">
 				<Label>Compact mode</Label>
-				<p class="text-muted-foreground text-sm">
-					Reduce padding to fit more content on screen.
-				</p>
+				<p class="text-muted-foreground text-sm">Reduce padding to fit more content on screen.</p>
 			</div>
 			<Switch checked={compact.current} onCheckedChange={onDensityChange} />
 		</div>

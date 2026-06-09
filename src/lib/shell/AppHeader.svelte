@@ -6,6 +6,7 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { Button } from '$lib/components/ui/button';
 	import { ThemeToggle, LanguageToggle, CommandMenu } from '$lib/components/shared';
+	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
 	import { initials } from '$lib/utils/formatters';
 	import { t } from '$lib/i18n';
@@ -58,7 +59,10 @@
 		<LanguageToggle />
 		<ThemeToggle />
 
-		<Separator orientation="vertical" class="mx-1 hidden data-[orientation=vertical]:h-4 sm:block" />
+		<Separator
+			orientation="vertical"
+			class="mx-1 hidden data-[orientation=vertical]:h-4 sm:block"
+		/>
 
 		<!-- User menu -->
 		<DropdownMenu.Root>
@@ -92,7 +96,7 @@
 				<DropdownMenu.Separator />
 				<DropdownMenu.Item>
 					{#snippet child({ props })}
-						<a href="/profile" {...props}>
+						<a href={resolve('/profile')} {...props}>
 							<UserIcon />
 							{t('common.profile')}
 						</a>
@@ -100,7 +104,7 @@
 				</DropdownMenu.Item>
 				<DropdownMenu.Item>
 					{#snippet child({ props })}
-						<a href="/settings" {...props}>
+						<a href={resolve('/settings')} {...props}>
 							<SettingsIcon />
 							{t('common.settings')}
 						</a>

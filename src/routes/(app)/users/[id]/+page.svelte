@@ -24,6 +24,7 @@
 	import type { Component } from 'svelte';
 
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 
 	import { PageContainer, StatCard, StatusBadge, EmptyState } from '$lib/components/shared';
 	import type { BadgeTone } from '$lib/components/shared';
@@ -64,7 +65,9 @@
 		return status === 'active' ? 'success' : status === 'invited' ? 'warning' : 'danger';
 	}
 
-	const pageTitle = $derived(user ? `${user.name} · Admin Starter` : 'User not found · Admin Starter');
+	const pageTitle = $derived(
+		user ? `${user.name} · Admin Starter` : 'User not found · Admin Starter'
+	);
 
 	// --- Invented (mock) profile metadata, derived from the user record ------
 	// Stable, deterministic picks so each profile renders consistently.
@@ -107,8 +110,18 @@
 
 	const activity: ActivityEntry[] = [
 		{ icon: LogIn, text: 'Signed in from a new device', time: '2 hours ago', tone: 'brand' },
-		{ icon: CircleCheck, text: 'Completed task “Refine onboarding flow”', time: '6 hours ago', tone: 'success' },
-		{ icon: MessageCircle, text: 'Commented on “Q3 roadmap review”', time: 'Yesterday', tone: 'muted' },
+		{
+			icon: CircleCheck,
+			text: 'Completed task “Refine onboarding flow”',
+			time: '6 hours ago',
+			tone: 'success'
+		},
+		{
+			icon: MessageCircle,
+			text: 'Commented on “Q3 roadmap review”',
+			time: 'Yesterday',
+			tone: 'muted'
+		},
 		{ icon: Upload, text: 'Uploaded 3 files to “Brand assets”', time: '2 days ago', tone: 'muted' },
 		{ icon: Folder, text: 'Created project “Mobile redesign”', time: '5 days ago', tone: 'brand' },
 		{ icon: Settings, text: 'Updated notification preferences', time: 'Last week', tone: 'muted' }
@@ -134,9 +147,27 @@
 	let twoFactor = $state(true);
 
 	const sessions = $state<Session[]>([
-		{ icon: Monitor, device: 'MacBook Pro · Chrome', location: 'San Francisco, US', time: 'Active now', current: true },
-		{ icon: Smartphone, device: 'iPhone 15 · Safari', location: 'San Francisco, US', time: '3 hours ago', current: false },
-		{ icon: Monitor, device: 'Windows · Edge', location: 'London, UK', time: '4 days ago', current: false }
+		{
+			icon: Monitor,
+			device: 'MacBook Pro · Chrome',
+			location: 'San Francisco, US',
+			time: 'Active now',
+			current: true
+		},
+		{
+			icon: Smartphone,
+			device: 'iPhone 15 · Safari',
+			location: 'San Francisco, US',
+			time: '3 hours ago',
+			current: false
+		},
+		{
+			icon: Monitor,
+			device: 'Windows · Edge',
+			location: 'London, UK',
+			time: '4 days ago',
+			current: false
+		}
 	]);
 
 	function notImplemented(label: string) {
@@ -151,7 +182,9 @@
 
 	function onTwoFactorChange(checked: boolean) {
 		twoFactor = checked;
-		toast.success(checked ? 'Two-factor authentication enabled' : 'Two-factor authentication disabled');
+		toast.success(
+			checked ? 'Two-factor authentication enabled' : 'Two-factor authentication disabled'
+		);
 	}
 </script>
 
@@ -179,7 +212,7 @@
 	{:else}
 		<!-- Breadcrumb / back link -->
 		<a
-			href="/users"
+			href={resolve('/users')}
 			class="text-muted-foreground hover:text-foreground -mb-2 inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors"
 		>
 			<ArrowLeft class="size-4" aria-hidden="true" />
@@ -246,7 +279,12 @@
 						trend="up"
 						hint="this quarter"
 					/>
-					<StatCard title="Comments" value={profile.comments} icon={MessageCircle} hint="all time" />
+					<StatCard
+						title="Comments"
+						value={profile.comments}
+						icon={MessageCircle}
+						hint="all time"
+					/>
 				</div>
 
 				<Card.Root>
@@ -269,7 +307,9 @@
 							<div class="flex items-center justify-between gap-4 py-3">
 								<dt class="text-muted-foreground text-sm">Status</dt>
 								<dd>
-									<StatusBadge tone={statusTone(user.status)}>{STATUS_LABELS[user.status]}</StatusBadge>
+									<StatusBadge tone={statusTone(user.status)}
+										>{STATUS_LABELS[user.status]}</StatusBadge
+									>
 								</dd>
 							</div>
 							<div class="flex items-center justify-between gap-4 py-3">
@@ -307,9 +347,7 @@
 					<Card.Content>
 						<ol class="relative space-y-6">
 							<!-- connecting rail -->
-							<span
-								class="bg-border absolute top-2 bottom-2 left-[15px] w-px"
-								aria-hidden="true"
+							<span class="bg-border absolute top-2 bottom-2 left-[15px] w-px" aria-hidden="true"
 							></span>
 							{#each activity as item, i (i)}
 								<li class="relative flex gap-4">
@@ -349,9 +387,7 @@
 									<ShieldCheck class="text-muted-foreground size-4" aria-hidden="true" />
 									<p class="text-sm font-medium">Two-factor authentication</p>
 								</div>
-								<p class="text-muted-foreground text-sm">
-									Require a verification code at sign-in.
-								</p>
+								<p class="text-muted-foreground text-sm">Require a verification code at sign-in.</p>
 							</div>
 							<Switch checked={twoFactor} onCheckedChange={onTwoFactorChange} />
 						</div>
@@ -366,7 +402,11 @@
 									Last changed {formatDate('2024-09-14')}.
 								</p>
 							</div>
-							<Button variant="outline" size="sm" onclick={() => notImplemented('Resetting passwords')}>
+							<Button
+								variant="outline"
+								size="sm"
+								onclick={() => notImplemented('Resetting passwords')}
+							>
 								Reset password
 							</Button>
 						</div>

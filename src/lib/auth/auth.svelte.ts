@@ -1,49 +1,18 @@
-// Mock authentication singleton. No backend — sessions live in localStorage.
-// Any email plus an 8+ character password is accepted. A `User` is derived
-// from the email and persisted under 'admin-starter:session'.
+// Reactive auth store. Holds the current user + loading state, restores a cached
+// session synchronously for instant UI (and so the route guard works on first
+// paint), and delegates the actual authentication to `authProvider`.
+//
+// The swap point for a real backend is provider.ts — not this file. This store's
+// public API (`auth.user`, `auth.login`, …) stays stable, so pages never change.
 
 import { browser } from '$app/environment';
 import { goto } from '$app/navigation';
+import { resolve } from '$app/paths';
 import type { User } from './types';
+import { authProvider } from './provider';
+import { config } from '$lib/config';
 
-const SESSION_KEY = 'admin-starter:session';
-const MIN_PASSWORD_LENGTH = 8;
-
-/** Derive a display name from the local-part of an email address. */
-function nameFromEmail(email: string): string {
-	const local = email.split('@')[0] ?? 'User';
-	return local
-		.split(/[._-]+/)
-		.filter(Boolean)
-		.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-		.join(' ') || 'User';
-}
-
-/** Stable-ish id derived from the email so repeat logins look consistent. */
-function idFromEmail(email: string): string {
-	let hash = 0;
-	for (let i = 0; i < email.length; i++) {
-		hash = (hash << 5) - hash + email.charCodeAt(i);
-		hash |= 0;
-	}
-	return `u_${Math.abs(hash).toString(36)}`;
-}
-
-function buildUser(email: string, name?: string): User {
-	const normalized = email.trim().toLowerCase();
-	return {
-		id: idFromEmail(normalized),
-		name: name?.trim() || nameFromEmail(normalized),
-		email: normalized,
-		// First demo admin keeps the admin role; everyone else is an editor.
-		role: normalized === 'admin@example.com' ? 'admin' : 'editor'
-	};
-}
-
-/** Simulate network latency for a more realistic mock UX. */
-function delay(ms: number): Promise<void> {
-	return new Promise((resolve) => setTimeout(resolve, ms));
-}
+const SESSION_KEY = config.auth.sessionKey;
 
 class AuthStore {
 	#user = $state<User | null>(null);
@@ -62,7 +31,7 @@ class AuthStore {
 		return this.#loading;
 	}
 
-	/** Restore a persisted session from localStorage. Safe to call repeatedly. */
+	/** Restore a cached session from localStorage. Safe to call repeatedly. */
 	init(): void {
 		if (this.#initialized || !browser) return;
 		this.#initialized = true;
@@ -74,6 +43,7 @@ class AuthStore {
 		}
 	}
 
+	/** Cache the session so `init()` can restore it instantly on the next load. */
 	#persist(user: User): void {
 		this.#user = user;
 		if (browser) {
@@ -85,16 +55,23 @@ class AuthStore {
 		}
 	}
 
+	#clear(): void {
+		this.#user = null;
+		if (browser) {
+			try {
+				localStorage.removeItem(SESSION_KEY);
+			} catch {
+				// Ignore storage errors.
+			}
+		}
+	}
+
 	async login(email: string, password: string): Promise<{ ok: boolean; error?: string }> {
 		this.#loading = true;
 		try {
-			await delay(400);
-			if (!email.trim()) return { ok: false, error: 'Email is required.' };
-			if (password.length < MIN_PASSWORD_LENGTH) {
-				return { ok: false, error: 'Password must be at least 8 characters.' };
-			}
-			this.#persist(buildUser(email));
-			return { ok: true };
+			const result = await authProvider.login(email, password);
+			if (result.ok && result.user) this.#persist(result.user);
+			return { ok: result.ok, error: result.error };
 		} finally {
 			this.#loading = false;
 		}
@@ -107,30 +84,22 @@ class AuthStore {
 	): Promise<{ ok: boolean; error?: string }> {
 		this.#loading = true;
 		try {
-			await delay(400);
-			if (!name.trim()) return { ok: false, error: 'Name is required.' };
-			if (!email.trim()) return { ok: false, error: 'Email is required.' };
-			if (password.length < MIN_PASSWORD_LENGTH) {
-				return { ok: false, error: 'Password must be at least 8 characters.' };
-			}
-			this.#persist(buildUser(email, name));
-			return { ok: true };
+			const result = await authProvider.register(name, email, password);
+			if (result.ok && result.user) this.#persist(result.user);
+			return { ok: result.ok, error: result.error };
 		} finally {
 			this.#loading = false;
 		}
 	}
 
-	/** Clear the session and return to the login screen. */
-	logout(): void {
-		this.#user = null;
-		if (browser) {
-			try {
-				localStorage.removeItem(SESSION_KEY);
-			} catch {
-				// Ignore storage errors.
-			}
+	/** Sign out (revoke via the provider), clear the cached session, return to login. */
+	async logout(): Promise<void> {
+		try {
+			await authProvider.logout();
+		} finally {
+			this.#clear();
+			void goto(resolve(config.auth.afterLogout));
 		}
-		void goto('/login');
 	}
 }
 

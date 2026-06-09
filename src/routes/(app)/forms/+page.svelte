@@ -23,12 +23,7 @@
 	import { cn } from '$lib/utils';
 	import { toast } from 'svelte-sonner';
 	import { z } from 'zod';
-	import {
-		DateFormatter,
-		getLocalTimeZone,
-		today,
-		type DateValue
-	} from '@internationalized/date';
+	import { DateFormatter, getLocalTimeZone, today, type DateValue } from '@internationalized/date';
 	import CalendarIcon from '@lucide/svelte/icons/calendar';
 	import MailIcon from '@lucide/svelte/icons/mail';
 	import RocketIcon from '@lucide/svelte/icons/rocket';
@@ -217,9 +212,7 @@
 										aria-invalid={fieldError(errors, 'dueDate') ? 'true' : undefined}
 									>
 										<CalendarIcon class="size-4" />
-										{dueValue
-											? df.format(dueValue.toDate(getLocalTimeZone()))
-											: 'Pick a date'}
+										{dueValue ? df.format(dueValue.toDate(getLocalTimeZone())) : 'Pick a date'}
 									</Button>
 								{/snippet}
 							</Popover.Trigger>
@@ -288,19 +281,14 @@
 				</div>
 
 				<!-- Notifications (switch) -->
-				<div
-					class="flex items-center justify-between rounded-md border border-border p-4"
-				>
+				<div class="flex items-center justify-between rounded-md border border-border p-4">
 					<div class="space-y-0.5">
 						<Label>Notify on completion</Label>
 						<p class="text-muted-foreground text-xs">
 							Send a notification when this project is marked done.
 						</p>
 					</div>
-					<Switch
-						checked={notifyOnComplete}
-						onCheckedChange={(v) => (notifyOnComplete = v)}
-					/>
+					<Switch checked={notifyOnComplete} onCheckedChange={(v) => (notifyOnComplete = v)} />
 				</div>
 			</Card.Content>
 			<Card.Footer class="justify-end gap-2 border-t">

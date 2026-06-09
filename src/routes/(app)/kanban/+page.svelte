@@ -384,7 +384,9 @@
 								<div class="flex items-center justify-between gap-2 pt-0.5">
 									<div class="flex items-center gap-2 min-w-0">
 										<Avatar.Root class="size-6">
-											<Avatar.Fallback class="text-[10px]">{initials(task.assignee)}</Avatar.Fallback>
+											<Avatar.Fallback class="text-[10px]"
+												>{initials(task.assignee)}</Avatar.Fallback
+											>
 										</Avatar.Root>
 										<span class="truncate text-xs text-muted-foreground">{task.assignee}</span>
 									</div>

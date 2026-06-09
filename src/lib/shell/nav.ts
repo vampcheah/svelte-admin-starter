@@ -1,5 +1,6 @@
 // Navigation model for the admin shell: grouped sidebar routes + lookup helper.
 import type { Component } from 'svelte';
+import type { Pathname } from '$app/types';
 import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
 import Users from '@lucide/svelte/icons/users';
 import Table from '@lucide/svelte/icons/table';
@@ -18,7 +19,7 @@ import CreditCard from '@lucide/svelte/icons/credit-card';
 
 export interface NavItem {
 	title: string;
-	href: string;
+	href: Pathname;
 	icon: Component;
 	badge?: string | number;
 }
@@ -83,14 +84,11 @@ export const navGroups: NavGroup[] = [
  * Find the nav item whose `href` is the longest prefix of `pathname`.
  * Returns the owning group alongside the matched item, or `undefined`.
  */
-export function findNavItem(
-	pathname: string
-): { group: NavGroup; item: NavItem } | undefined {
+export function findNavItem(pathname: string): { group: NavGroup; item: NavItem } | undefined {
 	let best: { group: NavGroup; item: NavItem } | undefined;
 	for (const group of navGroups) {
 		for (const item of group.items) {
-			const isMatch =
-				pathname === item.href || pathname.startsWith(item.href + '/');
+			const isMatch = pathname === item.href || pathname.startsWith(item.href + '/');
 			if (!isMatch) continue;
 			if (!best || item.href.length > best.item.href.length) {
 				best = { group, item };

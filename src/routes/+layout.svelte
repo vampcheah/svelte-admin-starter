@@ -5,11 +5,15 @@
 -->
 <script lang="ts">
 	import '../app.css';
+	// Self-hosted fonts (no external CDN) — pairs with --font-sans/--font-mono in app.css.
+	import '@fontsource-variable/geist';
+	import '@fontsource-variable/geist-mono';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
 	import { Toaster } from '$lib/components/ui/sonner';
 	import { auth } from '$lib/auth';
 	import { initLocale } from '$lib/i18n';
+	import { config } from '$lib/config';
 
 	let { children } = $props();
 
@@ -19,7 +23,7 @@
 	});
 </script>
 
-<ModeWatcher />
+<ModeWatcher defaultMode={config.theme.defaultMode} />
 <Toaster richColors position="top-right" />
 
 {@render children()}

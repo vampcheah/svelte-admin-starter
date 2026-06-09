@@ -21,16 +21,16 @@ Frontend only — no backend. Auth and data are mocked so you can clone it and s
 
 ## 🧱 Tech stack
 
-| Area | Choice |
-| --- | --- |
-| Framework | SvelteKit 2 · Svelte 5 (runes) |
-| Styling | Tailwind CSS v4 · `tw-animate-css` |
-| Components | shadcn-svelte · bits-ui |
-| Icons | `@lucide/svelte` |
-| Theme | `mode-watcher` |
-| Toasts | `svelte-sonner` |
-| Charts | `layerchart` |
-| Validation | `zod` |
+| Area       | Choice                             |
+| ---------- | ---------------------------------- |
+| Framework  | SvelteKit 2 · Svelte 5 (runes)     |
+| Styling    | Tailwind CSS v4 · `tw-animate-css` |
+| Components | shadcn-svelte · bits-ui            |
+| Icons      | `@lucide/svelte`                   |
+| Theme      | `mode-watcher`                     |
+| Toasts     | `svelte-sonner`                    |
+| Charts     | `layerchart`                       |
+| Validation | `zod`                              |
 
 ## 🚀 Quick start
 
@@ -87,7 +87,8 @@ src/
 - **Add a nav item:** edit `src/lib/shell/nav.ts`.
 - **Add a page:** create `src/routes/(app)/<name>/+page.svelte`.
 - **Add a UI component:** `npx shadcn-svelte@latest add <name>`.
-- **Wire a real backend:** replace the mock logic in `src/lib/auth/auth.svelte.ts` and add a server-side guard.
+- **Configure the backend URL:** set `config.api.baseUrl` in `src/lib/config/index.ts` (empty = mock mode).
+- **Wire a real backend:** implement the seams in `src/lib/auth/provider.ts` (auth) and `src/lib/server/db.ts` (data), then add a server-side guard.
 
 ## 📖 Documentation (中文指引)
 

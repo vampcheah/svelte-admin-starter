@@ -34,13 +34,7 @@
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>
 		{#snippet child({ props })}
-			<Button
-				{...props}
-				variant="ghost"
-				size="icon"
-				class="relative"
-				aria-label="Notifications"
-			>
+			<Button {...props} variant="ghost" size="icon" class="relative" aria-label="Notifications">
 				<Bell />
 				{#if unread > 0}
 					<Badge
@@ -68,9 +62,7 @@
 		</div>
 		<DropdownMenu.Separator class="my-0" />
 		{#if items.length === 0}
-			<div class="text-muted-foreground px-3 py-8 text-center text-sm">
-				You're all caught up
-			</div>
+			<div class="text-muted-foreground px-3 py-8 text-center text-sm">You're all caught up</div>
 		{:else}
 			<div class="max-h-80 overflow-y-auto">
 				{#each items as n (n.id)}

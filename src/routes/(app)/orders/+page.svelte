@@ -28,7 +28,6 @@
 		type Column,
 		type BadgeTone
 	} from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
 	import * as Sheet from '$lib/components/ui/sheet';
 	import { Button } from '$lib/components/ui/button';
 	import { Separator } from '$lib/components/ui/separator';
@@ -265,9 +264,7 @@
 	const TIMELINE_ORDER: Status[] = ['pending', 'processing', 'shipped', 'delivered'];
 
 	// How far the selected order has progressed along the timeline.
-	const reachedIndex = $derived(
-		selectedOrder ? TIMELINE_ORDER.indexOf(selectedOrder.status) : -1
-	);
+	const reachedIndex = $derived(selectedOrder ? TIMELINE_ORDER.indexOf(selectedOrder.status) : -1);
 
 	function exportOrders() {
 		toast.success(`Exported ${orders.length} orders to CSV`);

@@ -25,7 +25,8 @@
 
 	// Derive the effective trend: explicit `trend` wins, otherwise infer from `change`.
 	const effectiveTrend = $derived<'up' | 'down' | 'neutral'>(
-		trend ?? (change === undefined ? 'neutral' : change > 0 ? 'up' : change < 0 ? 'down' : 'neutral')
+		trend ??
+			(change === undefined ? 'neutral' : change > 0 ? 'up' : change < 0 ? 'down' : 'neutral')
 	);
 
 	const showTrend = $derived(change !== undefined || trend !== undefined);
@@ -43,9 +44,7 @@
 				: 'bg-muted text-muted-foreground'
 	);
 
-	const changeLabel = $derived(
-		change === undefined ? '' : `${change > 0 ? '+' : ''}${change}%`
-	);
+	const changeLabel = $derived(change === undefined ? '' : `${change > 0 ? '+' : ''}${change}%`);
 </script>
 
 <Card.Root class={cn('overflow-hidden transition-shadow hover:shadow-md', className)}>

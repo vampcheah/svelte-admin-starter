@@ -4,6 +4,7 @@
 -->
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { toast } from 'svelte-sonner';
 	import Eye from '@lucide/svelte/icons/eye';
 	import EyeOff from '@lucide/svelte/icons/eye-off';
@@ -50,7 +51,7 @@
 
 		if (result.ok) {
 			toast.success('Account created. Welcome aboard!');
-			goto('/dashboard');
+			goto(resolve('/dashboard'));
 		} else {
 			formError = result.error ?? 'Unable to create account. Please try again.';
 			toast.error(formError);
@@ -163,7 +164,10 @@
 	<Card.Footer class="justify-center">
 		<p class="text-sm text-muted-foreground">
 			Already have an account?
-			<a href="/login" class="font-medium text-foreground underline-offset-4 hover:underline">
+			<a
+				href={resolve('/login')}
+				class="font-medium text-foreground underline-offset-4 hover:underline"
+			>
 				Sign in
 			</a>
 		</p>
