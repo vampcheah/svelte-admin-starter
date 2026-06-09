@@ -8,6 +8,13 @@ import ComponentIcon from '@lucide/svelte/icons/component';
 import ChartLine from '@lucide/svelte/icons/chart-line';
 import User from '@lucide/svelte/icons/user';
 import Settings from '@lucide/svelte/icons/settings';
+import CalendarDays from '@lucide/svelte/icons/calendar-days';
+import Inbox from '@lucide/svelte/icons/inbox';
+import SquareKanban from '@lucide/svelte/icons/square-kanban';
+import ShoppingBag from '@lucide/svelte/icons/shopping-bag';
+import ShoppingCart from '@lucide/svelte/icons/shopping-cart';
+import Tag from '@lucide/svelte/icons/tag';
+import CreditCard from '@lucide/svelte/icons/credit-card';
 
 export interface NavItem {
 	title: string;
@@ -35,10 +42,32 @@ export const navGroups: NavGroup[] = [
 		]
 	},
 	{
+		label: 'Apps',
+		items: [
+			{ title: 'Calendar', href: '/calendar', icon: CalendarDays },
+			{ title: 'Inbox', href: '/inbox', icon: Inbox },
+			{ title: 'Board', href: '/kanban', icon: SquareKanban }
+		]
+	},
+	{
+		label: 'Commerce',
+		items: [
+			{ title: 'Sales Orders', href: '/orders', icon: ShoppingBag },
+			{ title: 'Cart', href: '/cart', icon: ShoppingCart }
+		]
+	},
+	{
 		label: 'Showcase',
 		items: [
 			{ title: 'Components', href: '/components', icon: ComponentIcon },
 			{ title: 'Charts', href: '/charts', icon: ChartLine }
+		]
+	},
+	{
+		label: 'Billing',
+		items: [
+			{ title: 'Pricing', href: '/pricing', icon: Tag },
+			{ title: 'Billing', href: '/billing', icon: CreditCard }
 		]
 	},
 	{

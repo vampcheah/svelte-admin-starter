@@ -1,7 +1,9 @@
 {
 	"name": "svelte-admin-starter",
-	"private": true,
+	"description": "Production-grade SvelteKit + Svelte 5 + Tailwind v4 + shadcn-svelte admin dashboard starter — frontend-only, mock data, clone-and-go.",
 	"version": "0.1.0",
+	"private": true,
+	"license": "MIT",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",

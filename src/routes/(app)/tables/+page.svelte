@@ -9,26 +9,24 @@
 	import Table from '@lucide/svelte/icons/table';
 	import Info from '@lucide/svelte/icons/info';
 
-	import { PageContainer, PageHeader, DataTable, type Column } from '$lib/components/shared';
-	import { Badge } from '$lib/components/ui/badge';
+	import {
+		PageContainer,
+		PageHeader,
+		DataTable,
+		StatusBadge,
+		type Column,
+		type BadgeTone
+	} from '$lib/components/shared';
 	import * as Card from '$lib/components/ui/card';
 
 	import { demoProducts, type DemoProduct } from '$lib/data/products';
 	import { formatCurrency, formatNumber } from '$lib/utils/formatters';
-	import { cn } from '$lib/utils';
 
 	type Status = DemoProduct['status'];
 
-	// Status badge mapping — emerald / amber / red, dark-mode friendly.
-	function statusClass(status: Status): string {
-		switch (status) {
-			case 'in_stock':
-				return 'border-transparent bg-emerald-500/15 text-emerald-600 dark:text-emerald-400';
-			case 'low':
-				return 'border-transparent bg-amber-500/15 text-amber-600 dark:text-amber-400';
-			case 'out':
-				return 'border-transparent bg-red-500/15 text-red-600 dark:text-red-400';
-		}
+	// Map product stock status to a shared StatusBadge tone (see StatusBadge).
+	function statusTone(status: Status): BadgeTone {
+		return status === 'in_stock' ? 'success' : status === 'low' ? 'warning' : 'danger';
 	}
 	function statusLabel(status: Status): string {
 		switch (status) {
@@ -124,9 +122,7 @@
 			{:else if column.key === 'stock'}
 				<span class="tabular-nums">{formatNumber(row.stock)}</span>
 			{:else if column.key === 'status'}
-				<Badge variant="outline" class={cn(statusClass(row.status))}>
-					{statusLabel(row.status)}
-				</Badge>
+				<StatusBadge tone={statusTone(row.status)}>{statusLabel(row.status)}</StatusBadge>
 			{/if}
 		{/snippet}
 	</DataTable>

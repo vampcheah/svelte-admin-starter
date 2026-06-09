@@ -16,7 +16,7 @@
 	import Download from '@lucide/svelte/icons/download';
 	import type { Component } from 'svelte';
 
-	import { PageContainer, PageHeader, StatCard } from '$lib/components/shared';
+	import { PageContainer, StatCard } from '$lib/components/shared';
 	import * as Card from '$lib/components/ui/card';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { Button } from '$lib/components/ui/button';
@@ -24,7 +24,7 @@
 	import { auth } from '$lib/auth';
 	import { t } from '$lib/i18n';
 	import { stats, revenueSeries, recentActivity, trafficByChannel } from '$lib/data/dashboard';
-	import { formatNumber, initials } from '$lib/utils/formatters';
+	import { formatDate, formatNumber, initials } from '$lib/utils/formatters';
 	import { exportToCsv } from '$lib/utils/csv';
 
 	// Map each stat to a Lucide icon (data stays icon-free per the contract).
@@ -32,6 +32,9 @@
 
 	// First name for the greeting, falling back gracefully.
 	const firstName = $derived(auth.user?.name?.split(' ')[0] ?? 'there');
+
+	// Today's date for the hero banner (e.g. "Monday, June 9").
+	const today = formatDate(new Date(), { weekday: 'long', month: 'long', day: 'numeric' });
 
 	// Format a "2024-07" month key into a short label like "Jul".
 	function monthLabel(key: string): string {
@@ -84,17 +87,30 @@
 </svelte:head>
 
 <PageContainer>
-	<PageHeader
-		title={t('dashboard.greeting', { name: firstName })}
-		description="Here is what is happening across your workspace today."
+	<!-- Hero greeting -->
+	<div
+		class="from-primary/10 via-primary/5 to-card relative overflow-hidden rounded-xl border bg-gradient-to-br p-6 sm:p-8"
 	>
-		{#snippet actions()}
-			<Button onclick={downloadReport}>
+		<div
+			class="bg-primary/10 pointer-events-none absolute -top-16 -right-12 size-56 rounded-full blur-3xl"
+			aria-hidden="true"
+		></div>
+		<div class="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+			<div class="space-y-1.5">
+				<p class="text-muted-foreground text-sm font-medium">{today}</p>
+				<h1 class="text-2xl font-semibold tracking-tight">
+					{t('dashboard.greeting', { name: firstName })}
+				</h1>
+				<p class="text-muted-foreground">
+					Here is what is happening across your workspace today.
+				</p>
+			</div>
+			<Button onclick={downloadReport} class="shrink-0">
 				<Download class="size-4" aria-hidden="true" />
 				Download
 			</Button>
-		{/snippet}
-	</PageHeader>
+		</div>
+	</div>
 
 	<!-- KPI stat cards -->
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

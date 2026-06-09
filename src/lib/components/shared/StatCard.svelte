@@ -34,12 +34,13 @@
 		effectiveTrend === 'up' ? ArrowUp : effectiveTrend === 'down' ? ArrowDown : Minus
 	);
 
-	const trendColor = $derived(
+	// Tinted "pill" backgrounds so the trend reads as a small badge, not loose text.
+	const trendClass = $derived(
 		effectiveTrend === 'up'
-			? 'text-emerald-500'
+			? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
 			: effectiveTrend === 'down'
-				? 'text-red-500'
-				: 'text-muted-foreground'
+				? 'bg-red-500/10 text-red-600 dark:text-red-400'
+				: 'bg-muted text-muted-foreground'
 	);
 
 	const changeLabel = $derived(
@@ -47,24 +48,29 @@
 	);
 </script>
 
-<Card.Root class={cn('overflow-hidden', className)}>
+<Card.Root class={cn('overflow-hidden transition-shadow hover:shadow-md', className)}>
 	<Card.Header class="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
 		<Card.Description class="text-sm font-medium text-muted-foreground">
 			{title}
 		</Card.Description>
 		{#if Icon}
 			<div
-				class="flex size-8 shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground"
+				class="bg-primary/10 text-primary flex size-9 shrink-0 items-center justify-center rounded-lg"
 			>
-				<Icon class="size-4" aria-hidden="true" />
+				<Icon class="size-5" aria-hidden="true" />
 			</div>
 		{/if}
 	</Card.Header>
 	<Card.Content class="space-y-1">
-		<div class="text-2xl font-semibold tracking-tight text-foreground">{value}</div>
+		<div class="text-2xl font-semibold tracking-tight text-foreground tabular-nums">{value}</div>
 		<div class="flex items-center gap-1.5 text-xs">
 			{#if showTrend}
-				<span class={cn('inline-flex items-center gap-0.5 font-medium', trendColor)}>
+				<span
+					class={cn(
+						'inline-flex items-center gap-0.5 rounded-md px-1.5 py-0.5 font-medium tabular-nums',
+						trendClass
+					)}
+				>
 					<TrendIcon class="size-3.5" aria-hidden="true" />
 					{#if changeLabel}{changeLabel}{/if}
 				</span>

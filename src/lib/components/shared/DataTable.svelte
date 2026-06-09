@@ -215,13 +215,19 @@
 							</Table.Head>
 						{/if}
 						{#each columns as column (column.key)}
-							<Table.Head class={cn(alignClass(column.align), column.class)}>
+							<Table.Head
+								class={cn(
+									'text-xs font-medium tracking-wide text-muted-foreground uppercase',
+									alignClass(column.align),
+									column.class
+								)}
+							>
 								{#if column.sortable}
 									<button
 										type="button"
 										onclick={() => toggleSort(column)}
 										class={cn(
-											'-mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 font-medium text-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+											'-mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
 											column.align === 'right' && 'flex-row-reverse'
 										)}
 										aria-label={`Sort by ${column.header}`}
@@ -315,7 +321,7 @@
 
 	{#if !loading && sorted.length > 0}
 		<div class="flex flex-col items-center justify-between gap-3 sm:flex-row">
-			<p class="text-sm text-muted-foreground">
+			<p class="text-sm whitespace-nowrap text-muted-foreground">
 				{#if selectable && selected.length > 0}
 					{selected.length} selected ·
 				{/if}
@@ -331,6 +337,7 @@
 					perPage={pagination.pageSize}
 					page={pagination.page}
 					onPageChange={(p) => pagination.setPage(p)}
+					class="mx-0 w-auto justify-end"
 				>
 					<Pagination.Content>
 						<Pagination.Item>

@@ -1,6 +1,7 @@
 <!--
-  Auth layout — a centered, card-friendly canvas on a subtle muted backdrop.
-  Shows the brand mark and a corner theme/language toggle. Already-authenticated
+  Auth layout — a split-screen canvas. On large screens an indigo brand panel
+  (headline + product highlights) sits beside the form; on small screens it
+  collapses to a centered form with a compact brand mark. Already-authenticated
   visitors are bounced to the dashboard.
 -->
 <script lang="ts">
@@ -8,8 +9,16 @@
 	import { goto } from '$app/navigation';
 	import { auth } from '$lib/auth';
 	import { ThemeToggle, LanguageToggle } from '$lib/components/shared';
+	import Check from '@lucide/svelte/icons/check';
 
 	let { children } = $props();
+
+	const highlights = [
+		'Svelte 5 runes + SvelteKit 2',
+		'Tailwind v4 + shadcn-svelte UI',
+		'Dark mode, i18n & ⌘K command palette',
+		'Responsive, accessible and fully typed'
+	];
 
 	onMount(() => {
 		auth.init();
@@ -17,25 +26,67 @@
 	});
 </script>
 
-<div class="relative flex min-h-svh flex-col bg-muted/40">
-	<!-- Decorative top glow — pure design tokens, dark-mode safe. -->
-	<div
-		class="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-primary/10 to-transparent"
-		aria-hidden="true"
-	></div>
+<div class="bg-background relative min-h-svh lg:grid lg:grid-cols-2">
+	<!-- Brand panel — large screens only -->
+	<aside
+		class="bg-primary text-primary-foreground relative hidden overflow-hidden p-10 lg:flex lg:flex-col lg:justify-between xl:p-14"
+	>
+		<!-- Decorative depth: soft glows + a subtle sheen, all token-driven. -->
+		<div class="pointer-events-none absolute inset-0" aria-hidden="true">
+			<div class="bg-primary-foreground/10 absolute -top-24 -left-24 size-80 rounded-full blur-3xl"></div>
+			<div class="bg-primary-foreground/10 absolute right-0 -bottom-32 size-96 rounded-full blur-3xl"></div>
+			<div class="from-primary-foreground/10 absolute inset-0 bg-gradient-to-br to-transparent"></div>
+		</div>
 
-	<!-- Corner controls -->
-	<div class="absolute right-4 top-4 z-10 flex items-center gap-1">
-		<LanguageToggle />
-		<ThemeToggle />
-	</div>
+		<a href="/" class="relative flex items-center gap-2.5">
+			<div
+				class="bg-primary-foreground/15 flex size-9 items-center justify-center rounded-lg text-base font-bold backdrop-blur"
+			>
+				A
+			</div>
+			<span class="text-lg font-semibold tracking-tight">Admin Starter</span>
+		</a>
 
-	<main class="relative flex flex-1 items-center justify-center p-4 sm:p-6">
+		<div class="relative max-w-md space-y-8">
+			<div class="space-y-3">
+				<h1 class="text-3xl font-semibold tracking-tight text-balance xl:text-4xl">
+					Everything you need to ship an admin.
+				</h1>
+				<p class="text-primary-foreground/80 text-base leading-relaxed">
+					A polished SvelteKit starter — auth, dashboard, tables, forms and charts, fully wired and
+					ready to extend.
+				</p>
+			</div>
+			<ul class="space-y-3">
+				{#each highlights as item (item)}
+					<li class="flex items-center gap-3">
+						<span
+							class="bg-primary-foreground/15 flex size-5 shrink-0 items-center justify-center rounded-full"
+						>
+							<Check class="size-3.5" aria-hidden="true" />
+						</span>
+						<span class="text-primary-foreground/90 text-sm">{item}</span>
+					</li>
+				{/each}
+			</ul>
+		</div>
+
+		<p class="text-primary-foreground/60 relative text-xs">Svelte 5 · Tailwind v4 · shadcn-svelte</p>
+	</aside>
+
+	<!-- Form side -->
+	<main class="relative flex min-h-svh flex-col items-center justify-center p-4 sm:p-6 lg:min-h-0">
+		<!-- Corner controls -->
+		<div class="absolute top-4 right-4 z-10 flex items-center gap-1">
+			<LanguageToggle />
+			<ThemeToggle />
+		</div>
+
 		<div class="w-full max-w-sm space-y-6">
-			<!-- Brand mark -->
-			<a href="/" class="flex items-center justify-center gap-2">
+			<!-- Compact brand mark (small screens, where the panel is hidden) -->
+			<a href="/" class="flex items-center justify-center gap-2 lg:hidden">
 				<div
-					class="flex size-8 items-center justify-center rounded-md bg-primary text-base font-bold text-primary-foreground shadow-sm"
+					class="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-md text-base font-bold shadow-sm"
 				>
 					A
 				</div>
@@ -44,9 +95,9 @@
 
 			{@render children()}
 		</div>
-	</main>
 
-	<footer class="relative pb-6 text-center text-xs text-muted-foreground">
-		A SvelteKit admin starter template.
-	</footer>
+		<p class="text-muted-foreground absolute inset-x-0 bottom-4 text-center text-xs">
+			A SvelteKit admin starter template.
+		</p>
+	</main>
 </div>

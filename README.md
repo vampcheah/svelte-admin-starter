@@ -11,11 +11,12 @@ Frontend only — no backend. Auth and data are mocked so you can clone it and s
 
 - **Complete shadcn-svelte component set** — all 47 UI primitives pre-installed (`src/lib/components/ui`).
 - **Polished app shell** — collapsible sidebar (built on shadcn `sidebar`), sticky header with breadcrumbs, command palette (⌘K), notifications, theme & language switchers, user menu.
-- **Reusable building blocks** — `PageHeader`, `PageContainer`, `StatCard`, a generic `DataTable` (search / sort / pagination / selection), `EmptyState`, `ConfirmDialog`, `SearchInput`, `CommandMenu`, `ThemeToggle`, `LanguageToggle`, `Spinner`.
+- **Reusable building blocks** — `PageHeader`, `PageContainer`, `StatCard`, `StatusBadge`, a generic `DataTable` (search / sort / pagination / selection), `EmptyState`, `ConfirmDialog`, `SearchInput`, `CommandMenu`, `ThemeToggle`, `LanguageToggle`, `Spinner`.
+- **Refined design system** — "Linear/Vercel" aesthetic: Geist typeface, a single indigo accent, OKLCH tokens, soft elevation, themed scrollbars (no layout shift).
 - **Mock auth** — login / register / forgot-password flows with a client-side route guard, ready to swap for a real backend.
 - **Light i18n** — runes-based, English + 简体中文, locale persisted to `localStorage`.
 - **Dark mode** — semantic OKLCH design tokens via `mode-watcher`; no hardcoded colors.
-- **Rich example pages** — Dashboard, Users (full CRUD), Tables, Forms, Charts, a Components showcase, Profile, and Settings.
+- **20+ example pages** — Dashboard, Users (full CRUD with a slide-out drawer + a `/users/[id]` detail page), Tables, Forms, Charts, Calendar, Inbox (resizable mail), a drag-and-drop Kanban board, Sales Orders, Cart, Pricing, Billing, a Components showcase, Profile, Settings — plus status-aware 404 / error pages.
 - **Typed & verified** — strict TypeScript, `svelte-check` clean, production build passes.
 
 ## 🧱 Tech stack
@@ -60,10 +61,14 @@ src/
 ├── routes/
 │   ├── +layout.svelte       # root: stylesheet, ModeWatcher, Toaster, session/locale init
 │   ├── +page.ts             # redirects / → /dashboard
-│   ├── +error.svelte        # 404 / 500
-│   ├── (auth)/              # login · register · forgot-password (centered, no shell)
+│   ├── +error.svelte        # status-aware 404 / error page (branded, no shell)
+│   ├── (auth)/              # login · register · forgot-password (split-screen, no shell)
 │   └── (app)/              # behind the mock auth guard, wrapped in <AppShell>
-│       ├── dashboard/  users/  tables/  forms/  charts/
+│       ├── +error.svelte    # in-shell error boundary (keeps sidebar + header)
+│       ├── dashboard/  users/  users/[id]/  tables/  forms/  charts/
+│       ├── calendar/  inbox/  kanban/        # "Apps"
+│       ├── orders/  cart/                     # "Commerce"
+│       ├── pricing/  billing/                 # "Billing"
 │       ├── components/      # UI kitchen-sink showcase
 │       ├── profile/  settings/
 └── lib/

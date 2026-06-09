@@ -40,6 +40,13 @@
 				trail.push({ label: titleCase(seg), href: acc });
 			}
 		}
+
+		// A page can supply a friendly label for its leaf crumb via load data
+		// (e.g. /users/[id] returns the user's name instead of the raw id).
+		const data = page.data as { breadcrumb?: unknown };
+		if (typeof data.breadcrumb === 'string' && data.breadcrumb && trail.length > 1) {
+			trail[trail.length - 1] = { ...trail[trail.length - 1], label: data.breadcrumb };
+		}
 		return trail;
 	});
 </script>

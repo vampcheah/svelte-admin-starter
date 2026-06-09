@@ -61,7 +61,10 @@
 		"data-slot": "sidebar-menu-button",
 		"data-sidebar": "menu-button",
 		"data-size": size,
-		"data-active": isActive,
+		// Only emit the attribute when active. `data-active="false"` is still
+		// "present", so the `data-active:` Tailwind variant would otherwise match
+		// every item and paint them all with the active background.
+		"data-active": isActive ? true : undefined,
 		...restProps,
 	});
 </script>

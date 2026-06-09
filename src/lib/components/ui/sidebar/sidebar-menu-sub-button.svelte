@@ -25,7 +25,8 @@
 		"data-slot": "sidebar-menu-sub-button",
 		"data-sidebar": "menu-sub-button",
 		"data-size": size,
-		"data-active": isActive,
+		// Only emit when active — see sidebar-menu-button.svelte for the rationale.
+		"data-active": isActive ? true : undefined,
 		...restProps,
 	});
 </script>
