@@ -14,6 +14,7 @@
 	import { Separator } from '$lib/components/ui/separator';
 	import { toast } from 'svelte-sonner';
 	import { auth } from '$lib/auth';
+	import { logoutDialog } from '$lib/shell';
 	import { setLocale, LOCALES, i18n, type Locale } from '$lib/i18n';
 	import { initials } from '$lib/utils/formatters';
 	import Save from '@lucide/svelte/icons/save';
@@ -168,7 +169,7 @@
 					type="button"
 					variant="outline"
 					class="text-destructive hover:text-destructive"
-					onclick={() => auth.logout()}
+					onclick={() => (logoutDialog.open = true)}
 				>
 					Sign out
 				</Button>

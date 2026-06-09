@@ -10,6 +10,7 @@
 	import { auth } from '$lib/auth';
 	import { initials } from '$lib/utils/formatters';
 	import { t } from '$lib/i18n';
+	import { logoutDialog } from './logout-dialog.svelte';
 	import Breadcrumbs from './Breadcrumbs.svelte';
 	import NotificationsMenu from './NotificationsMenu.svelte';
 	import Search from '@lucide/svelte/icons/search';
@@ -111,7 +112,7 @@
 					{/snippet}
 				</DropdownMenu.Item>
 				<DropdownMenu.Separator />
-				<DropdownMenu.Item variant="destructive" onSelect={() => auth.logout()}>
+				<DropdownMenu.Item variant="destructive" onSelect={() => (logoutDialog.open = true)}>
 					<LogOut />
 					{t('common.logout')}
 				</DropdownMenu.Item>

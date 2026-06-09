@@ -11,6 +11,8 @@ export default {
 		confirm: 'Confirm',
 		loading: 'Loading',
 		logout: 'Log out',
+		logoutConfirmTitle: 'Log out?',
+		logoutConfirmDescription: "You'll need to sign in again to access your account.",
 		profile: 'Profile',
 		settings: 'Settings',
 		language: 'Language',

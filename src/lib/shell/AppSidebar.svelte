@@ -8,6 +8,7 @@
 	import { auth } from '$lib/auth';
 	import { initials } from '$lib/utils/formatters';
 	import { navGroups } from './nav';
+	import { logoutDialog } from './logout-dialog.svelte';
 	import { config } from '$lib/config';
 	import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
 	import UserIcon from '@lucide/svelte/icons/user';
@@ -145,7 +146,7 @@
 							</DropdownMenu.Item>
 						</DropdownMenu.Group>
 						<DropdownMenu.Separator />
-						<DropdownMenu.Item variant="destructive" onSelect={() => auth.logout()}>
+						<DropdownMenu.Item variant="destructive" onSelect={() => (logoutDialog.open = true)}>
 							<LogOut />
 							Logout
 						</DropdownMenu.Item>

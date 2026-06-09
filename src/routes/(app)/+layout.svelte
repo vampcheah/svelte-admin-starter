@@ -8,8 +8,10 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
-	import { AppShell } from '$lib/shell';
+	import { AppShell, logoutDialog } from '$lib/shell';
+	import { ConfirmDialog } from '$lib/components/shared';
 	import { config } from '$lib/config';
+	import { t } from '$lib/i18n';
 
 	let { children } = $props();
 	let ready = $state(false);
@@ -23,4 +25,13 @@
 
 {#if ready}
 	<AppShell>{@render children()}</AppShell>
+	<ConfirmDialog
+		bind:open={logoutDialog.open}
+		title={t('common.logoutConfirmTitle')}
+		description={t('common.logoutConfirmDescription')}
+		confirmText={t('common.logout')}
+		cancelText={t('common.cancel')}
+		variant="destructive"
+		onConfirm={() => auth.logout()}
+	/>
 {/if}

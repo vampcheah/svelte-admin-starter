@@ -6,3 +6,4 @@ export { default as Breadcrumbs } from './Breadcrumbs.svelte';
 export { default as NotificationsMenu } from './NotificationsMenu.svelte';
 export { navGroups, findNavItem } from './nav';
 export type { NavItem, NavGroup } from './nav';
+export { logoutDialog } from './logout-dialog.svelte';

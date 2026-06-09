@@ -11,6 +11,8 @@ export default {
 		confirm: '确认',
 		loading: '加载中',
 		logout: '退出登录',
+		logoutConfirmTitle: '确认退出登录?',
+		logoutConfirmDescription: '退出后需重新登录才能访问你的账户。',
 		profile: '个人资料',
 		settings: '设置',
 		language: '语言',
