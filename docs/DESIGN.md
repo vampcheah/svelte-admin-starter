@@ -1,6 +1,6 @@
 # 设计指引 (Design Guide)
 
-本指引描述 **Svelte Admin Starter** 的设计系统：所有颜色、圆角、间距、排版与明暗主题如何通过一套语义化 token 统一驱动。所有数值与类名均取自真实源码（`src/app.css`、`components.json` 与共享组件），可直接复制使用。
+本指引描述 **Svelte Admin Starter** 的设计系统：所有颜色、圆角、间距、排版、阴影与明暗主题如何通过一套语义化 token 统一驱动。整体风格为 **「Refined neutral + indigo」（精致中性 + 靛蓝）**，灵感取自 Linear / Vercel —— 冷调近中性表面带一丝靛蓝色调（hue 269），品牌强调色为一抹自信的靛蓝，深度来自柔和的分层阴影而非厚重边框。所有数值与类名均取自真实源码（`src/app.css`、`src/app.html`、`components.json` 与共享组件），可直接复制使用。
 
 ## 目录
 
@@ -12,9 +12,12 @@
 - [3. 明暗模式](#3-明暗模式)
 - [4. 圆角与间距](#4-圆角与间距)
 - [5. 排版](#5-排版)
-- [6. 图表配色](#6-图表配色)
-- [7. 状态色约定](#7-状态色约定)
-- [8. 如何自定义主题](#8-如何自定义主题)
+- [6. 阴影与高度（Elevation）](#6-阴影与高度elevation)
+- [7. 图表配色](#7-图表配色)
+- [8. 状态色约定](#8-状态色约定)
+- [9. 自定义变体（Custom variants）](#9-自定义变体custom-variants)
+- [10. 滚动条](#10-滚动条)
+- [11. 如何自定义主题](#11-如何自定义主题)
 
 ---
 
@@ -32,7 +35,7 @@
    业务组件中**禁止**出现 `#3b82f6`、`text-blue-600` 之类的硬编码颜色。一律使用语义类（`bg-primary`、`text-muted-foreground`、`border-border`…）。
    唯一例外是少量**状态色徽章**（success/warning/danger），它们直接使用 Tailwind 调色板的固定色阶并显式提供 `dark:` 变体，详见[第 7 节](#7-状态色约定)。
 
-token 全部以 [OKLCH](https://oklch.com/) 色彩空间定义（`oklch(L C H)` 或带 alpha 的 `oklch(L C H / α)`），相比 HSL/RGB 更感知均匀，便于成套调节明度与对比度。
+token 全部以 [OKLCH](https://oklch.com/) 色彩空间定义（`oklch(L C H)` 或带 alpha 的 `oklch(L C H / α)`），相比 HSL/RGB 更感知均匀，便于成套调节明度与对比度。品牌靛蓝固定在 **hue 269**；连中性色（background / foreground / border / muted…）也带极低彩度的 269 冷色调，让整套界面在视觉上统一偏冷。
 
 ---
 
@@ -54,7 +57,7 @@ token 在 `src/app.css` 中分两步声明：
 
 大多数语义色成对出现：`X`（背景/填充）+ `X-foreground`（其上文字）。`-foreground` 经过设计以保证在对应 `X` 背景上达到足够对比度——配对使用即可，例如 `bg-primary text-primary-foreground`。
 
-> `components.json` 中 `baseColor` 为 `slate`，这是 shadcn-svelte 添加新组件时生成的中性灰基色，与上方手写的蓝灰主题协调一致。
+> `components.json` 中 `baseColor` 为 `slate`，这是 shadcn-svelte 添加新组件时生成的中性灰基色，与上方手写的「精致中性 + 靛蓝」主题协调一致。
 
 ### 2.1 核心语义 token
 
@@ -62,50 +65,52 @@ token 在 `src/app.css` 中分两步声明：
 
 | token | 用途 | Light (`:root`) | Dark (`.dark`) | Tailwind 类 |
 |---|---|---|---|---|
-| `background` | 页面整体背景（`body` 默认） | `oklch(0.99 0.005 250)` | `oklch(0.129 0.042 264.695)` | `bg-background` |
-| `foreground` | 页面正文文字（`body` 默认） | `oklch(0.2 0.04 260)` | `oklch(0.984 0.003 247.858)` | `text-foreground` |
-| `card` | 卡片/面板背景 | `oklch(1 0 0)` | `oklch(0.208 0.042 265.755)` | `bg-card` |
-| `card-foreground` | 卡片内文字 | `oklch(0.2 0.04 260)` | `oklch(0.984 0.003 247.858)` | `text-card-foreground` |
-| `popover` | 弹出层（菜单/下拉/Tooltip）背景 | `oklch(0.97 0.01 250)` | `oklch(0.208 0.042 265.755)` | `bg-popover` |
-| `popover-foreground` | 弹出层内文字 | `oklch(0.2 0.04 260)` | `oklch(0.984 0.003 247.858)` | `text-popover-foreground` |
-| `primary` | 主操作色（主按钮、激活态、强调） | `oklch(0.55 0.16 250)` | `oklch(0.929 0.013 255.508)` | `bg-primary` |
-| `primary-foreground` | 主色背景上的文字 | `oklch(0.98 0.01 250)` | `oklch(0.208 0.042 265.755)` | `text-primary-foreground` |
-| `secondary` | 次操作色（次级按钮/徽章） | `oklch(0.92 0.02 250)` | `oklch(0.279 0.041 260.031)` | `bg-secondary` |
-| `secondary-foreground` | 次色背景上的文字 | `oklch(0.2 0.04 260)` | `oklch(0.984 0.003 247.858)` | `text-secondary-foreground` |
-| `muted` | 弱化背景（TabsList、占位块、头像底色） | `oklch(0.92 0.02 250)` | `oklch(0.279 0.041 260.031)` | `bg-muted` |
-| `muted-foreground` | 次要/辅助文字（描述、占位） | `oklch(0.5 0.04 250)` | `oklch(0.704 0.04 256.788)` | `text-muted-foreground` |
-| `accent` | 悬停/选中高亮背景 | `oklch(0.88 0.03 250)` | `oklch(0.279 0.041 260.031)` | `bg-accent` |
-| `accent-foreground` | accent 背景上的文字 | `oklch(0.2 0.04 260)` | `oklch(0.984 0.003 247.858)` | `text-accent-foreground` |
-| `destructive` | 危险/删除操作色 | `oklch(0.6 0.2 25)` | `oklch(0.704 0.191 22.216)` | `bg-destructive` / `text-destructive` |
-| `border` | 边框、分隔线 | `oklch(0.85 0.02 250)` | `oklch(1 0 0 / 35%)` | `border-border` |
-| `input` | 输入框背景 | `oklch(1 0 0)` | `oklch(1 0 0 / 30%)` | `bg-input` |
-| `ring` | 聚焦轮廓（focus ring） | `oklch(0.55 0.16 250 / 50%)` | `oklch(0.551 0.027 264.364)` | `ring-ring` |
-| `chart-1` | 图表系列 1 | `oklch(0.646 0.222 41.116)` | `oklch(0.488 0.243 264.376)` | 见[第 6 节](#6-图表配色) |
-| `chart-2` | 图表系列 2 | `oklch(0.6 0.118 184.704)` | `oklch(0.696 0.17 162.48)` | — |
-| `chart-3` | 图表系列 3 | `oklch(0.398 0.07 227.392)` | `oklch(0.769 0.188 70.08)` | — |
-| `chart-4` | 图表系列 4 | `oklch(0.828 0.189 84.429)` | `oklch(0.627 0.265 303.9)` | — |
-| `chart-5` | 图表系列 5 | `oklch(0.769 0.188 70.08)` | `oklch(0.645 0.246 16.439)` | — |
+| `background` | 页面整体背景（`body` 默认） | `oklch(0.99 0.003 269)` | `oklch(0.17 0.008 269)` | `bg-background` |
+| `foreground` | 页面正文文字（`body` 默认） | `oklch(0.21 0.025 269)` | `oklch(0.96 0.004 269)` | `text-foreground` |
+| `card` | 卡片/面板背景 | `oklch(1 0 0)` | `oklch(0.205 0.01 269)` | `bg-card` |
+| `card-foreground` | 卡片内文字 | `oklch(0.21 0.025 269)` | `oklch(0.96 0.004 269)` | `text-card-foreground` |
+| `popover` | 弹出层（菜单/下拉/Tooltip）背景 | `oklch(1 0 0)` | `oklch(0.205 0.01 269)` | `bg-popover` |
+| `popover-foreground` | 弹出层内文字 | `oklch(0.21 0.025 269)` | `oklch(0.96 0.004 269)` | `text-popover-foreground` |
+| `primary` | 主操作色（主按钮、激活态、强调） | `oklch(0.545 0.205 269)` | `oklch(0.62 0.19 269)` | `bg-primary` |
+| `primary-foreground` | 主色背景上的文字 | `oklch(0.985 0.002 269)` | `oklch(0.99 0.003 269)` | `text-primary-foreground` |
+| `secondary` | 次操作色（次级按钮/徽章） | `oklch(0.965 0.006 269)` | `oklch(0.26 0.012 269)` | `bg-secondary` |
+| `secondary-foreground` | 次色背景上的文字 | `oklch(0.25 0.03 269)` | `oklch(0.96 0.004 269)` | `text-secondary-foreground` |
+| `muted` | 弱化背景（TabsList、占位块、头像底色） | `oklch(0.967 0.005 269)` | `oklch(0.26 0.012 269)` | `bg-muted` |
+| `muted-foreground` | 次要/辅助文字（描述、占位） | `oklch(0.552 0.026 269)` | `oklch(0.705 0.025 269)` | `text-muted-foreground` |
+| `accent` | 悬停/选中高亮背景 | `oklch(0.95 0.015 269)` | `oklch(0.28 0.02 269)` | `bg-accent` |
+| `accent-foreground` | accent 背景上的文字 | `oklch(0.42 0.16 269)` | `oklch(0.96 0.004 269)` | `text-accent-foreground` |
+| `destructive` | 危险/删除操作色 | `oklch(0.585 0.22 25)` | `oklch(0.7 0.19 22)` | `bg-destructive` / `text-destructive` |
+| `border` | 边框、分隔线 | `oklch(0.925 0.006 269)` | `oklch(1 0 0 / 9%)` | `border-border` |
+| `input` | 输入框背景 | `oklch(1 0 0)` | `oklch(1 0 0 / 12%)` | `bg-input` |
+| `ring` | 聚焦轮廓（focus ring） | `oklch(0.545 0.205 269 / 50%)` | `oklch(0.62 0.19 269 / 55%)` | `ring-ring` |
+| `chart-1` | 图表系列 1（靛蓝 indigo） | `oklch(0.545 0.205 269)` | `oklch(0.66 0.18 269)` | 见[第 7 节](#7-图表配色) |
+| `chart-2` | 图表系列 2（天蓝 azure） | `oklch(0.62 0.16 232)` | `oklch(0.7 0.15 232)` | — |
+| `chart-3` | 图表系列 3（青色 cyan） | `oklch(0.7 0.13 195)` | `oklch(0.76 0.12 195)` | — |
+| `chart-4` | 图表系列 4（紫罗兰 violet） | `oklch(0.6 0.2 305)` | `oklch(0.68 0.18 305)` | — |
+| `chart-5` | 图表系列 5（粉色 pink） | `oklch(0.64 0.21 350)` | `oklch(0.7 0.19 350)` | — |
+
+> **靛蓝品牌色（light 与 dark 不同）**：`--primary` 在亮色下为 `oklch(0.545 0.205 269)`，在暗色下**提亮**为 `oklch(0.62 0.19 269)`（L 0.545 → 0.62）——同一靛蓝 hue 269，但在深色背景上调亮以保证按钮/链接的对比度与可见度。两套取值都必须保留：暗色直接复用亮色那一档会显得发暗、缺乏存在感。
 
 > 注意 `destructive` 的用法：在 button 组件里它常以低透明度填充 + 实色文字呈现（`bg-destructive/10 ... text-destructive`），而非纯实色背景。引用时按场景搭配透明度修饰符（如 `bg-destructive/10`、`ring-destructive/50`）。
 
 ### 2.2 Sidebar token
 
-侧边栏拥有独立的一组 token，以便在视觉上与主内容区轻微区分（亮色下略深、暗色下与卡片同色）。
+侧边栏拥有独立的一组 token，以便在视觉上与主内容区轻微区分：亮色下是一块略带冷调的浅灰面板（区别于纯白内容卡片），暗色下比 `background` / `card` 更深一档（`oklch(0.185 …)`），形成一个微微凹陷的导航区。
 
 | token | 用途 | Light (`:root`) | Dark (`.dark`) | Tailwind 类 |
 |---|---|---|---|---|
-| `sidebar` | 侧栏背景 | `oklch(0.98 0.01 250)` | `oklch(0.208 0.042 265.755)` | `bg-sidebar` |
-| `sidebar-foreground` | 侧栏文字 | `oklch(0.2 0.04 260)` | `oklch(0.984 0.003 247.858)` | `text-sidebar-foreground` |
-| `sidebar-primary` | 侧栏激活项主色 | `oklch(0.55 0.16 250)` | `oklch(0.488 0.243 264.376)` | `bg-sidebar-primary` |
-| `sidebar-primary-foreground` | 侧栏激活项文字 | `oklch(0.98 0.01 250)` | `oklch(0.984 0.003 247.858)` | `text-sidebar-primary-foreground` |
-| `sidebar-accent` | 侧栏悬停/选中高亮 | `oklch(0.92 0.02 250)` | `oklch(0.279 0.041 260.031)` | `bg-sidebar-accent` |
-| `sidebar-accent-foreground` | 侧栏高亮项文字 | `oklch(0.2 0.04 260)` | `oklch(0.984 0.003 247.858)` | `text-sidebar-accent-foreground` |
-| `sidebar-border` | 侧栏边框/分隔 | `oklch(0.9 0.02 250)` | `oklch(1 0 0 / 10%)` | `border-sidebar-border` |
-| `sidebar-ring` | 侧栏内 focus ring | `oklch(0.55 0.16 250 / 50%)` | `oklch(0.551 0.027 264.364)` | `ring-sidebar-ring` |
+| `sidebar` | 侧栏背景 | `oklch(0.985 0.004 269)` | `oklch(0.185 0.009 269)` | `bg-sidebar` |
+| `sidebar-foreground` | 侧栏文字 | `oklch(0.32 0.02 269)` | `oklch(0.86 0.01 269)` | `text-sidebar-foreground` |
+| `sidebar-primary` | 侧栏激活项主色 | `oklch(0.545 0.205 269)` | `oklch(0.62 0.19 269)` | `bg-sidebar-primary` |
+| `sidebar-primary-foreground` | 侧栏激活项文字 | `oklch(0.985 0.002 269)` | `oklch(0.99 0.003 269)` | `text-sidebar-primary-foreground` |
+| `sidebar-accent` | 侧栏悬停/选中高亮 | `oklch(0.94 0.018 269)` | `oklch(0.28 0.025 269)` | `bg-sidebar-accent` |
+| `sidebar-accent-foreground` | 侧栏高亮项文字 | `oklch(0.42 0.16 269)` | `oklch(0.92 0.02 269)` | `text-sidebar-accent-foreground` |
+| `sidebar-border` | 侧栏边框/分隔 | `oklch(0.925 0.006 269)` | `oklch(1 0 0 / 7%)` | `border-sidebar-border` |
+| `sidebar-ring` | 侧栏内 focus ring | `oklch(0.545 0.205 269 / 50%)` | `oklch(0.62 0.19 269 / 55%)` | `ring-sidebar-ring` |
 
 ### 2.3 Chart token
 
-`chart-1` 到 `chart-5` 用于数据可视化的多系列配色，详见[第 6 节](#6-图表配色)。
+`chart-1` 到 `chart-5` 用于数据可视化的多系列配色，详见[第 7 节](#7-图表配色)。
 
 ---
 
@@ -260,6 +265,38 @@ token 在 `src/app.css` 中分两步声明：
 
 ## 5. 排版
 
+### 字体（Typeface）
+
+UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体为 **Geist Mono**，提供干净、现代的界面气质。两者在 `src/app.html` 通过 Google Fonts 加载（并 `preconnect` 预连接以减少加载延迟）：
+
+```html
+<!-- src/app.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&display=swap"
+  rel="stylesheet"
+/>
+```
+
+字体栈在 `src/app.css` 的 `@theme inline` 块中通过 `--font-sans` / `--font-mono` 声明（生成 `font-sans` / `font-mono` 工具类），并带完整的回退链（Geist → Inter → 系统字体）：
+
+```css
+/* src/app.css */
+@theme inline {
+  --font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
+}
+```
+
+`body` 默认应用 `font-sans antialiased`（见 `@layer base` 中 `body { @apply bg-background text-foreground font-sans antialiased; }`），因此全站正文即为 Geist；需要等宽（代码、数字、token 值）时显式加 `font-mono`。
+
+> **生产环境建议**：当前从 Google Fonts CDN 加载，开发期最省事。若要避免第三方请求、消除字体闪烁并提升隐私/可靠性，可改为通过 [`@fontsource`](https://fontsource.org/)（如 `@fontsource/geist-sans`、`@fontsource/geist-mono`）自托管字体，再在本地 `import` 即可，`--font-sans` / `--font-mono` 无需改动。
+
+### 排版刻度
+
 排版约定集中体现在 `PageHeader`，它定义了页面标题块的标准字号/字重：
 
 ```svelte
@@ -293,9 +330,55 @@ token 在 `src/app.css` 中分两步声明：
 
 ---
 
-## 6. 图表配色
+## 6. 阴影与高度（Elevation）
 
-数据可视化使用 `chart-1` 到 `chart-5` 五个 token，它们在亮/暗下各自调过明度与色相以保证在两种背景上都清晰可辨（取值见[第 2.1 节](#21-核心语义-token)表格末尾）。
+本主题的深度来自**柔和、分层的阴影**，而非厚重边框——卡片、弹出层等用阴影托起，边框只作极轻的分隔。`@theme inline` 定义了一套带冷色调（hue 269）的阴影刻度 `--shadow-2xs … --shadow-xl`（生成 `shadow-2xs`、`shadow-xs`、`shadow-sm`、`shadow-md`、`shadow-lg`、`shadow-xl` 工具类）：
+
+```css
+/* src/app.css */
+@theme inline {
+  --shadow-2xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.04);
+  --shadow-xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.05);
+  --shadow-sm: 0 1px 2px -1px oklch(0.21 0.03 269 / 0.08),
+    0 1px 3px 0 oklch(0.21 0.03 269 / 0.05);
+  --shadow-md: 0 2px 4px -2px oklch(0.21 0.03 269 / 0.07),
+    0 4px 8px -2px oklch(0.21 0.03 269 / 0.06);
+  --shadow-lg: 0 4px 8px -3px oklch(0.21 0.03 269 / 0.08),
+    0 12px 20px -4px oklch(0.21 0.03 269 / 0.07);
+  --shadow-xl: 0 8px 16px -4px oklch(0.21 0.03 269 / 0.09),
+    0 20px 32px -8px oklch(0.21 0.03 269 / 0.09);
+}
+```
+
+| 类 | 层级 | 典型用途 |
+|---|---|---|
+| `shadow-2xs` / `shadow-xs` | 极轻（单层） | 贴地元素、输入框、细微抬起 |
+| `shadow-sm` | 轻（双层） | 卡片、按钮的默认抬起 |
+| `shadow-md` | 中（双层） | 悬浮态、下拉触发器 |
+| `shadow-lg` | 高（双层） | 弹出层、菜单、对话框 |
+| `shadow-xl` | 最高（双层） | 模态、需要明显悬浮感的浮层 |
+
+约定：
+
+- 阴影颜色统一用品牌冷调 `oklch(0.21 0.03 269 / α)`，靠 alpha 控制强度，因此阴影本身带一丝靛蓝、与整体色系协调。
+- 从 `shadow-sm` 起均为**多层叠加**（一层贴近的硬阴影 + 一层扩散的软阴影），更接近真实环境光，避免单层阴影的「贴纸感」。
+- **卡片优先用阴影表达层级，而非加重边框**——边框保持极轻（亮色 `oklch(0.925 …)`、暗色 `oklch(1 0 0 / 9%)`）。
+
+---
+
+## 7. 图表配色
+
+数据可视化使用 `chart-1` 到 `chart-5` 五个 token。它们不再是早期的「彩虹/暖色」杂色，而是一条**以品牌靛蓝为锚点的统一色带**：靛蓝 → 天蓝 → 青 → 紫罗兰 → 粉（indigo → azure → cyan → violet → pink）。亮、暗模式各定义一套（暗色整体提亮以适配深背景），但**色相顺序一致**，因此同一指标在明暗下读到的是同一种颜色（取值见[第 2.1 节](#21-核心语义-token)表格末尾）。
+
+色带取值（hue 固定，明暗仅调明度/彩度）：
+
+| token | 含义 | Light | Dark |
+|---|---|---|---|
+| `chart-1` | 靛蓝 indigo（品牌锚点） | `oklch(0.545 0.205 269)` | `oklch(0.66 0.18 269)` |
+| `chart-2` | 天蓝 azure | `oklch(0.62 0.16 232)` | `oklch(0.7 0.15 232)` |
+| `chart-3` | 青 cyan | `oklch(0.7 0.13 195)` | `oklch(0.76 0.12 195)` |
+| `chart-4` | 紫罗兰 violet | `oklch(0.6 0.2 305)` | `oklch(0.68 0.18 305)` |
+| `chart-5` | 粉 pink | `oklch(0.64 0.21 350)` | `oklch(0.7 0.19 350)` |
 
 图表组件通过 CSS 变量 `var(--chart-N)` 引用，而非 Tailwind 类。真实用法见 `src/routes/(app)/charts/+page.svelte`：
 
@@ -329,7 +412,7 @@ token 在 `src/app.css` 中分两步声明：
 
 ---
 
-## 7. 状态色约定
+## 8. 状态色约定
 
 语义 token 覆盖中性与主操作色，但**业务状态**（成功/警告/危险）使用一套固定语义色：`emerald`（success）、`amber`（warning）、`red`（danger）。它们是本系统中**唯一**允许直接使用 Tailwind 调色板而非 token 的场景，因为状态语义需要稳定、与主题色解耦。
 
@@ -370,7 +453,68 @@ function statusClass(status: Status): string {
 
 ---
 
-## 8. 如何自定义主题
+## 9. 自定义变体（Custom variants）
+
+除了 `dark`，`src/app.css` 顶部还声明了两个**方向变体**，供「方向感知」的基础组件（slider 滑块、toggle group 分段按钮组）使用：
+
+```css
+/* src/app.css */
+@custom-variant data-horizontal (&[data-orientation="horizontal"]);
+@custom-variant data-vertical (&[data-orientation="vertical"]);
+```
+
+它们把 `data-horizontal:` / `data-vertical:` 前缀映射到元素自身的 `[data-orientation="…"]` 属性。这类组件（如 Bits UI 的 slider）会在 DOM 上输出 `data-orientation="horizontal"`，组件内部据此用 `data-horizontal:h-1.5 data-vertical:w-1.5` 之类的类来决定轨道是横向取高度、还是纵向取宽度。
+
+> **为什么必须有**：缺少这两个变体时，像 `data-horizontal:h-1.5` 这样的类**永远不会匹配**到带 `data-orientation` 的元素，slider 的轨道高度退化为 0（轨道不可见、滑块「悬空」）。这是纯样式声明、无运行时成本，但去掉会直接破坏这些原生方向组件。
+
+---
+
+## 10. 滚动条
+
+全站滚动条经过统一美化——纤细、圆角、无箭头无轨道，颜色由 `muted-foreground` 经 `color-mix` 调出半透明，悬停时加深。它在 `@layer base` 中对**所有**滚动容器（页面、下拉、popover 等原生滚动区）生效，无需手动加类：
+
+```css
+/* src/app.css（节选） */
+@layer base {
+  * {
+    /* Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--muted-foreground) 35%, transparent) transparent;
+  }
+  /* WebKit/Blink */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background-color: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background-color: color-mix(in srgb, var(--muted-foreground) 35%, transparent);
+    border: 2px solid transparent;       /* 透明内边距 → 视觉更纤细 */
+    border-radius: 9999px;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--muted-foreground) 55%, transparent);
+  }
+  ::-webkit-scrollbar-corner { background-color: transparent; }
+}
+```
+
+因为颜色取自 `--muted-foreground`，滚动条自动随明暗主题适配，无需写 `dark:` 分支。
+
+此外，`html` 永远预留滚动条的「沟槽」，防止在「有滚动条的长页面」与「无滚动条的短页面」之间切换时产生横向跳动（layout shift）：
+
+```css
+/* src/app.css */
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+}
+```
+
+> 这是全局默认行为，已取代早期需要手动添加的 `.custom-scrollbar` 工具类——现在任意滚动容器都自动获得一致的滚动条，无需额外类名。
+
+---
+
+## 11. 如何自定义主题
 
 ### 改 token 值（换主色/换肤）
 
@@ -379,12 +523,12 @@ function statusClass(status: Status): string {
 ```css
 /* src/app.css */
 :root {
-  --primary: oklch(0.55 0.16 250);          /* 改成你的品牌色 */
-  --primary-foreground: oklch(0.98 0.01 250);
+  --primary: oklch(0.545 0.205 269);          /* 改成你的品牌色 */
+  --primary-foreground: oklch(0.985 0.002 269);
 }
 .dark {
-  --primary: oklch(0.929 0.013 255.508);
-  --primary-foreground: oklch(0.208 0.042 265.755);
+  --primary: oklch(0.62 0.19 269);            /* 暗色通常需提亮一档 */
+  --primary-foreground: oklch(0.99 0.003 269);
 }
 ```
 
@@ -405,30 +549,7 @@ function statusClass(status: Status): string {
 
 可选值为 shadcn 标准基色（`slate` / `gray` / `zinc` / `neutral` / `stone`）。注意：改它**只影响之后新拉取的组件**，不会回溯改写已有 token；要让现有界面跟上，仍需手动对齐 `app.css` 里的中性 token。
 
-### 滚动条 `.custom-scrollbar`
-
-`app.css` 定义了一个细滚动条工具类，颜色取自 `--border`，悬停时变为 `--muted-foreground`，因此自动适配明暗主题。给任意可滚动容器加上 `class="custom-scrollbar"` 即可启用：
-
-```css
-/* src/app.css（节选） */
-.custom-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
-}
-.custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 20px;
-  border: 1px solid transparent;
-  background-clip: content-box;
-}
-.custom-scrollbar:hover::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
-  background-clip: content-box;
-}
-```
-
-用法：`<div class="overflow-y-auto custom-scrollbar"> … </div>`。
+> 滚动条已是全局默认样式（见[第 10 节](#10-滚动条)），不再需要 `.custom-scrollbar` 之类的工具类；任意滚动容器自动获得一致外观。
 
 ### 无障碍注意点（Accessibility）
 
@@ -442,4 +563,4 @@ function statusClass(status: Status): string {
 
 - **不要仅靠颜色传达信息**：状态徽章除了颜色还带文字标签（如 `Active`/`Suspended`），图标按钮带 `aria-label`（见 `ThemeToggle` 的 `aria-label={label}`）。新增组件请沿用这一约定。
 
-- **autofill 覆盖**：`app.css` 在 `@layer` 之外强制覆盖了浏览器自动填充的背景与文字色（`input:-webkit-autofill { -webkit-box-shadow: 0 0 0px 1000px white inset; -webkit-text-fill-color: oklch(0.2 0.04 260); }`），避免 Chrome 默认黄色填充破坏输入框配色。改输入框配色时注意同步此处取值。
+- **autofill 覆盖**：`app.css` 在 `@layer` 之外强制覆盖了浏览器自动填充的背景与文字色，且现在改用 token 变量（`-webkit-box-shadow: 0 0 0px 1000px var(--input) inset; -webkit-text-fill-color: var(--foreground);`，`caret-color: var(--foreground)`），因此**明暗主题安全**——自动填充态会跟随 `--input` / `--foreground` 自动变色，不会再在暗色下出现亮底填充。避免 Chrome 默认黄色填充破坏输入框配色。改输入框配色时无需再手动同步颜色，只要 token 正确即可。

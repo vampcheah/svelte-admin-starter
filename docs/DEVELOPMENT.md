@@ -24,7 +24,7 @@
 
 ## 1. 项目简介 & 技术栈
 
-这是一个开箱即用的管理后台模板：包含登录/注册/找回密码页、带可折叠侧边栏的应用外壳（app shell）、面包屑、命令面板（⌘K）、通知菜单、主题切换、中英双语，以及 Dashboard / Users / Tables / Forms / Components / Charts / Profile / Settings 等示例页面。所有数据来自 `src/lib/data/`，鉴权来自 `src/lib/auth/`，均为 mock，便于直接替换为真实后端。
+这是一个开箱即用的管理后台模板：包含登录/注册/找回密码页、带可折叠侧边栏的应用外壳（app shell）、面包屑、命令面板（⌘K）、通知菜单、主题切换、中英双语、状态感知的错误页，以及一组示例页面：Dashboard、Users（含 `users/[id]` 用户详情页）、Tables、Forms、Calendar、Inbox、Board（kanban）、Sales Orders、Cart、Components、Charts、Pricing、Billing、Profile、Settings。所有数据来自 `src/lib/data/`，鉴权来自 `src/lib/auth/`，均为 mock，便于直接替换为真实后端。
 
 ### 技术栈（版本取自 `package.json`）
 
@@ -53,7 +53,7 @@ TypeScript `strict: true`，并对 `.js`/`.svelte` 同样开启类型检查（`t
 
 ### 前置要求
 
-- **Node.js**：建议 18+（推荐 20 LTS 或更新）。`.npmrc` 中设置了 `engine-strict=true`；目前 `package.json` 未声明 `engines` 字段，因此不会因版本被强制拦截，但请使用现代 LTS 版本以兼容 Vite 7 / SvelteKit 2。
+- **Node.js**：要求 `^20.19.0 || >=22.12.0`（SvelteKit 2 / Vite 7 的最低版本）。`package.json` 已声明该 `engines` 字段，且 `.npmrc` 设置了 `engine-strict=true`，因此不满足版本要求的环境会在 `npm install` 时被拦截。请使用 Node 20.19+ 或 22.12+（推荐最新 LTS）。
 - **包管理器**：npm（仓库提供 `package-lock.json`）。
 
 ### 安装与启动
@@ -124,7 +124,7 @@ src/
 │   ├── +layout.ts           # 根布局配置：ssr=true, prerender=false
 │   ├── +page.svelte         # 首页（仅在 redirect 前短暂闪现一个 Spinner）
 │   ├── +page.ts             # load() 重定向到 /dashboard
-│   ├── +error.svelte        # 全局错误边界（404 / 500 友好页）
+│   ├── +error.svelte        # 全局错误边界：状态感知（404/403/5xx），无 shell 的品牌全屏页
 │   ├── (auth)/              # 鉴权 route group：登录/注册/找回密码（无 shell）
 │   │   ├── +layout.svelte   # 居中卡片画布；已登录则跳转 /dashboard
 │   │   ├── login/+page.svelte
@@ -132,12 +132,24 @@ src/
 │   │   └── forgot-password/+page.svelte
 │   └── (app)/               # 应用 route group：受 mock 守卫保护，套 AppShell
 │       ├── +layout.svelte   # 守卫 + AppShell（见第 5 节）
+│       ├── +error.svelte    # shell 内错误边界（保留侧边栏 + 顶栏，见第 5 节）
 │       ├── dashboard/+page.svelte
-│       ├── users/+page.svelte
+│       ├── users/
+│       │   ├── +page.svelte         # 用户列表（点击姓名跳转详情）
+│       │   └── [id]/                # 用户详情（tab 切换）
+│       │       ├── +page.svelte
+│       │       └── +page.ts         # load 返回 { breadcrumb: 用户名 }（见第 7 节）
 │       ├── tables/+page.svelte
 │       ├── forms/+page.svelte
+│       ├── calendar/+page.svelte
+│       ├── inbox/+page.svelte
+│       ├── kanban/+page.svelte
+│       ├── orders/+page.svelte
+│       ├── cart/+page.svelte
 │       ├── components/+page.svelte
 │       ├── charts/+page.svelte
+│       ├── pricing/+page.svelte
+│       ├── billing/+page.svelte
 │       ├── profile/+page.svelte
 │       └── settings/        # 带嵌套 +layout 的设置区
 │           ├── +layout.svelte
@@ -321,9 +333,20 @@ onMount(() => {
 </Sidebar.Provider>
 ```
 
-### 错误页 `src/routes/+error.svelte`
+### 错误边界（两层）
 
-全局错误边界，用 `$app/state` 的响应式 `page` 对常见状态码做友好文案映射（404 → “Page not found”，≥500 → “Something went wrong”），并提供「返回 dashboard」按钮。
+项目用两个 `+error.svelte` 处理错误，二者都通过 `$app/state` 的响应式 `page` 读取 `page.status` / `page.error` 做状态感知文案。SvelteKit 没有单独的 404 文件——`+error.svelte` 凭 `page.status` 统一处理 404 与其它所有错误。
+
+**根错误页 `src/routes/+error.svelte`（无 shell）**：顶层错误边界，捕获未匹配路由（404）以及逃出 app shell 的 load/渲染错误。状态感知文案：
+
+- `404` → “Page not found”
+- `403` → “Access denied”
+- `>= 500` → “Something went wrong”
+- 其它 → “Unexpected error”
+
+渲染为一张干净的**品牌全屏页**（无侧边栏 / 顶栏），含大号状态码、说明文案与恢复操作（「Go to dashboard」，404 时附「Go back」、否则附「Try again」）。
+
+**应用内错误页 `src/routes/(app)/+error.svelte`（in-shell）**：当 `(app)` 下某个路由抛错时由它接管，渲染**在 AppShell 内部**，因此侧边栏与顶栏保持可用，导航不中断。同样状态感知（404 → “Page not found”，≥500 → “Something went wrong”，其它 → “Unexpected error”），并提供「Try again」/「Back to dashboard」恢复操作。
 
 ---
 
@@ -438,9 +461,25 @@ onMount(() => {
 `PageHeader` 的 props（来自 `PageHeader.svelte`）：`title: string`、`description?: string`、`actions?: Snippet`、`class?: string`。
 `PageContainer` 的 props：`children: Snippet`、`class?: string`（统一 `max-w-7xl` + 响应式 padding + `space-y-6`）。
 
+> 动态路由（如 `users/[id]`）若想让叶子面包屑显示友好标签而非原始 id 段，可加一个 `+page.ts`，让其 `load` 返回 `{ breadcrumb: '...' }`（见 7.6）。
+
 ### 7.2 在侧边栏新增导航项
 
 导航是数据驱动的——编辑 `src/lib/shell/nav.ts`，往对应 `NavGroup` 的 `items` 里加一条 `NavItem`。`AppSidebar.svelte` 会自动按 `navGroups` 渲染并高亮当前路由。
+
+当前 `navGroups`（顺序与条目均取自 `nav.ts`）：
+
+| 分组 | 条目（title → href） |
+| --- | --- |
+| **Overview** | Dashboard → `/dashboard` |
+| **Management** | Users → `/users`，Tables → `/tables`，Forms → `/forms` |
+| **Apps** | Calendar → `/calendar`，Inbox → `/inbox`，Board → `/kanban` |
+| **Commerce** | Sales Orders → `/orders`，Cart → `/cart` |
+| **Showcase** | Components → `/components`，Charts → `/charts` |
+| **Billing** | Pricing → `/pricing`，Billing → `/billing` |
+| **Account** | Profile → `/profile`，Settings → `/settings` |
+
+> `users/[id]` 没有自己的导航项——它由 Users 列表里点击姓名进入；活动态由 `findNavItem()` 按「最长 href 前缀」匹配回落到 `/users`。
 
 类型定义（来自 `nav.ts`）：
 
@@ -524,6 +563,23 @@ nav: { /* ... */, reports: '报表' }
 ```
 
 > 查找逻辑：先查当前 locale，未命中回退 `en`，再未命中则原样返回 key。所以漏翻译不会崩溃，但会显示英文或 key 本身。
+
+### 7.6 为动态路由覆写面包屑标签
+
+面包屑由 `src/lib/shell/Breadcrumbs.svelte` 根据当前路径 + 导航模型自动生成；动态段（如 `[id]`）默认会显示原始 id。要让叶子面包屑显示友好标签，在该路由下加一个 `+page.ts`，让其 `load` 返回 `{ breadcrumb: '...' }`：
+
+```ts
+// src/routes/(app)/users/[id]/+page.ts
+import { demoUsers } from '$lib/data/users';
+import type { PageLoad } from './$types';
+
+export const load: PageLoad = ({ params }) => {
+  const user = demoUsers.find((u) => u.id === params.id);
+  return { breadcrumb: user?.name };
+};
+```
+
+`Breadcrumbs.svelte` 读取 `page.data.breadcrumb`：当它是非空字符串时，用它替换**最后一个**面包屑的 label（仅当 trail 长度 > 1）。于是 `/users/u_123` 的面包屑会读作「Home › Management › Users › Olivia Martin」而不是原始 id。这就是上述 `users/[id]` 的现成示例。
 
 ---
 
