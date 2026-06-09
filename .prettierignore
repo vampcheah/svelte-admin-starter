@@ -11,3 +11,6 @@ yarn.lock
 .env
 .env.*
 *.log
+
+# Claude Code tooling dir (skills/config) — docs, not app source
+.claude/
