@@ -23,8 +23,8 @@
 :root {
 	--radius: 0.625rem;
 
-	/* Surfaces */
-	--background: oklch(0.99 0.003 269);
+	/* Surfaces — a soft cool-gray canvas so white cards/inputs lift off the page */
+	--background: oklch(0.965 0.006 269);
 	--foreground: oklch(0.21 0.025 269);
 	--card: oklch(1 0 0);
 	--card-foreground: oklch(0.21 0.025 269);
@@ -45,7 +45,9 @@
 	--destructive: oklch(0.585 0.22 25);
 
 	--border: oklch(0.925 0.006 269);
-	--input: oklch(1 0 0);
+	/* Form-control border — a touch darker than --border so inputs read as
+	   distinct fields on white cards (was pure white = invisible). */
+	--input: oklch(0.905 0.008 269);
 	--ring: oklch(0.545 0.205 269 / 50%);
 
 	/* Brand-anchored chart palette (indigo → azure → cyan → violet → pink) */
@@ -216,7 +218,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-	-webkit-box-shadow: 0 0 0px 1000px var(--input) inset !important;
+	-webkit-box-shadow: 0 0 0px 1000px var(--card) inset !important;
 	-webkit-text-fill-color: var(--foreground) !important;
 	caret-color: var(--foreground);
 	transition: background-color 5000s ease-in-out 0s !important;

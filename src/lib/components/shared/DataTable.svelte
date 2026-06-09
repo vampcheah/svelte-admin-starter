@@ -200,11 +200,11 @@
 		</div>
 	{/if}
 
-	<div class="overflow-hidden rounded-lg border border-border">
+	<div class="bg-card overflow-hidden rounded-lg border border-border">
 		<div class="overflow-x-auto">
 			<Table.Root>
 				<Table.Header>
-					<Table.Row class="bg-muted/50">
+					<Table.Row class="bg-primary/80 hover:[&>th]:!bg-primary/80">
 						{#if selectable}
 							<Table.Head class="w-10">
 								<Checkbox
@@ -218,7 +218,7 @@
 						{#each columns as column (column.key)}
 							<Table.Head
 								class={cn(
-									'text-xs font-medium tracking-wide text-muted-foreground uppercase',
+									'text-primary-foreground/80 text-xs font-medium tracking-wide uppercase',
 									alignClass(column.align),
 									column.class
 								)}
@@ -228,7 +228,7 @@
 										type="button"
 										onclick={() => toggleSort(column)}
 										class={cn(
-											'-mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
+											'text-primary-foreground/80 hover:text-primary-foreground focus-visible:ring-primary-foreground/50 -mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 font-medium transition-colors focus-visible:outline-none focus-visible:ring-2',
 											column.align === 'right' && 'flex-row-reverse'
 										)}
 										aria-label={`Sort by ${column.header}`}
@@ -236,13 +236,13 @@
 										{column.header}
 										{#if sortKey === column.key}
 											{#if sortDir === 'asc'}
-												<ArrowUp class="size-3.5 text-muted-foreground" aria-hidden="true" />
+												<ArrowUp class="text-primary-foreground size-3.5" aria-hidden="true" />
 											{:else}
-												<ArrowDown class="size-3.5 text-muted-foreground" aria-hidden="true" />
+												<ArrowDown class="text-primary-foreground size-3.5" aria-hidden="true" />
 											{/if}
 										{:else}
 											<ChevronsUpDown
-												class="size-3.5 text-muted-foreground/60"
+												class="text-primary-foreground/60 size-3.5"
 												aria-hidden="true"
 											/>
 										{/if}
