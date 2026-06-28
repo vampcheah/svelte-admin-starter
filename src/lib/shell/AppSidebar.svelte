@@ -1,25 +1,38 @@
 <!-- Admin sidebar: brand header, grouped nav with active highlighting, user footer dropdown. -->
 <script lang="ts">
+	import type { Pathname } from '$app/types';
+	import { mergeProps } from 'bits-ui';
 	import * as Sidebar from '$lib/components/ui/sidebar';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import * as ContextMenu from '$lib/components/ui/context-menu';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import { page } from '$app/state';
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
 	import { initials } from '$lib/utils/formatters';
 	import { navGroups } from './nav';
+	import { tabs } from './tabs.svelte';
 	import { logoutDialog } from './logout-dialog.svelte';
 	import { config } from '$lib/config';
+	import { t } from '$lib/i18n';
 	import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
 	import UserIcon from '@lucide/svelte/icons/user';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
 	import LogOut from '@lucide/svelte/icons/log-out';
+	import Plus from '@lucide/svelte/icons/plus';
 
 	const user = $derived(auth.user);
 	const pathname = $derived(page.url.pathname);
 
 	function isActive(href: string): boolean {
 		return pathname === href || pathname.startsWith(href + '/');
+	}
+
+	// Right-click → open a second, independent tab for the same route.
+	function openInNewTab(href: Pathname): void {
+		tabs.openNew(href);
+		if (href !== page.url.pathname) goto(resolve(href));
 	}
 </script>
 
@@ -53,18 +66,32 @@
 				<Sidebar.Menu>
 					{#each group.items as item (item.href)}
 						<Sidebar.MenuItem>
-							<Sidebar.MenuButton
-								isActive={isActive(item.href)}
-								tooltipContent={item.title}
-								class="relative transition-colors data-active:text-sidebar-primary data-active:before:absolute data-active:before:inset-y-1.5 data-active:before:left-0 data-active:before:w-0.5 data-active:before:rounded-full data-active:before:bg-sidebar-primary data-active:before:content-['']"
-							>
-								{#snippet child({ props })}
-									<a href={resolve(item.href)} {...props}>
-										<item.icon />
-										<span>{item.title}</span>
-									</a>
-								{/snippet}
-							</Sidebar.MenuButton>
+							<ContextMenu.Root>
+								<ContextMenu.Trigger>
+									{#snippet child({ props: ctxProps })}
+										<Sidebar.MenuButton
+											isActive={isActive(item.href)}
+											tooltipContent={item.title}
+											class="relative transition-colors data-active:text-sidebar-primary data-active:before:absolute data-active:before:inset-y-1.5 data-active:before:left-0 data-active:before:w-0.5 data-active:before:rounded-full data-active:before:bg-sidebar-primary data-active:before:content-['']"
+										>
+											{#snippet child({ props })}
+												<!-- mergeProps so the context-menu trigger props (oncontextmenu)
+												     compose with the button's class/data-active, not clobber them. -->
+												<a href={resolve(item.href)} {...mergeProps(props, ctxProps)}>
+													<item.icon />
+													<span>{item.title}</span>
+												</a>
+											{/snippet}
+										</Sidebar.MenuButton>
+									{/snippet}
+								</ContextMenu.Trigger>
+								<ContextMenu.Content>
+									<ContextMenu.Item onSelect={() => openInNewTab(item.href)}>
+										<Plus class="size-4" />
+										{t('common.openInNewTab')}
+									</ContextMenu.Item>
+								</ContextMenu.Content>
+							</ContextMenu.Root>
 							{#if item.badge != null}
 								<Sidebar.MenuBadge>{item.badge}</Sidebar.MenuBadge>
 							{/if}

@@ -18,7 +18,8 @@ export default {
 		language: '语言',
 		theme: '主题',
 		actions: '操作',
-		close: '关闭'
+		close: '关闭',
+		openInNewTab: '在新标签打开'
 	},
 	auth: {
 		signIn: '登录',

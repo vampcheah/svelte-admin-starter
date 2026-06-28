@@ -42,8 +42,8 @@
 	{#if page.error}
 		<div class="absolute inset-0 overflow-auto">{@render children()}</div>
 	{:else}
-		{#each tabs.items as tab (tab.href)}
-			{@const active = tab.href === tabs.active}
+		{#each tabs.items as tab (tab.id)}
+			{@const active = tab.id === tabs.active}
 			<div class={cn('absolute inset-0 overflow-auto', !active && 'hidden')}>
 				{#await loadRoute(tab.href) then components}
 					<LayoutChain

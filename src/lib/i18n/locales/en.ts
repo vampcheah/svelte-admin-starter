@@ -18,7 +18,8 @@ export default {
 		language: 'Language',
 		theme: 'Theme',
 		actions: 'Actions',
-		close: 'Close'
+		close: 'Close',
+		openInNewTab: 'Open in new tab'
 	},
 	auth: {
 		signIn: 'Sign in',

@@ -26,7 +26,7 @@
 	// once, so their per-page <title> effects clobber each other — re-assert the
 	// active tab's title on every switch instead.
 	$effect(() => {
-		const current = tabs.items.find((t) => t.href === tabs.active);
+		const current = tabs.items.find((t) => t.id === tabs.active);
 		if (current) document.title = `${current.title} · ${config.app.name}`;
 	});
 </script>
