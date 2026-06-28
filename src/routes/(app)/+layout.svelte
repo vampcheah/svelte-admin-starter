@@ -1,7 +1,9 @@
 <!--
   (app) route-group layout — mock auth guard + admin shell.
   Restores the mock session on the client; redirects to /login when not
-  authenticated, otherwise renders the children inside the AppShell.
+  authenticated. The AppShell's keep-alive outlet renders the pages itself (it
+  reads the current route from `page`); `children` is forwarded only so a load
+  error (+error.svelte) can still render in-shell.
 -->
 <script lang="ts">
 	import { onMount } from 'svelte';
@@ -24,7 +26,7 @@
 </script>
 
 {#if ready}
-	<AppShell>{@render children()}</AppShell>
+	<AppShell {children} />
 	<ConfirmDialog
 		bind:open={logoutDialog.open}
 		title={t('common.logoutConfirmTitle')}

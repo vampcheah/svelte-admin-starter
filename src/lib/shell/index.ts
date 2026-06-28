@@ -2,7 +2,10 @@
 export { default as AppShell } from './AppShell.svelte';
 export { default as AppSidebar } from './AppSidebar.svelte';
 export { default as AppHeader } from './AppHeader.svelte';
+export { default as TabBar } from './TabBar.svelte';
 export { default as Breadcrumbs } from './Breadcrumbs.svelte';
+export { tabs } from './tabs.svelte';
+export type { Tab } from './tabs.svelte';
 export { default as NotificationsMenu } from './NotificationsMenu.svelte';
 export { navGroups, findNavItem } from './nav';
 export type { NavItem, NavGroup } from './nav';

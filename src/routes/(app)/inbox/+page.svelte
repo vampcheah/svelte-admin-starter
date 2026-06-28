@@ -251,7 +251,7 @@
 	<title>Inbox · Admin Starter</title>
 </svelte:head>
 
-<PageContainer>
+<PageContainer class="flex h-full min-h-0 flex-col">
 	<PageHeader
 		title="Inbox"
 		description="Read, triage and reply to your messages — all in one place."
@@ -264,9 +264,7 @@
 		{/snippet}
 	</PageHeader>
 
-	<div
-		class="h-[calc(100vh-13rem)] min-h-[520px] overflow-hidden rounded-xl border border-border bg-card shadow-sm"
-	>
+	<div class="min-h-0 flex-1 overflow-hidden rounded-xl border border-border bg-card shadow-sm">
 		<Resizable.PaneGroup direction="horizontal" class="h-full">
 			<!-- LEFT: message list -->
 			<Resizable.Pane defaultSize={38} minSize={28} maxSize={55} class="flex flex-col">

@@ -11,6 +11,7 @@ import { resolve } from '$app/paths';
 import type { User } from './types';
 import { authProvider } from './provider';
 import { config } from '$lib/config';
+import { tabs } from '$lib/shell/tabs.svelte';
 
 const SESSION_KEY = config.auth.sessionKey;
 
@@ -98,6 +99,7 @@ class AuthStore {
 			await authProvider.logout();
 		} finally {
 			this.#clear();
+			tabs.reset();
 			void goto(resolve(config.auth.afterLogout));
 		}
 	}
