@@ -36,6 +36,21 @@ app — their archetype sources are preserved in the skill's
 `references/examples/`, so removal must never be a reason to stop following
 the template.
 
+## Maintenance: refreshing the snapshots
+
+`references/examples/` is a frozen mirror of `src/routes/` (each file suffixed
+`.txt`). Whenever template pages or layouts change **in this starter repo**,
+refresh it in the same commit:
+
+```bash
+rm -rf .claude/skills/create-page/references/examples \
+  && cp -r src/routes/. .claude/skills/create-page/references/examples/ \
+  && find .claude/skills/create-page/references/examples -type f -exec mv {} {}.txt \;
+```
+
+Do NOT run this in clones that have replaced the demo routes with real app
+pages — it would overwrite the template snapshots with app code.
+
 ## Definition of done
 
 `npm run check && npm run lint && npm run build` — all green before any page
