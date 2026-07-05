@@ -11,7 +11,7 @@
 	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
 	import { AppShell, logoutDialog } from '$lib/shell';
-	import { ConfirmDialog } from '$lib/components/shared';
+	import { ConfirmDialog, ConfirmHost } from '$lib/components/shared';
 	import { config } from '$lib/config';
 	import { t } from '$lib/i18n';
 
@@ -36,4 +36,5 @@
 		variant="destructive"
 		onConfirm={() => auth.logout()}
 	/>
+	<ConfirmHost />
 {/if}

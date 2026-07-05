@@ -7,6 +7,7 @@ export { default as StatusBadge, type BadgeTone } from './StatusBadge.svelte';
 export { default as DataTable } from './DataTable.svelte';
 export { default as EmptyState } from './EmptyState.svelte';
 export { default as ConfirmDialog } from './ConfirmDialog.svelte';
+export { default as ConfirmHost } from './ConfirmHost.svelte';
 export { default as ThemeToggle } from './ThemeToggle.svelte';
 export { default as LanguageToggle } from './LanguageToggle.svelte';
 export { default as Spinner } from './Spinner.svelte';
