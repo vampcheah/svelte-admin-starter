@@ -63,6 +63,11 @@ read them when a step needs more than the one-liner here.
 If a page mixes archetypes (e.g. a list with a detail drawer), start from the
 dominant one and borrow pieces from the others.
 
+**If the live example route no longer exists in this clone** (demo pages may
+have been removed), copy from the frozen snapshots in `references/examples/`
+instead — same files, suffixed `.txt`. Prefer the live route when both exist,
+since it may carry newer fixes.
+
 ## The rules that bite (apply to every archetype)
 
 These are enforced by `svelte-check` / `eslint` — getting them wrong fails the
