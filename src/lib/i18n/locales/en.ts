@@ -26,7 +26,11 @@ export default {
 		clone: 'Clone',
 		close: 'Close',
 		closeAll: 'Close all',
-		closeLabel: 'Close {title}'
+		closeLabel: 'Close {title}',
+		scrollStart: 'Scroll to first tab',
+		scrollPrevious: 'Scroll tabs left',
+		scrollNext: 'Scroll tabs right',
+		scrollEnd: 'Scroll to last tab'
 	},
 	dateTimePicker: {
 		pickDate: 'Pick a date',

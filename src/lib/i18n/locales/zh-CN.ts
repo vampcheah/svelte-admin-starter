@@ -26,7 +26,11 @@ export default {
 		clone: '克隆',
 		close: '关闭',
 		closeAll: '关闭全部',
-		closeLabel: '关闭 {title}'
+		closeLabel: '关闭 {title}',
+		scrollStart: '移至第一个标签页',
+		scrollPrevious: '向左移动标签页',
+		scrollNext: '向右移动标签页',
+		scrollEnd: '移至最后一个标签页'
 	},
 	dateTimePicker: {
 		pickDate: '选择日期',

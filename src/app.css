@@ -13,6 +13,15 @@
 @custom-variant data-horizontal (&[data-orientation="horizontal"]);
 @custom-variant data-vertical (&[data-orientation="vertical"]);
 
+/* Keep scroll containers operable while allowing compact navigation surfaces
+   to hide their native scrollbar chrome. */
+@utility no-scrollbar {
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
 /*
   Theme: "Refined neutral + indigo" (Linear / Vercel inspired).
   Cool near-neutral surfaces carry a faint indigo tint (hue 269); the brand
