@@ -21,6 +21,13 @@ export default {
 		close: '关闭',
 		openInNewTab: '在新标签打开'
 	},
+	tabs: {
+		open: '打开',
+		clone: '克隆',
+		close: '关闭',
+		closeAll: '关闭全部',
+		closeLabel: '关闭 {title}'
+	},
 	dateTimePicker: {
 		pickDate: '选择日期',
 		pickTime: '选择时间',

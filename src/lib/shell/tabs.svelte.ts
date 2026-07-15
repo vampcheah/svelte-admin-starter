@@ -84,6 +84,33 @@ class Tabs {
 		return this.#add(pathname, data);
 	}
 
+	/** Duplicate an existing tab beside it and focus the new independent instance. */
+	clone(id: string): Tab | null {
+		const index = this.items.findIndex((tab) => tab.id === id);
+		const source = this.items[index];
+		if (!source) return null;
+
+		const cloned: Tab = {
+			...source,
+			id: `${source.href}#${this.#seq++}`
+		};
+		this.items.splice(index + 1, 0, cloned);
+		this.active = cloned.id;
+		return cloned;
+	}
+
+	/** Move one open tab before or after another without recreating either instance. */
+	move(id: string, targetId: string, after = false): void {
+		if (id === targetId) return;
+		const from = this.items.findIndex((tab) => tab.id === id);
+		if (from === -1 || !this.items.some((tab) => tab.id === targetId)) return;
+
+		const [moved] = this.items.splice(from, 1);
+		if (!moved) return;
+		const target = this.items.findIndex((tab) => tab.id === targetId);
+		this.items.splice(target + (after ? 1 : 0), 0, moved);
+	}
+
 	/**
 	 * Close a tab by id. Returns the pathname to navigate to when the active tab
 	 * was closed (the caller navigates only if it differs from the current URL),
@@ -102,6 +129,22 @@ class Tabs {
 		const next = this.items[i] ?? this.items[i - 1];
 		this.active = next?.id ?? '';
 		return next?.href ?? '/dashboard';
+	}
+
+	/** Close every page tab and leave one focused Dashboard tab as the shell fallback. */
+	closeAll(): Pathname {
+		const home =
+			this.items.find((tab) => tab.id === this.active && tab.href === '/dashboard') ??
+			this.items.find((tab) => tab.href === '/dashboard');
+
+		if (home) {
+			this.items = [home];
+			this.active = home.id;
+		} else {
+			this.items = [];
+			this.#add('/dashboard');
+		}
+		return '/dashboard';
 	}
 
 	/** Clear every tab — call on logout so a new session starts clean. */

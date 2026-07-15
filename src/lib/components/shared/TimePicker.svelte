@@ -53,6 +53,9 @@
 	let draftHour = $state(12);
 	let draftMinute = $state(0);
 	let view = $state<ClockView>('hour');
+	let dragging = $state(false);
+	let dragPointerId = $state<number | null>(null);
+	let dragView = $state<ClockView | null>(null);
 
 	const resolvedLocale = $derived(locale ?? i18n.locale);
 	const resolvedPlaceholder = $derived(placeholder ?? t('dateTimePicker.pickTime'));
@@ -65,6 +68,10 @@
 			: Array.from({ length: 24 }, (_, index) => index)
 	);
 	const minuteItems = Array.from({ length: 12 }, (_, index) => index * 5);
+	const handAngle = $derived(
+		view === 'minute' ? draftMinute * 6 - 90 : ((hour12 ? displayHour : draftHour) % 12) * 30 - 90
+	);
+	const handRadius = $derived(view === 'hour' && !hour12 && draftHour >= 12 ? 27 : 42);
 
 	$effect(() => {
 		if (!open) return;
@@ -86,6 +93,71 @@
 			draftHour = hour;
 		}
 		view = 'minute';
+	}
+
+	function updateFromPointer(event: PointerEvent, face: HTMLDivElement): void {
+		const rect = face.getBoundingClientRect();
+		const x = event.clientX - (rect.left + rect.width / 2);
+		const y = event.clientY - (rect.top + rect.height / 2);
+		if (x === 0 && y === 0) return;
+
+		const fullTurn = Math.PI * 2;
+		const angle = (Math.atan2(y, x) + Math.PI / 2 + fullTurn) % fullTurn;
+		const activeView = dragView ?? view;
+
+		if (activeView === 'minute') {
+			draftMinute = Math.round((angle / fullTurn) * 60) % 60;
+			return;
+		}
+
+		const dialIndex = Math.round((angle / fullTurn) * 12) % 12;
+		if (hour12) {
+			const hour = dialIndex === 0 ? 12 : dialIndex;
+			draftHour = period === 'PM' ? (hour % 12) + 12 : hour % 12;
+			return;
+		}
+
+		const distance = Math.hypot(x, y);
+		const innerRing = distance < rect.width * 0.345;
+		draftHour = dialIndex + (innerRing ? 12 : 0);
+	}
+
+	function handlePointerDown(event: PointerEvent): void {
+		if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+		const face = event.currentTarget as HTMLDivElement;
+		dragging = true;
+		dragPointerId = event.pointerId;
+		dragView = view;
+		face.setPointerCapture(event.pointerId);
+		updateFromPointer(event, face);
+		event.preventDefault();
+	}
+
+	function handlePointerMove(event: PointerEvent): void {
+		if (!dragging || event.pointerId !== dragPointerId) return;
+		updateFromPointer(event, event.currentTarget as HTMLDivElement);
+		event.preventDefault();
+	}
+
+	function handlePointerUp(event: PointerEvent): void {
+		if (!dragging || event.pointerId !== dragPointerId) return;
+
+		const face = event.currentTarget as HTMLDivElement;
+		const completedView = dragView;
+		updateFromPointer(event, face);
+		dragging = false;
+		dragPointerId = null;
+		dragView = null;
+		if (face.hasPointerCapture(event.pointerId)) face.releasePointerCapture(event.pointerId);
+		if (completedView === 'hour') view = 'minute';
+	}
+
+	function handlePointerCancel(event: PointerEvent): void {
+		if (event.pointerId !== dragPointerId) return;
+		dragging = false;
+		dragPointerId = null;
+		dragView = null;
 	}
 
 	function selectPeriod(nextPeriod: Period): void {
@@ -174,24 +246,38 @@
 
 			<div class="px-4 pb-4">
 				<div
-					class="bg-muted relative mx-auto size-64 rounded-full"
+					class={cn(
+						'bg-muted relative mx-auto size-64 touch-none select-none rounded-full',
+						dragging ? 'cursor-grabbing' : 'cursor-grab'
+					)}
 					role="group"
 					aria-label={view === 'hour'
 						? t('dateTimePicker.selectHour')
 						: t('dateTimePicker.selectMinute')}
+					onpointerdown={handlePointerDown}
+					onpointermove={handlePointerMove}
+					onpointerup={handlePointerUp}
+					onpointercancel={handlePointerCancel}
 				>
+					<span
+						class="bg-primary pointer-events-none absolute left-1/2 top-1/2 z-0 h-0.5 origin-left rounded-full"
+						style={`width: ${handRadius}%; transform: translateY(-50%) rotate(${handAngle}deg)`}
+						aria-hidden="true"
+					></span>
 					{#if view === 'hour'}
-						{#each hourItems as hour, index (hour)}
+						{#each hourItems as hour (hour)}
 							<button
 								type="button"
-								style={positionStyle(index % 12, 12, !hour12 && hour >= 12 ? 27 : 42)}
+								style={positionStyle(hour % 12, 12, !hour12 && hour >= 12 ? 27 : 42)}
 								class={cn(
-									'absolute flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm tabular-nums transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+									'absolute z-10 flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm tabular-nums transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
 									hour === draftHour || (hour12 && hour === displayHour)
 										? 'bg-primary text-primary-foreground hover:bg-primary'
 										: 'text-foreground'
 								)}
-								onclick={() => selectHour(hour)}
+								onclick={(event) => {
+									if (event.detail === 0) selectHour(hour);
+								}}
 								aria-pressed={hour === draftHour || (hour12 && hour === displayHour)}
 							>
 								{hour}
@@ -203,20 +289,31 @@
 								type="button"
 								style={positionStyle(index, 12, 42)}
 								class={cn(
-									'absolute flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm tabular-nums transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
+									'absolute z-10 flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm tabular-nums transition-colors hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none',
 									minute === draftMinute
 										? 'bg-primary text-primary-foreground hover:bg-primary'
 										: 'text-foreground'
 								)}
-								onclick={() => (draftMinute = minute)}
+								onclick={(event) => {
+									if (event.detail === 0) draftMinute = minute;
+								}}
 								aria-pressed={minute === draftMinute}
 							>
 								{String(minute).padStart(2, '0')}
 							</button>
 						{/each}
+						{#if draftMinute % 5 !== 0}
+							<span
+								class="bg-primary text-primary-foreground pointer-events-none absolute z-10 flex size-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full text-sm tabular-nums"
+								style={positionStyle(draftMinute, 60, 42)}
+								aria-hidden="true"
+							>
+								{String(draftMinute).padStart(2, '0')}
+							</span>
+						{/if}
 					{/if}
 					<span
-						class="bg-primary absolute left-1/2 top-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+						class="bg-primary pointer-events-none absolute left-1/2 top-1/2 z-20 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full"
 						aria-hidden="true"
 					></span>
 				</div>

@@ -21,6 +21,13 @@ export default {
 		close: 'Close',
 		openInNewTab: 'Open in new tab'
 	},
+	tabs: {
+		open: 'Open',
+		clone: 'Clone',
+		close: 'Close',
+		closeAll: 'Close all',
+		closeLabel: 'Close {title}'
+	},
 	dateTimePicker: {
 		pickDate: 'Pick a date',
 		pickTime: 'Pick a time',
