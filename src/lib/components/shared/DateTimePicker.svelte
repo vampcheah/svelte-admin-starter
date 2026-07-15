@@ -155,6 +155,7 @@
 				{maxValue}
 				locale={resolvedLocale}
 				captionLayout="dropdown"
+				class="mx-auto w-fit"
 			/>
 
 			<div class="flex flex-wrap items-center justify-between gap-2 border-t p-3">

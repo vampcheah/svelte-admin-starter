@@ -197,7 +197,7 @@
 
 		<Popover.Content class="w-80 p-0" align="start">
 			<div class="p-4 pb-3">
-				<p class="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+				<p class="text-muted-foreground text-center text-xs font-medium tracking-wide uppercase">
 					{t('dateTimePicker.selectTime')}
 				</p>
 				<div class="mt-3 flex items-center justify-center gap-2">

@@ -85,12 +85,12 @@
 			{/snippet}
 		</Popover.Trigger>
 
-		<Popover.Content class="w-auto overflow-hidden p-0" align="start">
-			<div class="border-b px-4 py-3">
-				<p class="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+		<Popover.Content class="w-[22rem] max-w-[calc(100vw-2rem)] overflow-hidden p-0" align="start">
+			<div class="flex items-center justify-between gap-4 border-b px-4 py-3">
+				<p class="text-muted-foreground shrink-0 text-xs font-medium tracking-wide uppercase">
 					{t('dateTimePicker.selectDate')}
 				</p>
-				<p class="mt-1 min-h-6 text-base font-semibold">
+				<p class="min-h-6 min-w-0 truncate text-right text-base font-semibold">
 					{draftValue
 						? formatDateForDisplay(dateValueToString(draftValue), resolvedLocale)
 						: resolvedPlaceholder}
@@ -103,6 +103,7 @@
 				{maxValue}
 				locale={resolvedLocale}
 				captionLayout="dropdown"
+				class="mx-auto w-fit"
 			/>
 			<div class="flex items-center justify-between gap-2 border-t p-3">
 				{#if clearable}
