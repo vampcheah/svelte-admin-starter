@@ -5,14 +5,17 @@
   entry, so switching tabs is pure show/hide — nothing is destroyed until a tab
   is closed. Each tab is its own scroll container, so scroll position is per-tab.
 
-  Data selection is keyed off `page.url.pathname`, NOT `tabs.active`: SvelteKit
+	Data selection is keyed off `page.url.pathname`, NOT `tabs.active`: SvelteKit
   commits page.url + page.data together, but `tabs.active` is set later (in
   afterNavigate). Keying off the lagging active state would briefly feed the
   still-active tab the *next* route's data and crash pages that read a
   route-specific shape (e.g. tables' data.products).
 
   On a load error, page.error is set and SvelteKit makes `children` the error
-  subtree; we render that instead so +error.svelte still works.
+	subtree; we render that instead so +error.svelte still works.
+
+	The scroll containers reserve their vertical scrollbar gutter. Scrolling and
+	short pages therefore have the same content width and do not shift on switch.
 -->
 <script lang="ts">
 	import type { Snippet } from 'svelte';
@@ -40,11 +43,15 @@
 
 <div class="relative min-h-0 flex-1">
 	{#if page.error}
-		<div class="absolute inset-0 overflow-auto">{@render children()}</div>
+		<div class="absolute inset-0 overflow-auto [scrollbar-gutter:stable]">
+			{@render children()}
+		</div>
 	{:else}
 		{#each tabs.items as tab (tab.id)}
 			{@const active = tab.id === tabs.active}
-			<div class={cn('absolute inset-0 overflow-auto', !active && 'hidden')}>
+			<div
+				class={cn('absolute inset-0 overflow-auto [scrollbar-gutter:stable]', !active && 'hidden')}
+			>
 				{#await loadRoute(tab.href) then components}
 					<LayoutChain
 						{components}
