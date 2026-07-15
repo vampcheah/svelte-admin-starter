@@ -65,6 +65,7 @@
 	// The currently viewed month is driven by $state — navigation mutates it.
 	let viewYear = $state(now.getFullYear());
 	let viewMonth = $state(now.getMonth()); // 0-indexed
+	let selectedKey = $state<string | null>(null);
 
 	// Build mock events anchored to the *current* real month so the grid always
 	// has content on first load. Each entry is { day, title, category, time? }.
@@ -187,10 +188,12 @@
 		const next = new Date(viewYear, viewMonth + delta, 1);
 		viewYear = next.getFullYear();
 		viewMonth = next.getMonth();
+		selectedKey = null;
 	}
 	function goToday(): void {
 		viewYear = now.getFullYear();
 		viewMonth = now.getMonth();
+		selectedKey = null;
 	}
 
 	const isViewingCurrentMonth = $derived(
@@ -278,10 +281,18 @@
 				>
 					{#each grid as cell (cell.key)}
 						{@const overflow = cell.dayEvents.length - MAX_CHIPS}
-						<div
+						<button
+							type="button"
+							onclick={() => (selectedKey = selectedKey === cell.key ? null : cell.key)}
+							aria-label={cell.date.toLocaleDateString('en-US', { dateStyle: 'full' })}
+							aria-pressed={selectedKey === cell.key}
 							class={cn(
-								'bg-card relative flex min-h-20 flex-col gap-1 p-1.5 sm:min-h-28 sm:p-2',
-								!cell.inMonth && 'bg-muted/40'
+								'bg-card relative flex min-h-20 cursor-pointer flex-col gap-1 p-1.5 text-left transition-colors hover:bg-sky-100 focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset focus-visible:outline-none sm:min-h-28 sm:p-2 dark:hover:bg-sky-950/30',
+								!cell.inMonth && 'bg-muted/40 hover:bg-muted/70 dark:hover:bg-muted/55',
+								cell.isToday &&
+									'bg-sky-200/80 hover:bg-sky-300/80 dark:bg-sky-950/45 dark:hover:bg-sky-950/65',
+								selectedKey === cell.key &&
+									'bg-blue-300/75 ring-2 ring-blue-500/60 ring-inset hover:bg-blue-300/90 dark:bg-blue-900/60 dark:ring-blue-400/60 dark:hover:bg-blue-900/75'
 							)}
 						>
 							<!-- Day number; today gets an indigo pill -->
@@ -323,7 +334,7 @@
 									</span>
 								{/if}
 							</div>
-						</div>
+						</button>
 					{/each}
 				</div>
 
