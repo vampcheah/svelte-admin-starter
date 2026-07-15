@@ -1,0 +1,4 @@
+interface:
+  display_name: 'Svelte Admin Page Builder'
+  short_description: 'Create native pages in the Svelte admin starter'
+  default_prompt: 'Use $create-page to add a page that follows this Svelte admin starter architecture and components.'

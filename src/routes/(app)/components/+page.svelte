@@ -29,7 +29,14 @@
 	import { Slider } from '$lib/components/ui/slider';
 	import { Progress } from '$lib/components/ui/progress';
 	import { Skeleton } from '$lib/components/ui/skeleton';
-	import { PageContainer, PageHeader } from '$lib/components/shared';
+	import {
+		DatePicker,
+		DateTimePicker,
+		PageContainer,
+		PageHeader,
+		TimePicker
+	} from '$lib/components/shared';
+	import { t } from '$lib/i18n';
 	import { toast } from 'svelte-sonner';
 	import InfoIcon from '@lucide/svelte/icons/info';
 	import AlertTriangleIcon from '@lucide/svelte/icons/triangle-alert';
@@ -47,6 +54,9 @@
 	let sliderValue = $state(60);
 	let progressValue = $state(45);
 	let page = $state(2);
+	let dateValue = $state('2026-07-15');
+	let timeValue = $state('13:30');
+	let dateTimeValue = $state('2026-07-15T13:30');
 
 	const fruits = [
 		{ value: 'apple', label: 'Apple' },
@@ -158,6 +168,31 @@
 				<div class="grid gap-2">
 					<Label for="demo-disabled">Disabled</Label>
 					<Input id="demo-disabled" value="Cannot edit" disabled />
+				</div>
+			</Card.Content>
+		</Card.Root>
+
+		<!-- Date and time pickers -->
+		<Card.Root class="lg:col-span-2">
+			<Card.Header>
+				<Card.Title>{t('components.dateTimeTitle')}</Card.Title>
+				<Card.Description>{t('components.dateTimeDescription')}</Card.Description>
+			</Card.Header>
+			<Card.Content class="grid gap-5 md:grid-cols-3">
+				<div class="grid content-start gap-2">
+					<Label for="demo-date-picker">{t('dateTimePicker.date')}</Label>
+					<DatePicker id="demo-date-picker" bind:value={dateValue} />
+					<code class="text-muted-foreground truncate text-xs">{dateValue || '—'}</code>
+				</div>
+				<div class="grid content-start gap-2">
+					<Label for="demo-time-picker">{t('dateTimePicker.time')}</Label>
+					<TimePicker id="demo-time-picker" bind:value={timeValue} />
+					<code class="text-muted-foreground truncate text-xs">{timeValue || '—'}</code>
+				</div>
+				<div class="grid content-start gap-2">
+					<Label for="demo-date-time-picker">{t('dateTimePicker.pickDateTime')}</Label>
+					<DateTimePicker id="demo-date-time-picker" bind:value={dateTimeValue} />
+					<code class="text-muted-foreground truncate text-xs">{dateTimeValue || '—'}</code>
 				</div>
 			</Card.Content>
 		</Card.Root>

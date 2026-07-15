@@ -19,9 +19,17 @@
 >
 	<CalendarPrimitive.YearSelect bind:ref class="absolute inset-0 opacity-0" {...restProps}>
 		{#snippet child({ props, yearItems, selectedYearItem })}
-			<select {...props} {value}>
+			<select
+				{...props}
+				{value}
+				class={cn(
+					String(props.class ?? ''),
+					'bg-popover text-popover-foreground [color-scheme:light] dark:[color-scheme:dark]'
+				)}
+			>
 				{#each yearItems as yearItem (yearItem.value)}
 					<option
+						class="bg-popover text-popover-foreground"
 						value={yearItem.value}
 						selected={value !== undefined
 							? yearItem.value === value

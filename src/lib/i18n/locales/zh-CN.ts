@@ -21,6 +21,24 @@ export default {
 		close: '关闭',
 		openInNewTab: '在新标签打开'
 	},
+	dateTimePicker: {
+		pickDate: '选择日期',
+		pickTime: '选择时间',
+		pickDateTime: '选择日期和时间',
+		selectDate: '选择日期',
+		selectTime: '选择时间',
+		selectHour: '选择小时',
+		selectMinute: '选择分钟',
+		date: '日期',
+		time: '时间',
+		hour: '小时',
+		minute: '分钟',
+		am: '上午',
+		pm: '下午',
+		now: '现在',
+		clear: '清除',
+		apply: '应用'
+	},
 	auth: {
 		signIn: '登录',
 		signOut: '退出登录',
@@ -31,6 +49,10 @@ export default {
 	dashboard: {
 		greeting: '欢迎回来，{name}',
 		overview: '概览'
+	},
+	components: {
+		dateTimeTitle: '日期与时间选择器',
+		dateTimeDescription: '可交互的日期、时间和日期时间组合字段。'
 	},
 	nav: {
 		dashboard: '仪表盘',

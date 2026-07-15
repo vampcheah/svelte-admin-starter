@@ -21,6 +21,24 @@ export default {
 		close: 'Close',
 		openInNewTab: 'Open in new tab'
 	},
+	dateTimePicker: {
+		pickDate: 'Pick a date',
+		pickTime: 'Pick a time',
+		pickDateTime: 'Pick a date and time',
+		selectDate: 'Select date',
+		selectTime: 'Select time',
+		selectHour: 'Select hour',
+		selectMinute: 'Select minute',
+		date: 'Date',
+		time: 'Time',
+		hour: 'Hour',
+		minute: 'Minute',
+		am: 'AM',
+		pm: 'PM',
+		now: 'Now',
+		clear: 'Clear',
+		apply: 'Apply'
+	},
 	auth: {
 		signIn: 'Sign in',
 		signOut: 'Sign out',
@@ -31,6 +49,10 @@ export default {
 	dashboard: {
 		greeting: 'Welcome back, {name}',
 		overview: 'Overview'
+	},
+	components: {
+		dateTimeTitle: 'Date & time pickers',
+		dateTimeDescription: 'Interactive date, time and combined date-time fields.'
 	},
 	nav: {
 		dashboard: 'Dashboard',

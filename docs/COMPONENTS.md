@@ -16,6 +16,7 @@
   - [EmptyState](#emptystate)
   - [Spinner](#spinner)
   - [SearchInput](#searchinput)
+  - [DatePicker / TimePicker / DateTimePicker](#datepicker--timepicker--datetimepicker)
   - [ConfirmDialog](#confirmdialog)
   - [ThemeToggle](#themetoggle)
   - [LanguageToggle](#languagetoggle)
@@ -124,6 +125,7 @@ CLI 会把组件源码写入 `src/lib/components/ui/<component>/`。**删除**�
 import {
   PageContainer, PageHeader, StatCard, StatusBadge, DataTable, EmptyState,
   ConfirmDialog, ThemeToggle, LanguageToggle, Spinner, SearchInput, CommandMenu,
+  DatePicker, TimePicker, DateTimePicker,
   type Column, type BadgeTone
 } from '$lib/components/shared';
 ```
@@ -309,6 +311,34 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 </script>
 
 <SearchInput bind:value={query} placeholder="Search users..." />
+```
+
+---
+
+### DatePicker / TimePicker / DateTimePicker
+
+三个可确认、可清除的日期时间表单组件，均组合现有的 `Popover`、`Calendar`、`Input` 和 `Button` 原语，并自动跟随主题与中英文 locale。它们使用可直接提交和序列化的本地时间字符串，不在组件内部做时区转换：
+
+| 组件             | `value` 格式       | 主要交互                                |
+| ---------------- | ------------------ | --------------------------------------- |
+| `DatePicker`     | `YYYY-MM-DD`       | 月历、月份/年份下拉、最小/最大日期      |
+| `TimePicker`     | `HH:mm`            | 时钟表盘、小时/分钟切换、12/24 小时显示 |
+| `DateTimePicker` | `YYYY-MM-DDTHH:mm` | 日期输入、时间输入、月历、快捷「现在」  |
+
+共同 props 包括可双向绑定的 `value` 与 `open`，以及 `id`、`name`、`placeholder`、`locale`、`disabled`、`required`、`clearable`、`class`、`onValueChange` 和 aria 属性。`DatePicker` / `DateTimePicker` 另支持 `minValue`、`maxValue`；`TimePicker` / `DateTimePicker` 支持 `hour12`。
+
+```svelte
+<script lang="ts">
+	import { DatePicker, TimePicker, DateTimePicker } from '$lib/components/shared';
+
+	let date = $state('');
+	let time = $state('');
+	let scheduledAt = $state('');
+</script>
+
+<DatePicker bind:value={date} name="dueDate" />
+<TimePicker bind:value={time} name="startTime" hour12={false} />
+<DateTimePicker bind:value={scheduledAt} name="scheduledAt" />
 ```
 
 ---

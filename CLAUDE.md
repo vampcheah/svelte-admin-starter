@@ -7,11 +7,12 @@ session, in every clone.
 ## Creating or reworking pages
 
 - **Always use the `create-page` skill** (`.claude/skills/create-page/`) when
-  adding any page/route/view. Never hand-write a `+page.svelte` from scratch.
-- New pages are built by **copying an existing archetype page** (list/CRUD,
-  form, detail, overview — see the skill's archetype table) and adapting it.
-- If the live archetype route was removed in this clone, copy from the frozen
-  snapshots in `.claude/skills/create-page/references/examples/` instead.
+  adding a page/route/view or structurally reworking a page. Small copy,
+  styling, example, or component-insertion edits can patch the target directly.
+- The canonical cross-client skill lives at `.agents/skills/create-page/`;
+  `.claude/skills/create-page/` is only the Claude Code discovery entry.
+- Inspect current routes and components as behavioral references. Do not copy
+  an unrelated page wholesale or depend on frozen page snapshots.
 
 ## UI must come from the template's system
 
@@ -26,30 +27,15 @@ session, in every clone.
 
 ## Protected paths — never delete or rewrite wholesale
 
-- `.claude/skills/` — the scaffolding skill and its frozen examples.
+- `.agents/skills/` and `.claude/skills/` — reusable agent workflows and their
+  client-specific discovery entries.
 - `src/lib/components/shared/` and `src/lib/components/ui/` — the component
   library every page depends on.
 - `CLAUDE.md`, `docs/DEVELOPMENT.md`, `docs/COMPONENTS.md`, `docs/DESIGN.md`.
 
 Demo routes under `src/routes/(app)/` **may** be removed when building a real
-app — their archetype sources are preserved in the skill's
-`references/examples/`, so removal must never be a reason to stop following
-the template.
-
-## Maintenance: refreshing the snapshots
-
-`references/examples/` is a frozen mirror of `src/routes/` (each file suffixed
-`.txt`). Whenever template pages or layouts change **in this starter repo**,
-refresh it in the same commit:
-
-```bash
-rm -rf .claude/skills/create-page/references/examples \
-  && cp -r src/routes/. .claude/skills/create-page/references/examples/ \
-  && find .claude/skills/create-page/references/examples -type f -exec mv {} {}.txt \;
-```
-
-Do NOT run this in clones that have replaced the demo routes with real app
-pages — it would overwrite the template snapshots with app code.
+app. The skill describes architecture, page creation, and component use without
+depending on those demo routes remaining present.
 
 ## Definition of done
 
