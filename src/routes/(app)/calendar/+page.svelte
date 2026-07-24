@@ -220,7 +220,7 @@
 
 				<!-- Month grid: 6 weeks × 7 days -->
 				<div
-					class="border-border bg-border grid grid-cols-7 gap-px overflow-hidden rounded-lg border"
+					class="border-slate-300 bg-slate-300 grid grid-cols-7 gap-px overflow-hidden rounded-lg border dark:border-white/20 dark:bg-white/20"
 				>
 					{#each grid as cell (cell.key)}
 						{@const dayEvents = eventsByDay.get(cell.key) ?? []}
