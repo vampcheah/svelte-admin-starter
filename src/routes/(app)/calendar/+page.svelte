@@ -1,9 +1,8 @@
 <!--
-  Calendar — a month-view schedule page. A real month grid (6 weeks, leading and
-  trailing days from adjacent months) computed from `new Date()`, with ◀ / ▶ /
-  Today navigation, day cells showing up to three event chips (colored by
-  category) with a "+N more" overflow, a category legend, and an "Upcoming" list.
-  All events are mock data — there is no backend.
+  Calendar — a month-view schedule page. Month grid (6 weeks) computed via
+  $lib/calendar.ts helpers to stay clean and reactivity-warning free. Includes
+  month jump selector, today highlight, selected cell focus, chip overflows,
+  and upcoming event stream.
 -->
 <script lang="ts">
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
@@ -17,7 +16,11 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
+	import { Input } from '$lib/components/ui/input';
+	import { Label } from '$lib/components/ui/label';
 	import { cn } from '$lib/utils';
+	import { i18n, t } from '$lib/i18n';
+	import { buildGrid, monthLabel, shiftMonth, today, weekdayLabels, ymd } from '$lib/calendar';
 
 	type Category = 'meeting' | 'review' | 'deadline' | 'personal';
 
@@ -25,50 +28,44 @@
 		id: string;
 		title: string;
 		date: Date;
+		dateKey: string;
 		category: Category;
 		time?: string;
 	}
 
-	// Category metadata: label + soft tint (token-safe status tints), all
-	// resolved from a single source so chips, dots and the legend stay in sync.
-	const CATEGORIES: Record<Category, { label: string; chip: string; dot: string }> = {
+	const CATEGORIES: Record<Category, { labelKey: string; chip: string; dot: string }> = {
 		meeting: {
-			label: 'Meeting',
+			labelKey: 'calendar.categoryMeeting',
 			chip: 'bg-primary/10 text-primary',
 			dot: 'bg-primary'
 		},
 		review: {
-			label: 'Review',
+			labelKey: 'calendar.categoryReview',
 			chip: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
 			dot: 'bg-blue-500'
 		},
 		deadline: {
-			label: 'Deadline',
+			labelKey: 'calendar.categoryDeadline',
 			chip: 'bg-red-500/10 text-red-600 dark:text-red-400',
 			dot: 'bg-red-500'
 		},
 		personal: {
-			label: 'Personal',
+			labelKey: 'calendar.categoryPersonal',
 			chip: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
 			dot: 'bg-emerald-500'
 		}
 	};
 
 	const CATEGORY_ORDER: Category[] = ['meeting', 'review', 'deadline', 'personal'];
-	const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	const MAX_CHIPS = 3;
 
-	// "Now" is captured once so "today" highlighting and the initial view are stable.
-	const now = new Date();
-	const todayKey = dateKey(now);
+	const t0 = today();
+	const todayKey = t0.key;
 
-	// The currently viewed month is driven by $state — navigation mutates it.
-	let viewYear = $state(now.getFullYear());
-	let viewMonth = $state(now.getMonth()); // 0-indexed
+	let viewYear = $state(t0.year);
+	let viewMonth = $state(t0.month); // 0-indexed
 	let selectedKey = $state<string | null>(null);
 
-	// Build mock events anchored to the *current* real month so the grid always
-	// has content on first load. Each entry is { day, title, category, time? }.
 	const SEED: { day: number; title: string; category: Category; time?: string }[] = [
 		{ day: 2, title: 'Sprint planning', category: 'meeting', time: '09:30' },
 		{ day: 5, title: 'Design review', category: 'review', time: '14:00' },
@@ -84,127 +81,79 @@
 		{ day: 30, title: 'Retro', category: 'meeting', time: '13:00' }
 	];
 
-	const events: CalendarEvent[] = SEED.map((e, i) => ({
-		id: `evt-${i}`,
-		title: e.title,
-		category: e.category,
-		time: e.time,
-		// Clamp the day to the real month length so seeds never overflow.
-		date: new Date(
-			now.getFullYear(),
-			now.getMonth(),
-			Math.min(e.day, daysInMonth(now.getFullYear(), now.getMonth()))
-		)
-	}));
+	const events: CalendarEvent[] = SEED.map((e, i) => {
+		const d = new Date(t0.year, t0.month, Math.min(e.day, 28));
+		return {
+			id: `evt-${i}`,
+			title: e.title,
+			category: e.category,
+			time: e.time,
+			date: d,
+			dateKey: ymd(d)
+		};
+	});
 
-	// --- Date helpers ---------------------------------------------------------
-	function dateKey(d: Date): string {
-		return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-	}
-	function daysInMonth(year: number, month: number): number {
-		return new Date(year, month + 1, 0).getDate();
-	}
+	const grid = $derived(buildGrid(viewYear, viewMonth, todayKey));
+	const weekdays = $derived(weekdayLabels(i18n.locale));
+	const heading = $derived(monthLabel(viewYear, viewMonth, i18n.locale));
+	const monthInput = $derived(`${viewYear}-${String(viewMonth + 1).padStart(2, '0')}`);
 
-	// Index events by their date key for O(1) lookups while building the grid.
 	const eventsByDay = $derived.by(() => {
-		// Transient local rebuilt on each derivation — reactivity comes from $derived,
-		// not the Map itself, so a plain Map is correct here (not SvelteMap).
 		// eslint-disable-next-line svelte/prefer-svelte-reactivity
 		const map = new Map<string, CalendarEvent[]>();
 		for (const ev of events) {
-			const key = dateKey(ev.date);
-			const bucket = map.get(key);
+			const bucket = map.get(ev.dateKey);
 			if (bucket) bucket.push(ev);
-			else map.set(key, [ev]);
+			else map.set(ev.dateKey, [ev]);
 		}
-		// Keep each day's events ordered by time (timed first, then all-day).
 		for (const bucket of map.values()) {
 			bucket.sort((a, b) => (a.time ?? '99:99').localeCompare(b.time ?? '99:99'));
 		}
 		return map;
 	});
 
-	interface DayCell {
-		date: Date;
-		key: string;
-		inMonth: boolean;
-		isToday: boolean;
-		dayEvents: CalendarEvent[];
-	}
-
-	// The full 6×7 grid for the viewed month, including dimmed adjacent-month days.
-	const grid = $derived.by<DayCell[]>(() => {
-		const firstOfMonth = new Date(viewYear, viewMonth, 1);
-		// Sunday-based offset: how many leading days to borrow from the prev month.
-		// Transient locals inside $derived — plain Date is correct (not SvelteDate).
-		// eslint-disable-next-line svelte/prefer-svelte-reactivity
-		const start = new Date(firstOfMonth);
-		start.setDate(start.getDate() - firstOfMonth.getDay());
-
-		const cells: DayCell[] = [];
-		for (let i = 0; i < 42; i++) {
-			// eslint-disable-next-line svelte/prefer-svelte-reactivity
-			const date = new Date(start);
-			date.setDate(start.getDate() + i);
-			const key = dateKey(date);
-			cells.push({
-				date,
-				key,
-				inMonth: date.getMonth() === viewMonth,
-				isToday: key === todayKey,
-				dayEvents: eventsByDay.get(key) ?? []
-			});
-		}
-		return cells;
-	});
-
-	const monthLabel = $derived(
-		new Date(viewYear, viewMonth, 1).toLocaleString('en-US', {
-			month: 'long',
-			year: 'numeric'
-		})
-	);
-
-	// Count of events that actually fall in the viewed month, for the subheading.
 	const monthEventCount = $derived(
 		events.filter((e) => e.date.getFullYear() === viewYear && e.date.getMonth() === viewMonth)
 			.length
 	);
 
-	// The next handful of upcoming events relative to "now" (chronological).
 	const upcoming = $derived(
 		[...events]
-			.filter((e) => e.date.getTime() >= new Date(todayKey).getTime())
+			.filter((e) => e.dateKey >= todayKey)
 			.sort((a, b) => {
-				const byDate = a.date.getTime() - b.date.getTime();
+				const byDate = a.dateKey.localeCompare(b.dateKey);
 				if (byDate !== 0) return byDate;
 				return (a.time ?? '99:99').localeCompare(b.time ?? '99:99');
 			})
 			.slice(0, 5)
 	);
 
-	// --- Navigation -----------------------------------------------------------
-	function shiftMonth(delta: number): void {
-		const next = new Date(viewYear, viewMonth + delta, 1);
-		viewYear = next.getFullYear();
-		viewMonth = next.getMonth();
+	function move(delta: number): void {
 		selectedKey = null;
-	}
-	function goToday(): void {
-		viewYear = now.getFullYear();
-		viewMonth = now.getMonth();
-		selectedKey = null;
+		({ year: viewYear, month: viewMonth } = shiftMonth(viewYear, viewMonth, delta));
 	}
 
-	const isViewingCurrentMonth = $derived(
-		viewYear === now.getFullYear() && viewMonth === now.getMonth()
-	);
+	function goToday(): void {
+		selectedKey = null;
+		viewYear = t0.year;
+		viewMonth = t0.month;
+	}
+
+	function jumpToMonth(event: Event): void {
+		const [year, month] = (event.currentTarget as HTMLInputElement).value.split('-').map(Number);
+		if (!year || month < 1 || month > 12) return;
+		selectedKey = null;
+		viewYear = year;
+		viewMonth = month - 1;
+	}
+
+	const isViewingCurrentMonth = $derived(viewYear === t0.year && viewMonth === t0.month);
 
 	function formatUpcomingDate(d: Date): string {
-		return d.toLocaleString('en-US', { month: 'short', day: 'numeric' });
+		return d.toLocaleString(i18n.locale, { month: 'short', day: 'numeric' });
 	}
 	function weekdayShort(d: Date): string {
-		return d.toLocaleString('en-US', { weekday: 'short' });
+		return d.toLocaleString(i18n.locale, { weekday: 'short' });
 	}
 </script>
 
@@ -215,10 +164,29 @@
 <PageContainer>
 	<PageHeader title="Calendar" description="Plan your month and keep track of upcoming events.">
 		{#snippet actions()}
-			<Button>
-				<Plus class="size-4" aria-hidden="true" />
-				New event
-			</Button>
+			<div class="flex flex-wrap items-center gap-1.5">
+				<Label for="calendar-month-jump" class="sr-only">Jump to month</Label>
+				<Input
+					id="calendar-month-jump"
+					type="month"
+					value={monthInput}
+					onchange={jumpToMonth}
+					class="h-8 w-36"
+				/>
+				<Button variant="outline" size="icon" onclick={() => move(-1)} aria-label="Previous month">
+					<ChevronLeft class="size-4" aria-hidden="true" />
+				</Button>
+				<Button variant="outline" size="sm" onclick={goToday} disabled={isViewingCurrentMonth}>
+					Today
+				</Button>
+				<Button variant="outline" size="icon" onclick={() => move(1)} aria-label="Next month">
+					<ChevronRight class="size-4" aria-hidden="true" />
+				</Button>
+				<Button class="ml-1">
+					<Plus class="size-4" aria-hidden="true" />
+					New event
+				</Button>
+			</div>
 		{/snippet}
 	</PageHeader>
 
@@ -229,36 +197,14 @@
 				class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0"
 			>
 				<div class="space-y-1">
-					<Card.Title class="flex items-center gap-2 text-lg">
+					<Card.Title class="flex items-center gap-2 text-lg capitalize">
 						<CalendarDays class="text-muted-foreground size-5" aria-hidden="true" />
-						<span class="tabular-nums">{monthLabel}</span>
+						<span class="tabular-nums">{heading}</span>
 					</Card.Title>
 					<Card.Description>
 						{monthEventCount}
 						{monthEventCount === 1 ? 'event' : 'events'} this month
 					</Card.Description>
-				</div>
-
-				<div class="flex items-center gap-1.5">
-					<Button
-						variant="outline"
-						size="icon"
-						onclick={() => shiftMonth(-1)}
-						aria-label="Previous month"
-					>
-						<ChevronLeft class="size-4" aria-hidden="true" />
-					</Button>
-					<Button variant="outline" size="sm" onclick={goToday} disabled={isViewingCurrentMonth}>
-						Today
-					</Button>
-					<Button
-						variant="outline"
-						size="icon"
-						onclick={() => shiftMonth(1)}
-						aria-label="Next month"
-					>
-						<ChevronRight class="size-4" aria-hidden="true" />
-					</Button>
 				</div>
 			</Card.Header>
 
@@ -267,11 +213,8 @@
 				<div
 					class="text-muted-foreground mb-2 grid grid-cols-7 gap-px text-center text-xs font-medium"
 				>
-					{#each WEEKDAYS as day (day)}
-						<div class="py-1">
-							<span class="hidden sm:inline">{day}</span>
-							<span class="sm:hidden">{day.charAt(0)}</span>
-						</div>
+					{#each weekdays as day (day)}
+						<div class="py-1">{day}</div>
 					{/each}
 				</div>
 
@@ -280,22 +223,23 @@
 					class="border-border bg-border grid grid-cols-7 gap-px overflow-hidden rounded-lg border"
 				>
 					{#each grid as cell (cell.key)}
-						{@const overflow = cell.dayEvents.length - MAX_CHIPS}
+						{@const dayEvents = eventsByDay.get(cell.key) ?? []}
+						{@const overflow = dayEvents.length - MAX_CHIPS}
 						<button
 							type="button"
 							onclick={() => (selectedKey = selectedKey === cell.key ? null : cell.key)}
-							aria-label={cell.date.toLocaleDateString('en-US', { dateStyle: 'full' })}
+							aria-label={cell.key}
 							aria-pressed={selectedKey === cell.key}
 							class={cn(
-								'bg-card relative flex min-h-20 cursor-pointer flex-col gap-1 p-1.5 text-left transition-colors hover:bg-sky-100 focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset focus-visible:outline-none sm:min-h-28 sm:p-2 dark:hover:bg-sky-950/30',
-								!cell.inMonth && 'bg-muted/40 hover:bg-muted/70 dark:hover:bg-muted/55',
+								'bg-card relative flex min-h-20 cursor-pointer flex-col gap-1 p-1.5 text-left transition-colors hover:bg-amber-100/70 focus-visible:z-10 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset focus-visible:outline-none sm:min-h-28 sm:p-2 dark:hover:bg-amber-300/15',
+								!cell.inMonth && 'bg-muted/40 text-muted-foreground hover:bg-muted/60',
 								cell.isToday &&
 									'bg-sky-200/80 hover:bg-sky-300/80 dark:bg-sky-950/45 dark:hover:bg-sky-950/65',
 								selectedKey === cell.key &&
 									'bg-blue-300/75 ring-2 ring-blue-500/60 ring-inset hover:bg-blue-300/90 dark:bg-blue-900/60 dark:ring-blue-400/60 dark:hover:bg-blue-900/75'
 							)}
 						>
-							<!-- Day number; today gets an indigo pill -->
+							<!-- Day number -->
 							<div class="flex items-center justify-between">
 								<span
 									class={cn(
@@ -307,13 +251,13 @@
 												: 'text-muted-foreground/60'
 									)}
 								>
-									{cell.date.getDate()}
+									{cell.day}
 								</span>
 							</div>
 
 							<!-- Event chips (up to MAX_CHIPS) + overflow indicator -->
 							<div class="flex flex-col gap-1">
-								{#each cell.dayEvents.slice(0, MAX_CHIPS) as ev (ev.id)}
+								{#each dayEvents.slice(0, MAX_CHIPS) as ev (ev.id)}
 									<div
 										class={cn(
 											'flex items-center gap-1 rounded-md px-1.5 py-0.5 text-left text-[11px] leading-tight font-medium',
@@ -344,7 +288,9 @@
 						<div class="flex items-center gap-1.5">
 							<span class={cn('size-2.5 rounded-full', CATEGORIES[category].dot)} aria-hidden="true"
 							></span>
-							<span class="text-muted-foreground text-xs">{CATEGORIES[category].label}</span>
+							<span class="text-muted-foreground text-xs"
+								>{CATEGORIES[category].labelKey ? t(CATEGORIES[category].labelKey) : category}</span
+							>
 						</div>
 					{/each}
 				</div>
@@ -398,7 +344,9 @@
 									variant="outline"
 									class={cn('shrink-0 border-transparent', CATEGORIES[ev.category].chip)}
 								>
-									{CATEGORIES[ev.category].label}
+									{CATEGORIES[ev.category].labelKey
+										? t(CATEGORIES[ev.category].labelKey)
+										: ev.category}
 								</Badge>
 							</li>
 						{/each}

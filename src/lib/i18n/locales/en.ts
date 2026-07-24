@@ -67,6 +67,12 @@ export default {
 		confirmTitle: 'Confirm download?',
 		confirmDesc: 'The file will open or download in a new window.'
 	},
+	calendar: {
+		categoryMeeting: 'Meeting',
+		categoryReview: 'Review',
+		categoryDeadline: 'Deadline',
+		categoryPersonal: 'Personal'
+	},
 	dateTimePicker: {
 		pickDate: 'Pick a date',
 		pickTime: 'Pick a time',

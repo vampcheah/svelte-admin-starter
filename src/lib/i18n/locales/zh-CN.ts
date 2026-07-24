@@ -67,6 +67,12 @@ export default {
 		confirmTitle: '确认下载文件？',
 		confirmDesc: '文件将会在新窗口中打开或下载。'
 	},
+	calendar: {
+		categoryMeeting: '会议',
+		categoryReview: '评审 / 审核',
+		categoryDeadline: '截止日',
+		categoryPersonal: '个人事项'
+	},
 	dateTimePicker: {
 		pickDate: '选择日期',
 		pickTime: '选择时间',
