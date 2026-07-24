@@ -16,5 +16,8 @@ export { default as CommandMenu } from './CommandMenu.svelte';
 export { default as DatePicker } from './DatePicker.svelte';
 export { default as TimePicker } from './TimePicker.svelte';
 export { default as DateTimePicker } from './DateTimePicker.svelte';
+export { default as LineItemsEditor } from './LineItemsEditor.svelte';
+export { default as QuickCreateClient } from './QuickCreateClient.svelte';
 
 export type { Column } from './DataTable.svelte';
+export type { EditableLine } from './LineItemsEditor.svelte';

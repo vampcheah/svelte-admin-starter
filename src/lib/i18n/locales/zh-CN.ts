@@ -17,20 +17,55 @@ export default {
 		settings: '设置',
 		language: '语言',
 		theme: '主题',
-		actions: '操作',
-		close: '关闭',
-		openInNewTab: '在新标签打开'
+		download: '下载',
+		description: '描述',
+		name: '名称',
+		saving: '保存中...',
+		createFailed: '创建失败',
+		tabLimitTitle: '打开标签页较多',
+		tabLimitDescription: '当前已打开 {count} 个标签页，继续打开可能会影响流畅度。',
+		forceContinue: '继续打开'
 	},
 	tabs: {
 		open: '打开',
 		clone: '克隆',
+		refresh: '刷新',
 		close: '关闭',
+		closeOthers: '关闭其他',
+		closeLeft: '关闭左侧',
+		closeRight: '关闭右侧',
 		closeAll: '关闭全部',
 		closeLabel: '关闭 {title}',
+		navigationLabel: '标签页导航',
 		scrollStart: '移至第一个标签页',
 		scrollPrevious: '向左移动标签页',
 		scrollNext: '向右移动标签页',
 		scrollEnd: '移至最后一个标签页'
+	},
+	sales: {
+		item: '项目 / 说明',
+		qty: '数量',
+		unitPrice: '单价',
+		discount: '折扣 %',
+		taxable: '计税',
+		lineTotal: '小计',
+		removeItem: '移除行',
+		addItem: '添加行',
+		addFromCatalog: '从项目库添加...',
+		noItems: '暂无明细项目',
+		subtotal: '小计',
+		tax: '税额',
+		total: '合计'
+	},
+	clients: {
+		newClient: '新建客户',
+		quickCreateHint: '快速添加一个新客户实体',
+		nameRequired: '客户名称必填',
+		clientCreated: '客户已创建'
+	},
+	download: {
+		confirmTitle: '确认下载文件？',
+		confirmDesc: '文件将会在新窗口中打开或下载。'
 	},
 	dateTimePicker: {
 		pickDate: '选择日期',

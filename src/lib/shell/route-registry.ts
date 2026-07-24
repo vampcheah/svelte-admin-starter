@@ -9,17 +9,10 @@
 // Lazy globs (not { eager: true }) preserve code-splitting — each route's chunk
 // (e.g. charts' ~250kB) loads only when its tab first opens. The (app) layout
 // gates rendering on mount, so all of this runs client-side.
-//
-// ponytail: layout matching is plain path-prefix. The repo has one nested,
-// load-less layout (settings) and one dynamic route (users/[id]); a *dynamic*
-// nested layout would need regex matching here — add it then, not now.
 import type { Component } from 'svelte';
 
 type Loader = () => Promise<{ default: Component }>;
 
-// import.meta.glob can't name the "(app)" route group directly — picomatch reads
-// "(app)" as an extglob and matches nothing. So glob every route, then keep only
-// the (app) group by path. (The root redirect and (auth) pages are filtered out.)
 function pickAppGroup(mods: Record<string, () => Promise<unknown>>): Record<string, Loader> {
 	return Object.fromEntries(
 		Object.entries(mods).filter(([file]) => file.includes('/(app)/'))
@@ -29,13 +22,11 @@ function pickAppGroup(mods: Record<string, () => Promise<unknown>>): Record<stri
 const PAGES = pickAppGroup(import.meta.glob('/src/routes/**/+page.svelte'));
 const LAYOUTS = pickAppGroup(import.meta.glob('/src/routes/**/+layout.svelte'));
 
-// '/src/routes/(app)/users/[id]/+page.svelte' -> '/users/[id]'
-// Route groups like '(app)' never appear in the URL, so strip them.
 function toRouteId(file: string, suffix: string): string {
 	const id = file
 		.slice('/src/routes'.length, -suffix.length)
-		.replace(/\/\([^/]+\)/g, '') // drop (group) segments
-		.replace(/\/$/, ''); // drop trailing slash
+		.replace(/\/\([^/]+\)/g, '')
+		.replace(/\/$/, '');
 	return id === '' ? '/' : id;
 }
 
@@ -47,14 +38,13 @@ interface PageRoute {
 
 const pageRoutes: PageRoute[] = Object.entries(PAGES).map(([file, load]) => {
 	const id = toRouteId(file, '/+page.svelte');
-	const pattern = id.replace(/\[[^\]]+\]/g, '[^/]+'); // [id] -> one path segment
+	const pattern = id.replace(/\[[^\]]+\]/g, '[^/]+');
 	return {
 		load,
 		matcher: new RegExp(`^${pattern}$`),
 		staticDepth: id.split('/').filter((s) => s && !s.startsWith('[')).length
 	};
 });
-// More-specific (more static segments) routes win over dynamic ones.
 pageRoutes.sort((a, b) => b.staticDepth - a.staticDepth);
 
 interface LayoutRoute {
@@ -62,12 +52,10 @@ interface LayoutRoute {
 	load: Loader;
 }
 
-// Exclude the (app) root layout — that's the AppShell host, already rendered.
 const layoutRoutes: LayoutRoute[] = Object.entries(LAYOUTS)
 	.map(([file, load]) => ({ id: toRouteId(file, '/+layout.svelte'), load }))
 	.filter((l) => l.id !== '/');
 
-/** Loaders for a pathname's layout chain (outermost first) + its page, or null. */
 function resolveChain(pathname: string): Loader[] | null {
 	const page = pageRoutes.find((r) => r.matcher.test(pathname));
 	if (!page) return null;
@@ -79,19 +67,22 @@ function resolveChain(pathname: string): Loader[] | null {
 
 const cache = new Map<string, Promise<Component[]>>();
 
-/**
- * Resolve a pathname to its rendered component chain ([...layouts, page]).
- * Cached per pathname so switching back to a tab reuses the loaded modules and
- * never re-triggers the {#await} that hosts the mounted page.
- */
-export function loadRoute(pathname: string): Promise<Component[]> {
+export function loadRoute(pathname: string, _revision = 0): Promise<Component[]> {
 	let promise = cache.get(pathname);
 	if (!promise) {
 		const chain = resolveChain(pathname);
-		promise = chain
+		const loading = chain
 			? Promise.all(chain.map((load) => load().then((m) => m.default)))
 			: Promise.resolve([]);
+		promise = loading.catch((error: unknown) => {
+			if (cache.get(pathname) === promise) cache.delete(pathname);
+			throw error;
+		});
 		cache.set(pathname, promise);
 	}
 	return promise;
+}
+
+export function invalidateRoute(pathname: string): void {
+	cache.delete(pathname);
 }

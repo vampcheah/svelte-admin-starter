@@ -6,14 +6,22 @@
   levels that don't declare it simply ignore it.
 -->
 <script lang="ts">
-	import type { Component } from 'svelte';
+	import { setContext, type Component } from 'svelte';
+	import { TAB_ACTIVITY, type TabActivity } from './tab-activity';
 
 	interface Props {
 		components: Component[];
 		data: unknown;
+		active: boolean;
 	}
 
-	let { components, data }: Props = $props();
+	let { components, data, active }: Props = $props();
+
+	setContext<TabActivity>(TAB_ACTIVITY, {
+		get active() {
+			return active;
+		}
+	});
 </script>
 
 {#snippet chain(comps: Component[])}

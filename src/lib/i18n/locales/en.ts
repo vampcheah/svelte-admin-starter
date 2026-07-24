@@ -17,20 +17,55 @@ export default {
 		settings: 'Settings',
 		language: 'Language',
 		theme: 'Theme',
-		actions: 'Actions',
-		close: 'Close',
-		openInNewTab: 'Open in new tab'
+		download: 'Download',
+		description: 'Description',
+		name: 'Name',
+		saving: 'Saving...',
+		createFailed: 'Failed to create',
+		tabLimitTitle: 'Many tabs open',
+		tabLimitDescription: 'You have {count} tabs open. Opening more may affect performance.',
+		forceContinue: 'Continue anyway'
 	},
 	tabs: {
 		open: 'Open',
 		clone: 'Clone',
+		refresh: 'Refresh',
 		close: 'Close',
+		closeOthers: 'Close others',
+		closeLeft: 'Close tabs to the left',
+		closeRight: 'Close tabs to the right',
 		closeAll: 'Close all',
 		closeLabel: 'Close {title}',
+		navigationLabel: 'Tabs navigation',
 		scrollStart: 'Scroll to first tab',
 		scrollPrevious: 'Scroll tabs left',
 		scrollNext: 'Scroll tabs right',
 		scrollEnd: 'Scroll to last tab'
+	},
+	sales: {
+		item: 'Item / Description',
+		qty: 'Qty',
+		unitPrice: 'Unit price',
+		discount: 'Discount %',
+		taxable: 'Tax',
+		lineTotal: 'Total',
+		removeItem: 'Remove line',
+		addItem: 'Add line',
+		addFromCatalog: 'Add from catalog...',
+		noItems: 'No line items',
+		subtotal: 'Subtotal',
+		tax: 'Tax',
+		total: 'Total'
+	},
+	clients: {
+		newClient: 'New client',
+		quickCreateHint: 'Quickly add a new client entity',
+		nameRequired: 'Client name is required',
+		clientCreated: 'Client created'
+	},
+	download: {
+		confirmTitle: 'Confirm download?',
+		confirmDesc: 'The file will open or download in a new window.'
 	},
 	dateTimePicker: {
 		pickDate: 'Pick a date',

@@ -1,30 +1,38 @@
 <!-- Multi-tab strip under the header: open routes as switchable, closable tabs. -->
 <script lang="ts">
-	import { tick } from 'svelte';
+	import { tick, untrack } from 'svelte';
 	import type { Tab } from './tabs.svelte';
 	import X from '@lucide/svelte/icons/x';
 	import PanelTopOpen from '@lucide/svelte/icons/panel-top-open';
 	import Copy from '@lucide/svelte/icons/copy';
+	import RefreshCw from '@lucide/svelte/icons/refresh-cw';
 	import CircleX from '@lucide/svelte/icons/circle-x';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import ChevronsLeft from '@lucide/svelte/icons/chevrons-left';
 	import ChevronsRight from '@lucide/svelte/icons/chevrons-right';
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
+	import type { Pathname } from '$app/types';
 	import * as ContextMenu from '$lib/components/ui/context-menu';
-	import { t } from '$lib/i18n';
+	import { i18n, t } from '$lib/i18n';
 	import { cn } from '$lib/utils';
 	import { tabs } from './tabs.svelte';
 
 	let draggedId = $state<string | null>(null);
 	let dragTargetId = $state<string | null>(null);
 	let dropAfter = $state(false);
-	let tabStrip = $state<HTMLDivElement | null>(null);
+	let tabStrip = $state<HTMLElement | null>(null);
 	let hasOverflow = $state(false);
 	let canScrollLeft = $state(false);
 	let canScrollRight = $state(false);
+	const currentUrl = $derived(`${page.url.pathname}${page.url.search}`);
+
+	$effect(() => {
+		const _locale = i18n.locale;
+		untrack(() => tabs.refreshTitles());
+	});
 
 	function updateScrollState(): void {
 		if (!tabStrip) return;
@@ -49,21 +57,29 @@
 	$effect(() => {
 		const activeId = tabs.active;
 		const itemCount = tabs.items.length;
-		if (!activeId || itemCount === 0) return;
+		const activeTitle = tabs.items.find((tab) => tab.id === activeId)?.title;
+		const _hasOverflow = hasOverflow;
+		const activeIsLast = tabs.items.at(-1)?.id === activeId;
+		if (!activeId || !activeTitle || itemCount === 0) return;
 		void tick().then(() => {
 			if (!tabStrip) return;
 			const activeTab = Array.from(tabStrip.querySelectorAll<HTMLElement>('[data-shell-tab]')).find(
 				(element) => element.dataset.tabId === activeId
 			);
 			if (!activeTab) return;
+			if (activeIsLast) {
+				tabStrip.scrollTo({ left: tabStrip.scrollWidth });
+				updateScrollState();
+				return;
+			}
 
-			const stripLeft = tabStrip.scrollLeft;
-			const stripRight = stripLeft + tabStrip.clientWidth;
-			const tabLeft = activeTab.offsetLeft;
-			const tabRight = tabLeft + activeTab.offsetWidth;
-			if (tabLeft < stripLeft) tabStrip.scrollTo({ left: Math.max(0, tabLeft - 8) });
-			else if (tabRight > stripRight)
-				tabStrip.scrollTo({ left: tabRight - tabStrip.clientWidth + 8 });
+			const stripBounds = tabStrip.getBoundingClientRect();
+			const tabBounds = activeTab.getBoundingClientRect();
+			if (tabBounds.left < stripBounds.left) {
+				tabStrip.scrollBy({ left: tabBounds.left - stripBounds.left - 8 });
+			} else if (tabBounds.right > stripBounds.right) {
+				tabStrip.scrollBy({ left: tabBounds.right - stripBounds.right + 8 });
+			}
 			updateScrollState();
 		});
 	});
@@ -83,34 +99,67 @@
 
 	function scrollWithWheel(event: WheelEvent): void {
 		if (!tabStrip || tabStrip.scrollWidth <= tabStrip.clientWidth) return;
-		// Trackpads already emit deltaX. Convert a conventional mouse wheel's
-		// vertical delta only while the pointer is over the horizontal tab strip.
 		if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
 		event.preventDefault();
 		tabStrip.scrollLeft += event.deltaY;
 	}
 
+	function navigate(url: string): void {
+		const queryAt = url.indexOf('?');
+		const pathname = (queryAt === -1 ? url : url.slice(0, queryAt)) as Pathname;
+		const search = queryAt === -1 ? '' : url.slice(queryAt);
+		// eslint-disable-next-line svelte/no-navigation-without-resolve
+		goto(`${resolve(pathname as '/dashboard')}${search}`);
+	}
+
+	async function refresh(tab: Tab): Promise<void> {
+		tabs.active = tab.id;
+		if (tab.url !== currentUrl) {
+			const queryAt = tab.url.indexOf('?');
+			const pathname = (queryAt === -1 ? tab.url : tab.url.slice(0, queryAt)) as Pathname;
+			const search = queryAt === -1 ? '' : tab.url.slice(queryAt);
+			// eslint-disable-next-line svelte/no-navigation-without-resolve
+			await goto(`${resolve(pathname as '/dashboard')}${search}`);
+		}
+		await invalidateAll();
+		tabs.refresh(tab.id);
+	}
+
 	function select(tab: Tab): void {
 		if (tab.id === tabs.active) return;
 		tabs.active = tab.id;
-		// Only navigate when the URL must change; switching between two tabs of the
-		// same route just flips the active id (URL is already correct).
-		if (tab.href !== page.url.pathname) goto(resolve(tab.href));
+		if (tab.url !== currentUrl) navigate(tab.url);
 	}
 
 	function close(tab: Tab): void {
 		const next = tabs.close(tab.id);
-		if (next && next !== page.url.pathname) goto(resolve(next));
+		if (next && next !== currentUrl) navigate(next);
 	}
 
-	function clone(tab: Tab): void {
-		const cloned = tabs.clone(tab.id);
-		if (cloned && cloned.href !== page.url.pathname) goto(resolve(cloned.href));
+	function closeOthers(tab: Tab): void {
+		const next = tabs.closeOthers(tab.id);
+		if (next && next !== currentUrl) navigate(next);
+	}
+
+	function closeLeft(tab: Tab): void {
+		const next = tabs.closeLeft(tab.id);
+		if (next && next !== currentUrl) navigate(next);
+	}
+
+	function closeRight(tab: Tab): void {
+		const next = tabs.closeRight(tab.id);
+		if (next && next !== currentUrl) navigate(next);
+	}
+
+	async function clone(tab: Tab): Promise<void> {
+		if (!(await tabs.confirmOverflow())) return;
+		const cloned = tabs.clone(tab.id, true);
+		if (cloned && cloned.url !== currentUrl) navigate(cloned.url);
 	}
 
 	function closeAll(): void {
 		const next = tabs.closeAll();
-		if (next !== page.url.pathname) goto(resolve(next));
+		if (next !== currentUrl) navigate(next);
 	}
 
 	function resetDrag(): void {
@@ -139,8 +188,6 @@
 		if (event.clientX < barBounds.left + scrollEdge) tabBar.scrollLeft -= scrollStep;
 		if (event.clientX > barBounds.right - scrollEdge) tabBar.scrollLeft += scrollStep;
 
-		// Calculate the insertion point from the whole strip. Ignoring the dragged
-		// tab's original box prevents that box from becoming a dead drop zone.
 		const candidates = Array.from(tabBar.querySelectorAll<HTMLElement>('[data-shell-tab]')).filter(
 			(element) => element.dataset.tabId !== draggedId
 		);
@@ -165,7 +212,7 @@
 </script>
 
 {#if tabs.items.length > 0}
-	<div class="bg-background flex h-10 shrink-0 items-center border-b">
+	<div class="dark:bg-background flex h-10 shrink-0 items-center border-b bg-slate-200">
 		{#if hasOverflow}
 			<div class="flex shrink-0 items-center border-r px-0.5">
 				<button
@@ -191,10 +238,10 @@
 			</div>
 		{/if}
 
-		<div
+		<nav
 			bind:this={tabStrip}
 			class="no-scrollbar flex min-w-0 flex-1 items-center gap-1 overflow-x-auto px-2"
-			role="tablist"
+			aria-label={t('tabs.navigationLabel')}
 			tabindex="-1"
 			onscroll={updateScrollState}
 			onwheel={scrollWithWheel}
@@ -216,7 +263,7 @@
 								ondragstart={(event) => startDrag(event, tab)}
 								ondragend={resetDrag}
 								class={cn(
-									'group relative flex h-7 shrink-0 select-none items-center rounded-md border transition-colors',
+									'group relative flex h-7 shrink-0 items-center rounded-md border transition-colors select-none',
 									active
 										? 'border-primary/30 bg-primary/10 text-primary'
 										: 'text-muted-foreground hover:bg-muted hover:text-foreground border-transparent',
@@ -229,14 +276,13 @@
 							>
 								<button
 									type="button"
-									role="tab"
-									aria-selected={active}
+									aria-current={active ? 'page' : undefined}
 									draggable="false"
 									onclick={() => select(tab)}
 									class="flex h-full items-center gap-1.5 rounded-l-md py-1 pr-1.5 pl-2.5 text-sm"
 								>
 									<tab.icon class="size-3.5 shrink-0" />
-									<span class="max-w-40 truncate">{tab.title}</span>
+									<span class="max-w-64 truncate" title={tab.title}>{tab.title}</span>
 								</button>
 								<button
 									type="button"
@@ -263,10 +309,32 @@
 							<Copy class="size-4" />
 							{t('tabs.clone')}
 						</ContextMenu.Item>
+						<ContextMenu.Item onSelect={() => void refresh(tab)}>
+							<RefreshCw class="size-4" />
+							{t('tabs.refresh')}
+						</ContextMenu.Item>
 						<ContextMenu.Separator />
 						<ContextMenu.Item disabled={soleDashboard} onSelect={() => close(tab)}>
 							<X class="size-4" />
 							{t('tabs.close')}
+						</ContextMenu.Item>
+						<ContextMenu.Item disabled={tabs.items.length <= 1} onSelect={() => closeOthers(tab)}>
+							<CircleX class="size-4" />
+							{t('tabs.closeOthers')}
+						</ContextMenu.Item>
+						<ContextMenu.Item
+							disabled={tabs.items[0]?.id === tab.id}
+							onSelect={() => closeLeft(tab)}
+						>
+							<ChevronsLeft class="size-4" />
+							{t('tabs.closeLeft')}
+						</ContextMenu.Item>
+						<ContextMenu.Item
+							disabled={tabs.items[tabs.items.length - 1]?.id === tab.id}
+							onSelect={() => closeRight(tab)}
+						>
+							<ChevronsRight class="size-4" />
+							{t('tabs.closeRight')}
 						</ContextMenu.Item>
 						<ContextMenu.Item
 							disabled={tabs.items.length === 1 && tabs.items[0]?.href === '/dashboard'}
@@ -278,7 +346,7 @@
 					</ContextMenu.Content>
 				</ContextMenu.Root>
 			{/each}
-		</div>
+		</nav>
 
 		{#if hasOverflow}
 			<div class="flex shrink-0 items-center border-l px-0.5">
