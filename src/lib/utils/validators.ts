@@ -10,23 +10,10 @@ export const emailSchema: z.ZodString = z
 	.min(1, 'Email is required')
 	.email('Enter a valid email address');
 
-/** A 12–128 character password containing upper/lowercase ASCII letters and a number. */
-export const passwordSchema: z.ZodString = z
-	.string()
-	.min(12, 'Password must be at least 12 characters')
-	.max(128, 'Password must be at most 128 characters')
-	.regex(/[a-z]/, 'Password must contain a lowercase letter')
-	.regex(/[A-Z]/, 'Password must contain an uppercase letter')
-	.regex(/[0-9]/, 'Password must contain a number');
-
-export function isStrongPassword(value: string): boolean {
-	return passwordSchema.safeParse(value).success;
-}
-
 /** Credentials accepted by the login form. */
 export const loginSchema = z.object({
 	email: emailSchema,
-	password: passwordSchema
+	password: z.string().min(1, 'Password is required')
 });
 
 /** Shape of a user record edited via the users form. */
