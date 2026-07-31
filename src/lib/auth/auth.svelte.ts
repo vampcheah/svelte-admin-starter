@@ -38,7 +38,14 @@ class AuthStore {
 		this.#initialized = true;
 		try {
 			const raw = localStorage.getItem(SESSION_KEY);
-			if (raw) this.#user = JSON.parse(raw) as User;
+			if (raw) {
+				const parsed = JSON.parse(raw) as User;
+				// Clean up stale or missing avatarUrl references from legacy localStorage sessions
+				if (parsed.avatarUrl && parsed.avatarUrl.includes('/avatars/')) {
+					delete parsed.avatarUrl;
+				}
+				this.#user = parsed;
+			}
 		} catch {
 			this.#user = null;
 		}
