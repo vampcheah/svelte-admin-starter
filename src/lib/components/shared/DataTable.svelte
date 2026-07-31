@@ -259,8 +259,7 @@
 							<Table.Head
 								class={cn(
 									'w-12 text-right',
-									stickyActions &&
-										'sticky right-0 z-20 bg-primary border-l-2 border-primary-foreground/30 shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.25)] dark:shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.5)]'
+									stickyActions && 'sticky right-0 z-20 bg-primary/90'
 								)}
 							>
 								<span class="sr-only">Actions</span>
@@ -284,8 +283,7 @@
 									<Table.Cell
 										class={cn(
 											'text-right',
-											stickyActions &&
-												'sticky right-0 z-10 bg-card border-l-2 border-border shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.12)] dark:shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.45)]'
+											stickyActions && 'sticky right-0 z-10 bg-muted/70 dark:bg-muted/60'
 										)}
 									>
 										<Skeleton class="ms-auto h-4 w-8" />
@@ -330,7 +328,7 @@
 										class={cn(
 											'text-right',
 											stickyActions &&
-												'sticky right-0 z-10 bg-card group-hover/row:bg-muted group-data-[state=selected]/row:bg-muted transition-colors border-l-2 border-border shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.12)] dark:shadow-[-8px_0_16px_-4px_rgba(0,0,0,0.45)]'
+												'sticky right-0 z-10 bg-muted/70 dark:bg-muted/60 group-hover/row:bg-muted group-data-[state=selected]/row:bg-muted/90 transition-colors'
 										)}
 									>
 										{@render actions(row)}
