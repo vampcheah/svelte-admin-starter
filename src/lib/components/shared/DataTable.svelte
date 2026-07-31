@@ -49,6 +49,8 @@
 		columns: Column<T>[];
 		searchable?: boolean;
 		selectable?: boolean;
+		/** Whether to pin the actions column to the right side on horizontal scroll (default: true). */
+		stickyActions?: boolean;
 		loading?: boolean;
 		pageSize?: number;
 		emptyTitle?: string;
@@ -68,6 +70,7 @@
 		columns,
 		searchable = false,
 		selectable = false,
+		stickyActions = true,
 		loading = false,
 		pageSize = config.ui.pageSize,
 		emptyTitle = 'No results',
@@ -253,7 +256,13 @@
 							</Table.Head>
 						{/each}
 						{#if actions}
-							<Table.Head class="w-12 text-right">
+							<Table.Head
+								class={cn(
+									'w-12 text-right',
+									stickyActions &&
+										'sticky right-0 z-20 bg-primary shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.15)] dark:shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.4)] border-l border-primary-foreground/10'
+								)}
+							>
 								<span class="sr-only">Actions</span>
 							</Table.Head>
 						{/if}
@@ -272,7 +281,15 @@
 									</Table.Cell>
 								{/each}
 								{#if actions}
-									<Table.Cell class="text-right"><Skeleton class="ms-auto h-4 w-8" /></Table.Cell>
+									<Table.Cell
+										class={cn(
+											'text-right',
+											stickyActions &&
+												'sticky right-0 z-10 bg-card border-l border-border/80 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] dark:shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.3)]'
+										)}
+									>
+										<Skeleton class="ms-auto h-4 w-8" />
+									</Table.Cell>
 								{/if}
 							</Table.Row>
 						{/each}
@@ -289,7 +306,7 @@
 						</Table.Row>
 					{:else}
 						{#each pageRows as row (row.id)}
-							<Table.Row data-state={selected.includes(row.id) ? 'selected' : undefined}>
+							<Table.Row class="group/row" data-state={selected.includes(row.id) ? 'selected' : undefined}>
 								{#if selectable}
 									<Table.Cell class="w-10">
 										<Checkbox
@@ -309,7 +326,13 @@
 									</Table.Cell>
 								{/each}
 								{#if actions}
-									<Table.Cell class="text-right">
+									<Table.Cell
+										class={cn(
+											'text-right',
+											stickyActions &&
+												'sticky right-0 z-10 bg-card group-hover/row:bg-muted group-data-[state=selected]/row:bg-muted transition-colors border-l border-border/60 shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.06)] dark:shadow-[-6px_0_12px_-4px_rgba(0,0,0,0.3)]'
+										)}
+									>
 										{@render actions(row)}
 									</Table.Cell>
 								{/if}
