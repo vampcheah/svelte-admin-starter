@@ -259,7 +259,7 @@
 							<Table.Head
 								class={cn(
 									'w-12 text-right',
-									stickyActions && 'sticky right-0 z-20 bg-primary/90'
+									stickyActions && 'sticky right-0 z-20 bg-primary'
 								)}
 							>
 								<span class="sr-only">Actions</span>
@@ -283,7 +283,7 @@
 									<Table.Cell
 										class={cn(
 											'text-right',
-											stickyActions && 'sticky right-0 z-10 bg-muted/70 dark:bg-muted/60'
+											stickyActions && 'sticky right-0 z-10 bg-muted'
 										)}
 									>
 										<Skeleton class="ms-auto h-4 w-8" />
@@ -328,7 +328,7 @@
 										class={cn(
 											'text-right',
 											stickyActions &&
-												'sticky right-0 z-10 bg-muted/70 dark:bg-muted/60 group-hover/row:bg-muted group-data-[state=selected]/row:bg-muted/90 transition-colors'
+												'sticky right-0 z-10 bg-muted group-hover/row:bg-accent group-data-[state=selected]/row:bg-accent transition-colors'
 										)}
 									>
 										{@render actions(row)}
