@@ -232,3 +232,23 @@ input:-webkit-autofill:active {
 	caret-color: var(--foreground);
 	transition: background-color 5000s ease-in-out 0s !important;
 }
+
+/* Performance & Reduced Motion Optimizations for low-end devices */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	::before,
+	::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+	.backdrop-blur-md,
+	.backdrop-blur-sm,
+	.backdrop-blur {
+		background-color: var(--background) !important;
+	}
+}
