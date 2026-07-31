@@ -3,6 +3,7 @@
 	import type { Pathname } from '$app/types';
 	import { mergeProps } from 'bits-ui';
 	import * as Sidebar from '$lib/components/ui/sidebar';
+	import { useSidebar } from '$lib/components/ui/sidebar';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as ContextMenu from '$lib/components/ui/context-menu';
 	import * as Avatar from '$lib/components/ui/avatar';
@@ -22,11 +23,18 @@
 	import LogOut from '@lucide/svelte/icons/log-out';
 	import Plus from '@lucide/svelte/icons/plus';
 
+	const sidebar = useSidebar();
 	const user = $derived(auth.user);
 	const pathname = $derived(page.url.pathname);
 
 	function isActive(href: string): boolean {
 		return pathname === href || pathname.startsWith(href + '/');
+	}
+
+	function handleNavClick(): void {
+		if (sidebar.isMobile) {
+			sidebar.setOpenMobile(false);
+		}
 	}
 
 	// Right-click → open a second, independent tab for the same route.
@@ -42,7 +50,7 @@
 			<Sidebar.MenuItem>
 				<Sidebar.MenuButton size="lg">
 					{#snippet child({ props })}
-						<a href={resolve('/dashboard')} {...props}>
+						<a href={resolve('/dashboard')} onclick={handleNavClick} {...props}>
 							<div
 								class="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg text-base font-semibold"
 							>
@@ -77,7 +85,7 @@
 											{#snippet child({ props })}
 												<!-- mergeProps so the context-menu trigger props (oncontextmenu)
 												     compose with the button's class/data-active, not clobber them. -->
-												<a href={resolve(item.href)} {...mergeProps(props, ctxProps)}>
+												<a href={resolve(item.href)} onclick={handleNavClick} {...mergeProps(props, ctxProps)}>
 													<item.icon />
 													<span>{item.title}</span>
 												</a>
@@ -157,7 +165,7 @@
 						<DropdownMenu.Group>
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
-									<a href={resolve('/profile')} {...props}>
+									<a href={resolve('/profile')} onclick={handleNavClick} {...props}>
 										<UserIcon />
 										Profile
 									</a>
@@ -165,7 +173,7 @@
 							</DropdownMenu.Item>
 							<DropdownMenu.Item>
 								{#snippet child({ props })}
-									<a href={resolve('/settings')} {...props}>
+									<a href={resolve('/settings')} onclick={handleNavClick} {...props}>
 										<SettingsIcon />
 										Settings
 									</a>
