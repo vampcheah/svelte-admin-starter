@@ -7,20 +7,17 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { toast } from 'svelte-sonner';
-	import Eye from '@lucide/svelte/icons/eye';
-	import EyeOff from '@lucide/svelte/icons/eye-off';
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
-	import { Spinner } from '$lib/components/shared';
+	import { PasswordInput, Spinner } from '$lib/components/shared';
 	import { auth } from '$lib/auth';
 	import { loginSchema, fieldError } from '$lib/utils/validators';
 	import { config } from '$lib/config';
 
 	let email = $state(config.auth.demo.email);
 	let password = $state(config.auth.demo.password);
-	let showPassword = $state(false);
 	let submitting = $state(false);
 
 	// Field errors are only shown after a submit attempt to avoid nagging.
@@ -110,29 +107,13 @@
 						Forgot password?
 					</a>
 				</div>
-				<div class="relative">
-					<Input
-						id="password"
-						type={showPassword ? 'text' : 'password'}
-						autocomplete="current-password"
-						placeholder="••••••••"
-						class="pr-10"
-						bind:value={password}
-						aria-invalid={errors.password ? 'true' : undefined}
-					/>
-					<button
-						type="button"
-						onclick={() => (showPassword = !showPassword)}
-						class="absolute inset-y-0 right-0 flex w-10 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
-						aria-label={showPassword ? 'Hide password' : 'Show password'}
-					>
-						{#if showPassword}
-							<EyeOff class="size-4" aria-hidden="true" />
-						{:else}
-							<Eye class="size-4" aria-hidden="true" />
-						{/if}
-					</button>
-				</div>
+				<PasswordInput
+					id="password"
+					autocomplete="current-password"
+					placeholder="••••••••"
+					bind:value={password}
+					aria-invalid={errors.password ? 'true' : undefined}
+				/>
 				{#if errors.password}
 					<p class="text-xs text-red-500">{errors.password}</p>
 				{/if}

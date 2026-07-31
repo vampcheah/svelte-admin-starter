@@ -12,6 +12,8 @@ export { default as ThemeToggle } from './ThemeToggle.svelte';
 export { default as LanguageToggle } from './LanguageToggle.svelte';
 export { default as Spinner } from './Spinner.svelte';
 export { default as SearchInput } from './SearchInput.svelte';
+export { default as PasswordInput } from './PasswordInput.svelte';
+
 export { default as CommandMenu } from './CommandMenu.svelte';
 export { default as DatePicker } from './DatePicker.svelte';
 export { default as TimePicker } from './TimePicker.svelte';

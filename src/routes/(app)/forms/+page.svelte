@@ -18,7 +18,7 @@
 	import { Checkbox } from '$lib/components/ui/checkbox';
 	import { Switch } from '$lib/components/ui/switch';
 	import { Slider } from '$lib/components/ui/slider';
-	import { PageContainer, PageHeader } from '$lib/components/shared';
+	import { PageContainer, PageHeader, PasswordInput } from '$lib/components/shared';
 	import { fieldError } from '$lib/utils/validators';
 	import { cn } from '$lib/utils';
 	import { toast } from 'svelte-sonner';
@@ -69,6 +69,7 @@
 	let dueValue = $state<DateValue | undefined>(undefined);
 	let priority = $state(50);
 	let notifyOnComplete = $state(true);
+	let demoPassword = $state('Secret123!');
 
 	let errors = $state<z.ZodError | null>(null);
 	let datePopoverOpen = $state(false);
@@ -306,7 +307,7 @@
 				<Card.Title>Input states</Card.Title>
 				<Card.Description>The visual states an input can take.</Card.Description>
 			</Card.Header>
-			<Card.Content class="grid gap-5 sm:grid-cols-2">
+			<Card.Content class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
 				<div class="grid gap-2">
 					<Label for="state-default">Default</Label>
 					<Input id="state-default" placeholder="Type something…" />
@@ -331,6 +332,11 @@
 						/>
 						<Input id="state-icon" type="email" placeholder="you@example.com" class="pl-8" />
 					</div>
+				</div>
+
+				<div class="grid gap-2">
+					<Label for="state-password">Password (with eye toggle)</Label>
+					<PasswordInput id="state-password" bind:value={demoPassword} placeholder="Enter password…" />
 				</div>
 			</Card.Content>
 		</Card.Root>

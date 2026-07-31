@@ -34,6 +34,7 @@
 		DateTimePicker,
 		PageContainer,
 		PageHeader,
+		PasswordInput,
 		TimePicker
 	} from '$lib/components/shared';
 	import { t } from '$lib/i18n';
@@ -168,6 +169,10 @@
 				<div class="grid gap-2">
 					<Label for="demo-disabled">Disabled</Label>
 					<Input id="demo-disabled" value="Cannot edit" disabled />
+				</div>
+				<div class="grid gap-2">
+					<Label for="demo-password">Password (with toggle)</Label>
+					<PasswordInput id="demo-password" value="secret123" placeholder="••••••••" />
 				</div>
 			</Card.Content>
 		</Card.Root>
