@@ -32,10 +32,15 @@
 	}
 
 	function handleNavClick(): void {
-		if (sidebar.isMobile) {
-			sidebar.setOpenMobile(false);
-		}
+		sidebar.setOpenMobile(false);
 	}
+
+	// Auto-close mobile sidebar whenever route navigation completes
+	$effect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
+		pathname;
+		sidebar.setOpenMobile(false);
+	});
 
 	// Right-click → open a second, independent tab for the same route.
 	function openInNewTab(href: Pathname): void {
