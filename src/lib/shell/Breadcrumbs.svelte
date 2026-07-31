@@ -3,6 +3,7 @@
 	import * as Breadcrumb from '$lib/components/ui/breadcrumb';
 	import { page } from '$app/state';
 	import { findNavItem } from './nav';
+	import { cn } from '$lib/utils';
 
 	interface Crumb {
 		label: string;
@@ -51,14 +52,14 @@
 	});
 </script>
 
-<Breadcrumb.Root>
+<Breadcrumb.Root class="min-w-0 overflow-hidden">
 	<Breadcrumb.List>
 		{#each crumbs as crumb, i (i)}
-			<Breadcrumb.Item class={i > 0 && i < crumbs.length - 1 ? 'hidden md:block' : ''}>
+			<Breadcrumb.Item class={cn('min-w-0', i > 0 && i < crumbs.length - 1 ? 'hidden md:block' : '')}>
 				{#if i === crumbs.length - 1 || !crumb.href}
-					<Breadcrumb.Page>{crumb.label}</Breadcrumb.Page>
+					<Breadcrumb.Page class="truncate max-w-[150px] sm:max-w-[240px] inline-block align-bottom">{crumb.label}</Breadcrumb.Page>
 				{:else}
-					<Breadcrumb.Link href={crumb.href}>{crumb.label}</Breadcrumb.Link>
+					<Breadcrumb.Link href={crumb.href} class="truncate max-w-[120px] sm:max-w-[200px] inline-block align-bottom">{crumb.label}</Breadcrumb.Link>
 				{/if}
 			</Breadcrumb.Item>
 			{#if i < crumbs.length - 1}
