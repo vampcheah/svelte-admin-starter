@@ -207,7 +207,7 @@
 		<div class="overflow-x-auto">
 			<Table.Root>
 				<Table.Header>
-					<Table.Row class="bg-primary/80 hover:[&>th]:!bg-primary/80">
+					<Table.Row class="bg-primary hover:[&>th]:!bg-primary">
 						{#if selectable}
 							<Table.Head class="w-10">
 								<Checkbox
