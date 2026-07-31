@@ -14,7 +14,7 @@
 	bind:this={ref}
 	data-slot="table-row"
 	class={cn(
-		'hover:[&,&>svelte-css-wrapper]:[&>th,td]:bg-amber-50 dark:hover:[&,&>svelte-css-wrapper]:[&>th,td]:bg-amber-950/60 data-[state=selected]:bg-amber-100/70 dark:data-[state=selected]:bg-amber-900/40 border-b transition-colors',
+		'hover:[&,&>svelte-css-wrapper]:[&>th,td]:bg-amber-50 dark:hover:[&,&>svelte-css-wrapper]:[&>th,td]:bg-amber-950/60 data-[state=selected]:bg-amber-100/70 dark:data-[state=selected]:bg-amber-900/40 border-b',
 		className
 	)}
 	{...restProps}

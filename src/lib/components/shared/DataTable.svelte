@@ -328,7 +328,7 @@
 										class={cn(
 											'text-right',
 											stickyActions &&
-												'sticky right-0 z-10 bg-muted group-hover/row:bg-amber-50 dark:group-hover/row:bg-amber-950/60 group-data-[state=selected]/row:bg-amber-100/70 dark:group-data-[state=selected]/row:bg-amber-900/40 transition-colors'
+												'sticky right-0 z-10 bg-muted group-hover/row:bg-amber-50 dark:group-hover/row:bg-amber-950/60 group-data-[state=selected]/row:bg-amber-100/70 dark:group-data-[state=selected]/row:bg-amber-900/40'
 										)}
 									>
 										{@render actions(row)}
