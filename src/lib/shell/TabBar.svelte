@@ -15,9 +15,9 @@
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import type { Pathname } from '$app/types';
-	import * as ContextMenu from '$lib/components/ui/context-menu';
+	import * as ContextMenu from '$lib/core/components/ui/context-menu';
 	import { i18n, t } from '$lib/i18n';
-	import { cn } from '$lib/utils';
+	import { cn } from '$lib/core/utils';
 	import { tabs } from './tabs.svelte';
 
 	let draggedId = $state<string | null>(null);

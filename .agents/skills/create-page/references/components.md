@@ -4,11 +4,11 @@ Use the narrowest existing layer that owns the required responsibility. Read `do
 
 ## Component layers
 
-| Layer  | Import area              | Responsibility                                                  |
-| ------ | ------------------------ | --------------------------------------------------------------- |
-| Shell  | `$lib/shell`             | Application-wide sidebar, header, breadcrumbs, tabs, and outlet |
-| Shared | `$lib/components/shared` | Reusable product patterns composed across pages                 |
-| UI     | `$lib/components/ui/*`   | Low-level shadcn-svelte and Bits UI primitives                  |
+| Layer  | Import area                 | Responsibility                                                  |
+| ------ | --------------------------- | --------------------------------------------------------------- |
+| Shell  | `$lib/shell`                | Application-wide sidebar, header, breadcrumbs, tabs, and outlet |
+| Shared | `$lib/components/shared`    | Reusable product patterns composed across pages                 |
+| UI     | `$lib/core/components/ui/*` | Low-level shadcn-svelte and Bits UI primitives                  |
 
 Pages consume the shell but do not reconstruct it. Shared components may depend on UI primitives. UI primitives must not depend on feature pages or shared business patterns.
 

@@ -5,7 +5,7 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '$lib/core/components/ui/button';
 	import { PageContainer } from '$lib/components/shared';
 	import TriangleAlert from '@lucide/svelte/icons/triangle-alert';
 	import RotateCcw from '@lucide/svelte/icons/rotate-ccw';

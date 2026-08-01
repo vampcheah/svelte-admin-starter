@@ -1,8 +1,8 @@
 <!-- TimePicker — a clock-face time selector with 12/24-hour support. -->
 <script lang="ts">
-	import * as Popover from '$lib/components/ui/popover';
-	import { Button } from '$lib/components/ui/button';
-	import { cn } from '$lib/utils';
+	import * as Popover from '$lib/core/components/ui/popover';
+	import { Button } from '$lib/core/components/ui/button';
+	import { cn } from '$lib/core/utils';
 	import { i18n, t } from '$lib/i18n';
 	import ClockIcon from '@lucide/svelte/icons/clock-3';
 	import XIcon from '@lucide/svelte/icons/x';

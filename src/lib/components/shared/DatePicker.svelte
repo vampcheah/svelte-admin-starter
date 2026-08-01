@@ -1,9 +1,9 @@
 <!-- DatePicker — a form-ready, confirmable calendar popover. -->
 <script lang="ts">
-	import * as Popover from '$lib/components/ui/popover';
-	import { Button } from '$lib/components/ui/button';
-	import { Calendar } from '$lib/components/ui/calendar';
-	import { cn } from '$lib/utils';
+	import * as Popover from '$lib/core/components/ui/popover';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Calendar } from '$lib/core/components/ui/calendar';
+	import { cn } from '$lib/core/utils';
 	import { i18n, t } from '$lib/i18n';
 	import type { DateValue } from '@internationalized/date';
 	import CalendarIcon from '@lucide/svelte/icons/calendar';

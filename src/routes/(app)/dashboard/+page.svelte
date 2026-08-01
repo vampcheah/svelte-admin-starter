@@ -17,15 +17,15 @@
 	import type { Component } from 'svelte';
 
 	import { PageContainer, StatCard } from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import { Button } from '$lib/components/ui/button';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import { Button } from '$lib/core/components/ui/button';
 
 	import { auth } from '$lib/auth';
 	import { t } from '$lib/i18n';
 	import { stats, revenueSeries, recentActivity, trafficByChannel } from '$lib/data/dashboard';
-	import { formatDate, formatNumber, initials } from '$lib/utils/formatters';
-	import { exportToCsv } from '$lib/utils/csv';
+	import { formatDate, formatNumber, initials } from '$lib/core/utils/formatters';
+	import { exportToCsv } from '$lib/core/utils/csv';
 
 	// Map each stat to a Lucide icon (data stays icon-free per the contract).
 	const statIcons: Component[] = [DollarSign, Users, CreditCard, Activity];

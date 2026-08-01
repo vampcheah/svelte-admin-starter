@@ -4,19 +4,19 @@
   All mutations operate on local $state — there is no backend.
 -->
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import * as Select from '$lib/components/ui/select';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { Badge } from '$lib/components/ui/badge';
-	import { Separator } from '$lib/components/ui/separator';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Select from '$lib/core/components/ui/select';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
+	import { Badge } from '$lib/core/components/ui/badge';
+	import { Separator } from '$lib/core/components/ui/separator';
 	import { toast } from 'svelte-sonner';
 	import { auth } from '$lib/auth';
 	import { logoutDialog } from '$lib/shell';
 	import { setLocale, LOCALES, i18n, type Locale } from '$lib/i18n';
-	import { initials } from '$lib/utils/formatters';
+	import { initials } from '$lib/core/utils/formatters';
 	import Save from '@lucide/svelte/icons/save';
 
 	// A small, static list of common timezones for the mock Select.

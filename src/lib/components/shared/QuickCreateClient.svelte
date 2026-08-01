@@ -1,9 +1,9 @@
 <script lang="ts">
 	import UserPlus from '@lucide/svelte/icons/user-plus';
-	import * as Dialog from '$lib/components/ui/dialog';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
+	import * as Dialog from '$lib/core/components/ui/dialog';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
 	import { t } from '$lib/i18n';
 	import { toast } from 'svelte-sonner';
 

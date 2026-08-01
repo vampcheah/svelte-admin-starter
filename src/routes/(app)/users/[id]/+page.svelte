@@ -28,16 +28,16 @@
 
 	import { PageContainer, StatCard, StatusBadge, EmptyState } from '$lib/components/shared';
 	import type { BadgeTone } from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import * as Tabs from '$lib/components/ui/tabs';
-	import { Button } from '$lib/components/ui/button';
-	import { Switch } from '$lib/components/ui/switch';
-	import { Separator } from '$lib/components/ui/separator';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import * as Tabs from '$lib/core/components/ui/tabs';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Switch } from '$lib/core/components/ui/switch';
+	import { Separator } from '$lib/core/components/ui/separator';
 
 	import { demoUsers, type DemoUser } from '$lib/data/users';
-	import { formatDate, initials } from '$lib/utils/formatters';
-	import { cn } from '$lib/utils';
+	import { formatDate, initials } from '$lib/core/utils/formatters';
+	import { cn } from '$lib/core/utils';
 	import { toast } from 'svelte-sonner';
 
 	type Role = DemoUser['role'];

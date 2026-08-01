@@ -1,9 +1,9 @@
 <!-- Bell button with unread badge and a dropdown listing app notifications. -->
 <script lang="ts">
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { Button } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
-	import { cn } from '$lib/utils';
+	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Badge } from '$lib/core/components/ui/badge';
+	import { cn } from '$lib/core/utils';
 	import { notifications, type AppNotification } from '$lib/stores/notifications.svelte';
 	import Bell from '@lucide/svelte/icons/bell';
 	import Info from '@lucide/svelte/icons/info';

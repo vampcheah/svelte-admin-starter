@@ -1,6 +1,6 @@
 # 设计指引 (Design Guide)
 
-本指引描述 **Svelte Admin Starter** 的设计系统：所有颜色、圆角、间距、排版、阴影与明暗主题如何通过一套语义化 token 统一驱动。整体风格为 **「Refined neutral + indigo」（精致中性 + 靛蓝）**，灵感取自 Linear / Vercel —— 冷调近中性表面带一丝靛蓝色调（hue 269），品牌强调色为一抹自信的靛蓝，深度来自柔和的分层阴影而非厚重边框。所有数值与类名均取自真实源码（`src/app.css`、`src/app.html`、`components.json` 与共享组件），可直接复制使用。
+本指引描述 **Svelte Admin Starter** 的设计系统：所有颜色、圆角、间距、排版、阴影与明暗主题如何通过一套语义化 token 统一驱动。整体风格为 **「Refined neutral + indigo」（精致中性 + 靛蓝）**，灵感取自 Linear / Vercel —— 冷调近中性表面带一丝靛蓝色调（hue 269），品牌强调色为一抹自信的靛蓝，深度来自柔和的分层阴影而非厚重边框。所有数值与类名均取自真实源码（`src/lib/core/theme.css`、`src/app.html`、`components.json` 与共享组件），可直接复制使用。
 
 ## 目录
 
@@ -41,13 +41,13 @@ token 全部以 [OKLCH](https://oklch.com/) 色彩空间定义（`oklch(L C H)` 
 
 ## 2. 颜色系统
 
-token 在 `src/app.css` 中分两步声明：
+token 在 `src/lib/core/theme.css` 中分两步声明：
 
 - 在 `:root` / `.dark` 中定义裸 CSS 变量（如 `--primary`）。
 - 在 `@theme inline { ... }` 中把它们映射为 Tailwind 颜色（`--color-primary: var(--primary)`），从而生成 `bg-primary`、`text-primary`、`border-primary` 等工具类。
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 @theme inline {
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
@@ -61,7 +61,7 @@ token 在 `src/app.css` 中分两步声明：
 
 ### 2.1 核心语义 token
 
-下表为每个 token 的用途、light/dark 的真实 OKLCH 取值（抄自 `src/app.css`），以及生成的 Tailwind 工具类。
+下表为每个 token 的用途、light/dark 的真实 OKLCH 取值（抄自 `src/lib/core/theme.css`），以及生成的 Tailwind 工具类。
 
 | token                  | 用途                                   | Light (`:root`)                | Dark (`.dark`)               | Tailwind 类                           |
 | ---------------------- | -------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------- |
@@ -121,7 +121,7 @@ token 在 `src/app.css` 中分两步声明：
 主题切换基于在 `<html>` 上挂载/移除 `.dark` 类。`:root` 提供亮色取值，`.dark` 覆盖为暗色取值。`app.css` 顶部声明了自定义变体：
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 @custom-variant dark (&:is(.dark *));
 ```
 
@@ -157,7 +157,7 @@ token 在 `src/app.css` 中分两步声明：
 	import Sun from '@lucide/svelte/icons/sun';
 	import Moon from '@lucide/svelte/icons/moon';
 	import { toggleMode, mode } from 'mode-watcher';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '$lib/core/components/ui/button';
 
 	const label = $derived(
 		mode.current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
@@ -217,7 +217,7 @@ token 在 `src/app.css` 中分两步声明：
 圆角的单一真值是 `--radius`，在 `:root` 中为 `0.625rem`（即 10px）。`@theme inline` 把它派生为四档圆角刻度：
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 :root {
 	--radius: 0.625rem;
 }
@@ -287,10 +287,10 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 />
 ```
 
-字体栈在 `src/app.css` 的 `@theme inline` 块中通过 `--font-sans` / `--font-mono` 声明（生成 `font-sans` / `font-mono` 工具类），并带完整的回退链（Geist → Inter → 系统字体）：
+字体栈在 `src/lib/core/theme.css` 的 `@theme inline` 块中通过 `--font-sans` / `--font-mono` 声明（生成 `font-sans` / `font-mono` 工具类），并带完整的回退链（Geist → Inter → 系统字体）：
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 @theme inline {
 	--font-sans:
 		'Geist', 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial,
@@ -343,7 +343,7 @@ UI 字体为 **Geist**（Vercel 出品的几何无衬线字体），等宽字体
 本主题的深度来自**柔和、分层的阴影**，而非厚重边框——卡片、弹出层等用阴影托起，边框只作极轻的分隔。`@theme inline` 定义了一套带冷色调（hue 269）的阴影刻度 `--shadow-2xs … --shadow-xl`（生成 `shadow-2xs`、`shadow-xs`、`shadow-sm`、`shadow-md`、`shadow-lg`、`shadow-xl` 工具类）：
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 @theme inline {
 	--shadow-2xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.04);
 	--shadow-xs: 0 1px 2px 0 oklch(0.21 0.03 269 / 0.05);
@@ -466,10 +466,10 @@ function statusClass(status: Status): string {
 
 ## 9. 自定义变体（Custom variants）
 
-除了 `dark`，`src/app.css` 顶部还声明了两个**方向变体**，供「方向感知」的基础组件（slider 滑块、toggle group 分段按钮组）使用：
+除了 `dark`，`src/lib/core/theme.css` 顶部还声明了两个**方向变体**，供「方向感知」的基础组件（slider 滑块、toggle group 分段按钮组）使用：
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 @custom-variant data-horizontal (&[data-orientation="horizontal"]);
 @custom-variant data-vertical (&[data-orientation="vertical"]);
 ```
@@ -485,7 +485,7 @@ function statusClass(status: Status): string {
 全站滚动条经过统一美化——纤细、圆角、无箭头无轨道，颜色由 `muted-foreground` 经 `color-mix` 调出半透明，悬停时加深。它在 `@layer base` 中对**所有**滚动容器（页面、下拉、popover 等原生滚动区）生效，无需手动加类：
 
 ```css
-/* src/app.css（节选） */
+/* src/lib/core/theme.css（节选） */
 @layer base {
 	* {
 		/* Firefox */
@@ -520,7 +520,7 @@ function statusClass(status: Status): string {
 此外，`html` 永远预留滚动条的「沟槽」，防止在「有滚动条的长页面」与「无滚动条的短页面」之间切换时产生横向跳动（layout shift）：
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 @layer base {
 	html {
 		scrollbar-gutter: stable;
@@ -536,10 +536,10 @@ function statusClass(status: Status): string {
 
 ### 改 token 值（换主色/换肤）
 
-最常见的定制是改主操作色。只需在 `src/app.css` 同时更新 `:root` 与 `.dark` 下的 `--primary`（及其 `-foreground`），全站主按钮、激活态、链接强调会一并更新——无需改任何组件：
+最常见的定制是改主操作色。只需在 `src/lib/core/theme.css` 同时更新 `:root` 与 `.dark` 下的 `--primary`（及其 `-foreground`），全站主按钮、激活态、链接强调会一并更新——无需改任何组件：
 
 ```css
-/* src/app.css */
+/* src/lib/core/theme.css */
 :root {
 	--primary: oklch(0.545 0.205 269); /* 改成你的品牌色 */
 	--primary-foreground: oklch(0.985 0.002 269);
@@ -559,7 +559,7 @@ function statusClass(status: Status): string {
 ```json
 {
 	"tailwind": {
-		"css": "src/app.css",
+		"css": "src/lib/core/theme.css",
 		"baseColor": "slate"
 	}
 }

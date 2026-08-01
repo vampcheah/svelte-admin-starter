@@ -28,12 +28,12 @@
 		type Column,
 		type BadgeTone
 	} from '$lib/components/shared';
-	import * as Sheet from '$lib/components/ui/sheet';
-	import { Button } from '$lib/components/ui/button';
-	import { Separator } from '$lib/components/ui/separator';
-	import { cn } from '$lib/utils';
+	import * as Sheet from '$lib/core/components/ui/sheet';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Separator } from '$lib/core/components/ui/separator';
+	import { cn } from '$lib/core/utils';
 
-	import { formatCurrency, formatDate } from '$lib/utils/formatters';
+	import { formatCurrency, formatDate } from '$lib/core/utils/formatters';
 	import { toast } from 'svelte-sonner';
 
 	// --- Types --------------------------------------------------------------

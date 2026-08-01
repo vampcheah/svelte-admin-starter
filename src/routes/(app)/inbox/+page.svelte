@@ -18,13 +18,13 @@
 	import Mail from '@lucide/svelte/icons/mail';
 
 	import { PageContainer, PageHeader, SearchInput, EmptyState } from '$lib/components/shared';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import { Button } from '$lib/components/ui/button';
-	import { Separator } from '$lib/components/ui/separator';
-	import { Textarea } from '$lib/components/ui/textarea';
-	import * as Resizable from '$lib/components/ui/resizable';
-	import { initials } from '$lib/utils/formatters';
-	import { cn } from '$lib/utils';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Separator } from '$lib/core/components/ui/separator';
+	import { Textarea } from '$lib/core/components/ui/textarea';
+	import * as Resizable from '$lib/core/components/ui/resizable';
+	import { initials } from '$lib/core/utils/formatters';
+	import { cn } from '$lib/core/utils';
 
 	type Label = 'work' | 'personal' | 'updates';
 

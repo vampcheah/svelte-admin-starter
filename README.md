@@ -9,7 +9,7 @@ Frontend only — no backend. Auth and data are mocked so you can clone it and s
 
 ## ✨ Features
 
-- **Complete shadcn-svelte component set** — all 47 UI primitives pre-installed (`src/lib/components/ui`).
+- **Complete shadcn-svelte component set** — all 47 UI primitives pre-installed (`src/lib/core/components/ui`).
 - **Polished app shell** — collapsible sidebar (built on shadcn `sidebar`), sticky header with breadcrumbs, command palette (⌘K), notifications, theme & language switchers, user menu.
 - **Reusable building blocks** — `PageHeader`, `PageContainer`, `StatCard`, `StatusBadge`, a generic `DataTable` (search / sort / pagination / selection), `EmptyState`, `ConfirmDialog`, `SearchInput`, `CommandMenu`, `ThemeToggle`, `LanguageToggle`, `Spinner`.
 - **Refined design system** — "Linear/Vercel" aesthetic: Geist typeface, a single indigo accent, OKLCH tokens, soft elevation, themed scrollbars (no layout shift).
@@ -49,6 +49,8 @@ npm run build      # production build
 npm run preview    # preview the production build
 npm run check      # type-check with svelte-check
 npm run lint       # prettier --check + eslint
+npm test           # focused portable-core tests
+npm run check:export # validate the downstream export contract
 npm run format     # prettier --write
 ```
 
@@ -56,7 +58,7 @@ npm run format     # prettier --write
 
 ```
 src/
-├── app.css                  # design tokens (OKLCH) + dark theme
+├── app.css                  # imports the portable core theme
 ├── app.html
 ├── routes/
 │   ├── +layout.svelte       # root: stylesheet, ModeWatcher, Toaster, session/locale init
@@ -72,14 +74,19 @@ src/
 │       ├── components/      # UI kitchen-sink showcase
 │       ├── profile/  settings/
 └── lib/
+    ├── core/                # fixed downstream export root
+    │   ├── components/
+    │   │   ├── ui/         # 47 shadcn-svelte primitives
+    │   │   └── shared/     # portable composite components
+    │   ├── hooks/  stores/  utils/
+    │   ├── theme.css       # design tokens (OKLCH) + dark theme
+    │   └── utils.ts        # cn() + shadcn type helpers
     ├── components/
-    │   ├── ui/              # 47 shadcn-svelte primitives
-    │   └── shared/         # reusable composite components
+    │   └── shared/         # starter-only i18n/navigation/demo integrations
     ├── shell/              # AppShell, AppSidebar, AppHeader, nav config
     ├── auth/               # mock auth store + types
     ├── i18n/               # light i18n (en, zh-CN)
-    ├── hooks/  stores/  data/  utils/
-    └── utils.ts            # cn() + shadcn type helpers
+    └── data/
 ```
 
 ## 🧭 Where to start
@@ -89,6 +96,15 @@ src/
 - **Add a UI component:** `npx shadcn-svelte@latest add <name>`.
 - **Configure the backend URL:** set `config.api.baseUrl` in `src/lib/config/index.ts` (empty = mock mode).
 - **Wire a real backend:** implement the seams in `src/lib/auth/provider.ts` (auth) and `src/lib/server/db.ts` (data), then add a server-side guard.
+
+## Portable release contract
+
+Stable releases expose only the paths in `svelte-admin-export.json`: `src/lib/core/**` and
+`LICENSE`. The core uses relative internal imports and is consumed by this demo directly.
+Shell, navigation, auth, i18n, notifications, routes, and mock data stay outside the export.
+
+Run `npm run check:export` before release. Downstream repositories should copy the manifest
+selection from an immutable `vX.Y.Z` tag without overlays or import rewrites.
 
 ## 📖 Documentation (中文指引)
 

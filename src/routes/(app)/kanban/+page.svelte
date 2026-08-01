@@ -17,12 +17,12 @@
 	import { toast } from 'svelte-sonner';
 
 	import { PageContainer, PageHeader, StatusBadge, type BadgeTone } from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import { Button } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
-	import { cn } from '$lib/utils';
-	import { initials } from '$lib/utils/formatters';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Badge } from '$lib/core/components/ui/badge';
+	import { cn } from '$lib/core/utils';
+	import { initials } from '$lib/core/utils/formatters';
 
 	type Priority = 'low' | 'medium' | 'high';
 

@@ -1,7 +1,7 @@
 {
 	"name": "svelte-admin-starter",
 	"description": "Production-grade SvelteKit + Svelte 5 + Tailwind v4 + shadcn-svelte admin dashboard starter — frontend-only, mock data, clone-and-go.",
-	"version": "0.1.0",
+	"version": "1.0.0",
 	"private": true,
 	"license": "MIT",
 	"type": "module",
@@ -15,8 +15,10 @@
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"check:export": "node scripts/check-export.mjs",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"test": "vitest run"
 	},
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
@@ -46,7 +48,8 @@
 		"typescript": "^6.0.3",
 		"typescript-eslint": "^8.61.0",
 		"vaul-svelte": "^1.0.0-next.7",
-		"vite": "^8.0.16"
+		"vite": "^8.0.16",
+		"vitest": "^4.1.10"
 	},
 	"dependencies": {
 		"@fontsource-variable/geist": "^5.2.9",

@@ -18,7 +18,7 @@ Build pages from the repository's current architecture and component system. Ins
 1. Inspect the current route tree, neighboring pages, shared components, UI primitives, and project instructions.
 2. Classify the requested page and choose the closest live page only as a behavioral reference. Do not copy an unrelated page wholesale.
 3. Create the route inside the correct route group and preserve the existing shell composition.
-4. Compose the page from `$lib/components/shared` and `$lib/components/ui`; add a new shared component only for a genuinely reusable product pattern.
+4. Compose the page from `$lib/components/shared` and `$lib/core/components/ui`; add a new shared component only for a genuinely reusable product pattern.
 5. Keep dynamic data behind the existing server boundary. Add navigation only for top-level destinations and wrap internal navigation with `resolve()`.
 6. Put every new user-facing string in both locale dictionaries.
 7. Verify with `npm run check && npm run lint && npm run build`.

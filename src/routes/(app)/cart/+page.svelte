@@ -15,15 +15,15 @@
 	import Tag from '@lucide/svelte/icons/tag';
 
 	import { PageContainer, PageHeader, EmptyState } from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Separator } from '$lib/components/ui/separator';
-	import { cn } from '$lib/utils';
+	import * as Card from '$lib/core/components/ui/card';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Separator } from '$lib/core/components/ui/separator';
+	import { cn } from '$lib/core/utils';
 	import { toast } from 'svelte-sonner';
 
 	import { demoProducts, type DemoProduct } from '$lib/data/products';
-	import { formatCurrency } from '$lib/utils/formatters';
+	import { formatCurrency } from '$lib/core/utils/formatters';
 
 	// A cart line item is a product plus a quantity.
 	interface CartItem extends DemoProduct {

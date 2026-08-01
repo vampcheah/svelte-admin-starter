@@ -9,7 +9,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import type { Pathname } from '$app/types';
-	import * as Command from '$lib/components/ui/command';
+	import * as Command from '$lib/core/components/ui/command';
 	import { navGroups } from '$lib/shell/nav';
 
 	interface Props {

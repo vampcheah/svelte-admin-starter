@@ -28,20 +28,20 @@
 
 ### 技术栈（版本取自 `package.json`）
 
-| 技术            | 包名                                            | 版本                 | 说明                                                      |
-| --------------- | ----------------------------------------------- | -------------------- | --------------------------------------------------------- |
-| SvelteKit 2     | `@sveltejs/kit`                                 | `^2.50.1`            | 应用框架、路由、SSR                                       |
-| Svelte 5        | `svelte`                                        | `^5.48.2`            | 组件框架，使用 runes（`$state`/`$derived`/`$props` 等）   |
-| Tailwind CSS v4 | `tailwindcss` / `@tailwindcss/vite`             | `^4.1.18`            | 原子化 CSS，通过 Vite 插件接入（无 `tailwind.config.js`） |
-| shadcn-svelte   | （源码内置，registry: `shadcn-svelte.com`）     | —                    | UI 组件以源码形式 vendored 在 `src/lib/components/ui/`    |
-| bits-ui         | `bits-ui`                                       | `^2.18.1`            | shadcn-svelte 底层无样式原语                              |
-| Lucide 图标     | `@lucide/svelte`                                | `^1.17.0`            | 图标库，按 `@lucide/svelte/icons/<kebab>` 单独导入        |
-| 主题切换        | `mode-watcher`                                  | `^1.1.0`             | light/dark/system 模式管理                                |
-| Toast 通知      | `svelte-sonner`                                 | `^1.0.7`             | toast 提示                                                |
-| 图表            | `layerchart`                                    | `^2.0.0-next.48`     | 图表库（部分页面用纯 SVG + 设计 token 手绘）              |
-| 表单校验        | `zod`                                           | `^3.25.76`           | schema 校验                                               |
-| 表单增强        | `sveltekit-superforms` / `formsnap`             | `^2.30.1` / `^2.0.1` | 表单状态/绑定（可选使用）                                 |
-| 类名合并        | `clsx` / `tailwind-merge` / `tailwind-variants` | —                    | `cn()` 工具的底层依赖                                     |
+| 技术            | 包名                                            | 版本                 | 说明                                                        |
+| --------------- | ----------------------------------------------- | -------------------- | ----------------------------------------------------------- |
+| SvelteKit 2     | `@sveltejs/kit`                                 | `^2.50.1`            | 应用框架、路由、SSR                                         |
+| Svelte 5        | `svelte`                                        | `^5.48.2`            | 组件框架，使用 runes（`$state`/`$derived`/`$props` 等）     |
+| Tailwind CSS v4 | `tailwindcss` / `@tailwindcss/vite`             | `^4.1.18`            | 原子化 CSS，通过 Vite 插件接入（无 `tailwind.config.js`）   |
+| shadcn-svelte   | （源码内置，registry: `shadcn-svelte.com`）     | —                    | UI 组件以源码形式 vendored 在 `src/lib/core/components/ui/` |
+| bits-ui         | `bits-ui`                                       | `^2.18.1`            | shadcn-svelte 底层无样式原语                                |
+| Lucide 图标     | `@lucide/svelte`                                | `^1.17.0`            | 图标库，按 `@lucide/svelte/icons/<kebab>` 单独导入          |
+| 主题切换        | `mode-watcher`                                  | `^1.1.0`             | light/dark/system 模式管理                                  |
+| Toast 通知      | `svelte-sonner`                                 | `^1.0.7`             | toast 提示                                                  |
+| 图表            | `layerchart`                                    | `^2.0.0-next.48`     | 图表库（部分页面用纯 SVG + 设计 token 手绘）                |
+| 表单校验        | `zod`                                           | `^3.25.76`           | schema 校验                                                 |
+| 表单增强        | `sveltekit-superforms` / `formsnap`             | `^2.30.1` / `^2.0.1` | 表单状态/绑定（可选使用）                                   |
+| 类名合并        | `clsx` / `tailwind-merge` / `tailwind-variants` | —                    | `cn()` 工具的底层依赖                                       |
 
 其它：`@internationalized/date`（calendar）、`embla-carousel-svelte`（carousel）、`paneforge`（resizable）、`vaul-svelte`（drawer）、`date-fns`、`tw-animate-css`。
 
@@ -239,7 +239,7 @@ src/
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Toaster } from '$lib/components/ui/sonner';
+	import { Toaster } from '$lib/core/components/ui/sonner';
 	import { auth } from '$lib/auth';
 	import { initLocale } from '$lib/i18n';
 
@@ -392,20 +392,20 @@ onMount(() => {
 
 - **UI 原语用命名空间导入**（每个原语目录是一个组件族）：
   ```ts
-  import * as Card from '$lib/components/ui/card';
-  import * as Sidebar from '$lib/components/ui/sidebar';
-  import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+  import * as Card from '$lib/core/components/ui/card';
+  import * as Sidebar from '$lib/core/components/ui/sidebar';
+  import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
   // 用法：<Card.Root> <Card.Header> <Card.Title> ...
   ```
-  单组件原语用具名导入：`import { Button } from '$lib/components/ui/button';`、`import { Input } from '$lib/components/ui/input';`。
+  单组件原语用具名导入：`import { Button } from '$lib/core/components/ui/button';`、`import { Input } from '$lib/core/components/ui/input';`。
 - **图标按需单独导入**，路径为 `@lucide/svelte/icons/<kebab-case>`：
   ```ts
   import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
   import ChartLine from '@lucide/svelte/icons/chart-line';
   ```
-- **`cn()` 来自 `$lib/utils`**，用于合并/去重 Tailwind 类名：
+- **`cn()` 来自 `$lib/core/utils`**，用于合并/去重 Tailwind 类名：
   ```ts
-  import { cn } from '$lib/utils';
+  import { cn } from '$lib/core/utils';
   class={cn('overflow-hidden', className)}
   ```
 - **`page` 来自 `$app/state`**（注意是 `state` 不是已弃用的 `$app/stores`），直接读 `page.url.pathname` / `page.status`：
@@ -418,7 +418,7 @@ onMount(() => {
 
 ### 设计 token 优先
 
-颜色/圆角等一律使用 `src/app.css` 中定义的设计 token（CSS 变量 + 对应的 Tailwind 语义类），**不要硬编码颜色**。优先用 `bg-background` / `text-foreground` / `bg-primary` / `text-muted-foreground` / `border-border` / `bg-card` / `bg-accent` 等语义类；需要原始变量时用 `var(--primary)`（如 Dashboard 里手绘 SVG 图表的描边 `stroke="var(--primary)"`）。这样可天然适配 light/dark 两套主题。
+颜色/圆角等一律使用 `src/lib/core/theme.css` 中定义的设计 token（CSS 变量 + 对应的 Tailwind 语义类），**不要硬编码颜色**。优先用 `bg-background` / `text-foreground` / `bg-primary` / `text-muted-foreground` / `border-border` / `bg-card` / `bg-accent` 等语义类；需要原始变量时用 `var(--primary)`（如 Dashboard 里手绘 SVG 图表的描边 `stroke="var(--primary)"`）。这样可天然适配 light/dark 两套主题。
 
 ### UI 文案使用英文
 
@@ -437,7 +437,7 @@ onMount(() => {
 <script lang="ts">
 	import Download from '@lucide/svelte/icons/download';
 	import { PageContainer, PageHeader } from '$lib/components/shared';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '$lib/core/components/ui/button';
 </script>
 
 <svelte:head>
@@ -518,7 +518,7 @@ export interface NavGroup {
 
 ### 7.3 新增一个 shadcn 组件
 
-UI 原语以源码形式存放在 `src/lib/components/ui/`。用 CLI 增量添加（配置已在 `components.json` 中就绪，registry 指向 `https://shadcn-svelte.com/registry`）：
+UI 原语以源码形式存放在 `src/lib/core/components/ui/`。用 CLI 增量添加（配置已在 `components.json` 中就绪，registry 指向 `https://shadcn-svelte.com/registry`）：
 
 ```bash
 npx shadcn-svelte@latest add <name>
@@ -526,7 +526,7 @@ npx shadcn-svelte@latest add <name>
 npx shadcn-svelte@latest add data-table
 ```
 
-CLI 会按 `components.json` 的别名（`ui` → `$lib/components/ui`，`utils` → `$lib/utils`，`hooks` → `$lib/hooks`）把组件源码写入项目；之后即可 `import * as <Name> from '$lib/components/ui/<name>';`。注意：基础色为 `slate`，CSS 入口为 `src/app.css`。
+CLI 会按 `components.json` 的别名（`ui` → `$lib/core/components/ui`，`utils` → `$lib/core/utils`，`hooks` → `$lib/core/hooks`）把组件源码写入项目；之后即可 `import * as <Name> from '$lib/core/components/ui/<name>';`。注意：基础色为 `slate`，CSS 入口为 `src/lib/core/theme.css`。
 
 ### 7.4 使用 toast（svelte-sonner）
 

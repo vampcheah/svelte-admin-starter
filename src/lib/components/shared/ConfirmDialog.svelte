@@ -5,10 +5,10 @@
   closes. The destructive variant styles the confirm button for delete flows.
 -->
 <script lang="ts">
-	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	import { Button } from '$lib/components/ui/button';
-	import Spinner from './Spinner.svelte';
-	import { cn } from '$lib/utils';
+	import * as AlertDialog from '$lib/core/components/ui/alert-dialog';
+	import { Button } from '$lib/core/components/ui/button';
+	import Spinner from '$lib/core/components/shared/Spinner.svelte';
+	import { cn } from '$lib/core/utils';
 	import { t } from '$lib/i18n';
 
 	interface Props {

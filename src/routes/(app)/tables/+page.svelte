@@ -17,10 +17,10 @@
 		type Column,
 		type BadgeTone
 	} from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
+	import * as Card from '$lib/core/components/ui/card';
 
 	import type { DemoProduct } from '$lib/data/products';
-	import { formatCurrency, formatNumber } from '$lib/utils/formatters';
+	import { formatCurrency, formatNumber } from '$lib/core/utils/formatters';
 	import type { PageData } from './$types';
 
 	// Products are loaded on the server via `+page.server.ts` (the `db` data seam),

@@ -22,12 +22,12 @@
 <script lang="ts">
 	import Plus from '@lucide/svelte/icons/plus';
 	import Trash2 from '@lucide/svelte/icons/trash-2';
-	import * as Table from '$lib/components/ui/table';
-	import * as Select from '$lib/components/ui/select';
-	import { Input } from '$lib/components/ui/input';
-	import { Textarea } from '$lib/components/ui/textarea';
-	import { Button } from '$lib/components/ui/button';
-	import { Checkbox } from '$lib/components/ui/checkbox';
+	import * as Table from '$lib/core/components/ui/table';
+	import * as Select from '$lib/core/components/ui/select';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Textarea } from '$lib/core/components/ui/textarea';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Checkbox } from '$lib/core/components/ui/checkbox';
 	import { t } from '$lib/i18n';
 
 	export interface ServiceItem {

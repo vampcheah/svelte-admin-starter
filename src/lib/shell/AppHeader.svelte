@@ -1,14 +1,14 @@
 <!-- Sticky top bar inside the inset: trigger, breadcrumbs, search, notifications, toggles, user menu. -->
 <script lang="ts">
-	import * as Sidebar from '$lib/components/ui/sidebar';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import { Separator } from '$lib/components/ui/separator';
-	import { Button } from '$lib/components/ui/button';
+	import * as Sidebar from '$lib/core/components/ui/sidebar';
+	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import { Separator } from '$lib/core/components/ui/separator';
+	import { Button } from '$lib/core/components/ui/button';
 	import { ThemeToggle, LanguageToggle, CommandMenu } from '$lib/components/shared';
 	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
-	import { initials } from '$lib/utils/formatters';
+	import { initials } from '$lib/core/utils/formatters';
 	import { t } from '$lib/i18n';
 	import { logoutDialog } from './logout-dialog.svelte';
 	import Breadcrumbs from './Breadcrumbs.svelte';

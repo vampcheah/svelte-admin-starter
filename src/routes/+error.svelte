@@ -5,7 +5,7 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '$lib/core/components/ui/button';
 	import House from '@lucide/svelte/icons/house';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import RotateCcw from '@lucide/svelte/icons/rotate-ccw';

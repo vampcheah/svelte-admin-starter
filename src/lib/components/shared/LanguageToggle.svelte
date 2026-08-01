@@ -5,8 +5,8 @@
 <script lang="ts">
 	import Languages from '@lucide/svelte/icons/languages';
 	import Check from '@lucide/svelte/icons/check';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import { Button } from '$lib/components/ui/button';
+	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+	import { Button } from '$lib/core/components/ui/button';
 	import { LOCALES, setLocale, i18n, type Locale } from '$lib/i18n';
 
 	function select(value: Locale) {

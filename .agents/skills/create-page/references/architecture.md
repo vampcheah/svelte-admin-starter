@@ -18,7 +18,7 @@ The application shell is composed in `src/lib/shell/`. `AppShell` coordinates th
 
 ## Page composition
 
-Use `PageContainer` as the normal page boundary and `PageHeader` for the title, description, and primary actions. Build the remaining sections from shared components and UI primitives. Keep layout responsive and use the semantic design tokens defined in `src/app.css`.
+Use `PageContainer` as the normal page boundary and `PageHeader` for the title, description, and primary actions. Build the remaining sections from shared components and UI primitives. Keep layout responsive and use the semantic design tokens defined in `src/lib/core/theme.css`.
 
 ## Data flow
 
@@ -36,8 +36,8 @@ Do not import `$lib/server/*` from a `.svelte` file. Pages with purely local dem
 - Navigation: register top-level destinations in `src/lib/shell/nav.ts`; use `resolve()` from `$app/paths` for internal links and programmatic navigation.
 - Localization: call `t()` for new user-facing strings and mirror keys in `src/lib/i18n/locales/en.ts` and `zh-CN.ts`.
 - Authentication: rely on the existing `(app)` layout and `$lib/auth`; do not add page-local authentication shells.
-- Components: import page patterns from `$lib/components/shared` and primitives from `$lib/components/ui`.
+- Components: import page patterns from `$lib/components/shared` and primitives from `$lib/core/components/ui`.
 
 ## Source-of-truth files
 
-Inspect `CLAUDE.md` or `AGENTS.md`, `src/lib/shell/`, `src/lib/components/shared/`, `src/lib/components/ui/`, `docs/DEVELOPMENT.md`, `docs/COMPONENTS.md`, and `docs/DESIGN.md` before changing the corresponding concern.
+Inspect `CLAUDE.md` or `AGENTS.md`, `src/lib/shell/`, `src/lib/components/shared/`, `src/lib/core/components/ui/`, `docs/DEVELOPMENT.md`, `docs/COMPONENTS.md`, and `docs/DESIGN.md` before changing the corresponding concern.

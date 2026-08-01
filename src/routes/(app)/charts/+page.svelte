@@ -8,11 +8,11 @@
   stays on layerchart's PieChart. Fed by mock dashboard data — no backend.
 -->
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import * as Chart from '$lib/components/ui/chart';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Chart from '$lib/core/components/ui/chart';
 	import { PageContainer, PageHeader } from '$lib/components/shared';
 	import { revenueSeries, trafficByChannel } from '$lib/data/dashboard';
-	import { formatCurrency, formatNumber } from '$lib/utils/formatters';
+	import { formatCurrency, formatNumber } from '$lib/core/utils/formatters';
 	import { PieChart } from 'layerchart';
 
 	// Turn the "2025-06" month strings into short labels like "Jun" for the axes.

@@ -4,7 +4,7 @@
 	import type { Pathname } from '$app/types';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import * as Sidebar from '$lib/components/ui/sidebar';
+	import * as Sidebar from '$lib/core/components/ui/sidebar';
 	import { config } from '$lib/config';
 	import AppSidebar from './AppSidebar.svelte';
 	import AppHeader from './AppHeader.svelte';

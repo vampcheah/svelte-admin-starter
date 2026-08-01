@@ -6,13 +6,13 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { toast } from 'svelte-sonner';
-	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
+	import * as Card from '$lib/core/components/ui/card';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
 	import { PasswordInput, Spinner } from '$lib/components/shared';
 	import { auth } from '$lib/auth';
-	import { emailSchema, fieldError } from '$lib/utils/validators';
+	import { emailSchema, fieldError } from '$lib/core/utils/validators';
 
 	let name = $state('');
 	let email = $state('');

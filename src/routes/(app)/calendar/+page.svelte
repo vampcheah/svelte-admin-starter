@@ -13,12 +13,12 @@
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
 
 	import { PageContainer, PageHeader } from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { cn } from '$lib/utils';
+	import * as Card from '$lib/core/components/ui/card';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Badge } from '$lib/core/components/ui/badge';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
+	import { cn } from '$lib/core/utils';
 	import { i18n, t } from '$lib/i18n';
 	import { buildGrid, monthLabel, shiftMonth, today, weekdayLabels, ymd } from '$lib/calendar';
 

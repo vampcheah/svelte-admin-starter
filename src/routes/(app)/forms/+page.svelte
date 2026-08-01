@@ -6,21 +6,21 @@
   shows a toast and resets the local $state.
 -->
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import * as Select from '$lib/components/ui/select';
-	import * as Popover from '$lib/components/ui/popover';
-	import * as RadioGroup from '$lib/components/ui/radio-group';
-	import { Calendar } from '$lib/components/ui/calendar';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { Textarea } from '$lib/components/ui/textarea';
-	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { Switch } from '$lib/components/ui/switch';
-	import { Slider } from '$lib/components/ui/slider';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Select from '$lib/core/components/ui/select';
+	import * as Popover from '$lib/core/components/ui/popover';
+	import * as RadioGroup from '$lib/core/components/ui/radio-group';
+	import { Calendar } from '$lib/core/components/ui/calendar';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
+	import { Textarea } from '$lib/core/components/ui/textarea';
+	import { Checkbox } from '$lib/core/components/ui/checkbox';
+	import { Switch } from '$lib/core/components/ui/switch';
+	import { Slider } from '$lib/core/components/ui/slider';
 	import { PageContainer, PageHeader, PasswordInput } from '$lib/components/shared';
-	import { fieldError } from '$lib/utils/validators';
-	import { cn } from '$lib/utils';
+	import { fieldError } from '$lib/core/utils/validators';
+	import { cn } from '$lib/core/utils';
 	import { toast } from 'svelte-sonner';
 	import { z } from 'zod';
 	import { DateFormatter, getLocalTimeZone, today, type DateValue } from '@internationalized/date';
@@ -336,7 +336,11 @@
 
 				<div class="grid gap-2">
 					<Label for="state-password">Password (with eye toggle)</Label>
-					<PasswordInput id="state-password" bind:value={demoPassword} placeholder="Enter password…" />
+					<PasswordInput
+						id="state-password"
+						bind:value={demoPassword}
+						placeholder="Enter password…"
+					/>
 				</div>
 			</Card.Content>
 		</Card.Root>

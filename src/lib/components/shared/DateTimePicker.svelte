@@ -1,10 +1,10 @@
 <!-- DateTimePicker — a single confirmable popover for local date and time. -->
 <script lang="ts">
-	import * as Popover from '$lib/components/ui/popover';
-	import { Button } from '$lib/components/ui/button';
-	import { Calendar } from '$lib/components/ui/calendar';
-	import { Input } from '$lib/components/ui/input';
-	import { cn } from '$lib/utils';
+	import * as Popover from '$lib/core/components/ui/popover';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Calendar } from '$lib/core/components/ui/calendar';
+	import { Input } from '$lib/core/components/ui/input';
+	import { cn } from '$lib/core/utils';
 	import { i18n, t } from '$lib/i18n';
 	import { getLocalTimeZone, today, type DateValue } from '@internationalized/date';
 	import CalendarClockIcon from '@lucide/svelte/icons/calendar-clock';

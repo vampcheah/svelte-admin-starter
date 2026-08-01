@@ -33,11 +33,11 @@
 
 模板把组件按职责分成三层，导入路径互不混淆。选层的原则是「该组件属于哪一层的职责」：
 
-| 层                        | 目录                         | 导入路径                                             | 何时用                                                                                                                     |
-| ------------------------- | ---------------------------- | ---------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| **ui** — shadcn 原子      | `src/lib/components/ui/`     | `import * as Card from '$lib/components/ui/card'`    | 需要无业务含义的基础控件（按钮、输入框、对话框、表格原语等）。这些由 shadcn-svelte CLI 生成，可直接修改源码。              |
-| **shared** — 复用业务组件 | `src/lib/components/shared/` | `import { DataTable } from '$lib/components/shared'` | 跨页面复用、带有约定样式与行为的展示组件（页头、KPI 卡片、数据表、确认弹窗等）。它们组合 ui 原子，封装出统一的产品级模式。 |
-| **shell** — 布局外壳      | `src/lib/shell/`             | `import { AppShell } from '$lib/shell'`              | 整个 admin 后台的框架：侧边栏、顶栏、面包屑、通知菜单、导航模型。一般只在 layout 中出现一次。                              |
+| 层                        | 目录                          | 导入路径                                               | 何时用                                                                                                                     |
+| ------------------------- | ----------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
+| **ui** — shadcn 原子      | `src/lib/core/components/ui/` | `import * as Card from '$lib/core/components/ui/card'` | 需要无业务含义的基础控件（按钮、输入框、对话框、表格原语等）。这些由 shadcn-svelte CLI 生成，可直接修改源码。              |
+| **shared** — 复用业务组件 | `src/lib/components/shared/`  | `import { DataTable } from '$lib/components/shared'`   | 跨页面复用、带有约定样式与行为的展示组件（页头、KPI 卡片、数据表、确认弹窗等）。它们组合 ui 原子，封装出统一的产品级模式。 |
+| **shell** — 布局外壳      | `src/lib/shell/`              | `import { AppShell } from '$lib/shell'`                | 整个 admin 后台的框架：侧边栏、顶栏、面包屑、通知菜单、导航模型。一般只在 layout 中出现一次。                              |
 
 依赖方向是单向的：`shell` 依赖 `shared` 与 `ui`，`shared` 依赖 `ui`，`ui` 不依赖上层。
 
@@ -45,7 +45,7 @@
 
 ## 2. UI 原子组件 (shadcn-svelte)
 
-`src/lib/components/ui/` 下共 **47 个** shadcn-svelte 组件目录，每个目录都有一个 `index.ts` 导出该组件族的全部子组件。
+`src/lib/core/components/ui/` 下共 **47 个** shadcn-svelte 组件目录，每个目录都有一个 `index.ts` 导出该组件族的全部子组件。
 
 ### 全部 47 个组件
 
@@ -70,9 +70,9 @@ toggle           toggle-group     tooltip
 
 ```svelte
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import * as Table from '$lib/components/ui/table';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Table from '$lib/core/components/ui/table';
+	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
 </script>
 
 <Card.Root>
@@ -85,21 +85,21 @@ toggle           toggle-group     tooltip
 
 ```svelte
 <script lang="ts">
-	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Badge } from '$lib/components/ui/badge';
+	import { Button, buttonVariants } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Badge } from '$lib/core/components/ui/badge';
 </script>
 ```
 
 `sonner` 族导出的是 `Toaster`（toast 的渲染入口，见 [第 6 节](#6-stores-与全局-helper)）：
 
 ```svelte
-import {Toaster} from '$lib/components/ui/sonner';
+import {Toaster} from '$lib/core/components/ui/sonner';
 ```
 
 ### 用 CLI 增删组件
 
-项目根目录的 `components.json` 已配置好别名（`ui` → `$lib/components/ui`，`utils` → `$lib/utils`，`hooks` → `$lib/hooks`），baseColor 为 `slate`，registry 指向 `https://shadcn-svelte.com/registry`。
+项目根目录的 `components.json` 已配置好别名（`ui` → `$lib/core/components/ui`，`utils` → `$lib/core/utils`，`hooks` → `$lib/core/hooks`），baseColor 为 `slate`，registry 指向 `https://shadcn-svelte.com/registry`。
 
 新增一个尚未安装的组件：
 
@@ -109,7 +109,7 @@ npx shadcn-svelte@latest add <component>
 npx shadcn-svelte@latest add data-table
 ```
 
-CLI 会把组件源码写入 `src/lib/components/ui/<component>/`。**删除**直接删掉对应目录即可（CLI 不提供 remove 命令）；删除后请检查没有页面再引用它。由于源码就在仓库内，可直接编辑这些文件来定制样式或行为。
+CLI 会把组件源码写入 `src/lib/core/components/ui/<component>/`。**删除**直接删掉对应目录即可（CLI 不提供 remove 命令）；删除后请检查没有页面再引用它。由于源码就在仓库内，可直接编辑这些文件来定制样式或行为。
 
 ### 文档
 
@@ -265,7 +265,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 ```svelte
 <script lang="ts">
 	import { EmptyState } from '$lib/components/shared';
-	import { Button } from '$lib/components/ui/button';
+	import { Button } from '$lib/core/components/ui/button';
 	import Inbox from '@lucide/svelte/icons/inbox';
 </script>
 
@@ -601,7 +601,7 @@ const columns: Column<DemoUser>[] = [
 
 #### 推荐模式：用 Sheet 抽屉做增/改/查（来自 Users 页）
 
-Users 页的 add / edit / view 已从居中的 `Dialog` 改为右侧 **`Sheet` 抽屉**（`$lib/components/ui/sheet`）。这是表单/详情类交互的推荐写法——更适合较长的表单，且不遮挡主内容。约定结构：
+Users 页的 add / edit / view 已从居中的 `Dialog` 改为右侧 **`Sheet` 抽屉**（`$lib/core/components/ui/sheet`）。这是表单/详情类交互的推荐写法——更适合较长的表单，且不遮挡主内容。约定结构：
 
 - `Sheet.Content` 传 `side="right" class="gap-0 sm:max-w-lg!"`；
 - `Sheet.Header` 加 `border-b`；
@@ -610,7 +610,7 @@ Users 页的 add / edit / view 已从居中的 `Dialog` 改为右侧 **`Sheet` �
 
 ```svelte
 <script lang="ts">
-  import * as Sheet from '$lib/components/ui/sheet';
+  import * as Sheet from '$lib/core/components/ui/sheet';
   let dialogOpen = $state(false);
 </script>
 
@@ -894,7 +894,7 @@ notifications.markAllRead();
 
 ### toast — `svelte-sonner`
 
-toast 提示来自 `svelte-sonner`。渲染入口 `<Toaster />`（`$lib/components/ui/sonner`）已挂在根 layout：
+toast 提示来自 `svelte-sonner`。渲染入口 `<Toaster />`（`$lib/core/components/ui/sonner`）已挂在根 layout：
 
 ```svelte
 <!-- src/routes/+layout.svelte -->
@@ -977,7 +977,7 @@ import { t, setLocale, initLocale, i18n, LOCALES, type Locale } from '$lib/i18n'
 | `initials`           | `(name: string) => string`                                                                           | 取最多两位大写首字母（"Jane Doe" → "JD"）                       |
 
 ```ts
-import { formatCurrency, formatDate, initials } from '$lib/utils/formatters';
+import { formatCurrency, formatDate, initials } from '$lib/core/utils/formatters';
 
 formatCurrency(48200); // "$48,200.00"
 formatDate('2026-06-09'); // "Jun 9, 2026"
@@ -996,7 +996,7 @@ initials('Jane Doe'); // "JD"
 真实用法（来自 users 页）：
 
 ```ts
-import { exportToCsv } from '$lib/utils/csv';
+import { exportToCsv } from '$lib/core/utils/csv';
 
 exportToCsv(rows, 'users.csv', [
 	{ key: 'name', header: 'Name' },
@@ -1024,7 +1024,7 @@ exportToCsv(rows, 'users.csv', [
 真实用法（来自 users 页）：
 
 ```ts
-import { userSchema, fieldError } from '$lib/utils/validators';
+import { userSchema, fieldError } from '$lib/core/utils/validators';
 import { z } from 'zod';
 
 let errors = $state<z.ZodError | null>(null);
@@ -1046,4 +1046,4 @@ function save() {
 {/if}
 ```
 
-> `cn()`（合并/去重 Tailwind 类名）从 `$lib/utils` 导出，被几乎所有组件用于合并 `class` prop。
+> `cn()`（合并/去重 Tailwind 类名）从 `$lib/core/utils` 导出，被几乎所有组件用于合并 `class` prop。

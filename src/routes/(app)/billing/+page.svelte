@@ -17,12 +17,12 @@
 		type Column,
 		type BadgeTone
 	} from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { Progress } from '$lib/components/ui/progress';
+	import * as Card from '$lib/core/components/ui/card';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Progress } from '$lib/core/components/ui/progress';
 
-	import { formatCurrency, formatDate } from '$lib/utils/formatters';
-	import { cn } from '$lib/utils';
+	import { formatCurrency, formatDate } from '$lib/core/utils/formatters';
+	import { cn } from '$lib/core/utils';
 	import { toast } from 'svelte-sonner';
 
 	// --- Current plan (mock) ----------------------------------------------

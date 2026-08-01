@@ -23,16 +23,16 @@
 		type Column,
 		type BadgeTone
 	} from '$lib/components/shared';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import * as Sheet from '$lib/components/ui/sheet';
-	import * as Select from '$lib/components/ui/select';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
+	import * as Sheet from '$lib/core/components/ui/sheet';
+	import * as Select from '$lib/core/components/ui/select';
 
 	import { demoUsers, type DemoUser } from '$lib/data/users';
-	import { userSchema, fieldError } from '$lib/utils/validators';
-	import { exportToCsv } from '$lib/utils/csv';
-	import { formatDate, initials } from '$lib/utils/formatters';
+	import { userSchema, fieldError } from '$lib/core/utils/validators';
+	import { exportToCsv } from '$lib/core/utils/csv';
+	import { formatDate, initials } from '$lib/core/utils/formatters';
 	import { toast } from 'svelte-sonner';
 	import { z } from 'zod';
 

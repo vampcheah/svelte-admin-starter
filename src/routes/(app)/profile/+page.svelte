@@ -7,18 +7,18 @@
 	import Camera from '@lucide/svelte/icons/camera';
 
 	import { PageContainer, PageHeader } from '$lib/components/shared';
-	import * as Card from '$lib/components/ui/card';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import * as Select from '$lib/components/ui/select';
-	import { Button } from '$lib/components/ui/button';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { Textarea } from '$lib/components/ui/textarea';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import * as Select from '$lib/core/components/ui/select';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
+	import { Textarea } from '$lib/core/components/ui/textarea';
 
 	import { toast } from 'svelte-sonner';
 
 	import { auth } from '$lib/auth';
-	import { initials } from '$lib/utils/formatters';
+	import { initials } from '$lib/core/utils/formatters';
 
 	// `value` is typed `string` to satisfy the single-select binding (bits-ui).
 	const ROLE_OPTIONS: { value: string; label: string }[] = [

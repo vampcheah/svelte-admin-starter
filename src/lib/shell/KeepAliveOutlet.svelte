@@ -21,10 +21,10 @@
 	import type { Snippet } from 'svelte';
 	import { page } from '$app/state';
 	import { SvelteMap } from 'svelte/reactivity';
-	import { cn } from '$lib/utils';
+	import { cn } from '$lib/core/utils';
 	import { t } from '$lib/i18n';
-	import { Button } from '$lib/components/ui/button';
-	import Spinner from '$lib/components/shared/Spinner.svelte';
+	import { Button } from '$lib/core/components/ui/button';
+	import Spinner from '$lib/core/components/shared/Spinner.svelte';
 	import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
 	import { tabs } from './tabs.svelte';
 	import { invalidateRoute, loadRoute } from './route-registry';

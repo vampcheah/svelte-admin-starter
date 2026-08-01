@@ -5,30 +5,30 @@
   talks to a backend.
 -->
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import * as Alert from '$lib/components/ui/alert';
-	import * as Select from '$lib/components/ui/select';
-	import * as Tabs from '$lib/components/ui/tabs';
-	import * as Accordion from '$lib/components/ui/accordion';
-	import * as Tooltip from '$lib/components/ui/tooltip';
-	import * as Popover from '$lib/components/ui/popover';
-	import * as HoverCard from '$lib/components/ui/hover-card';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import * as Dialog from '$lib/components/ui/dialog';
-	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	import * as Avatar from '$lib/components/ui/avatar';
-	import * as RadioGroup from '$lib/components/ui/radio-group';
-	import * as Breadcrumb from '$lib/components/ui/breadcrumb';
-	import * as Pagination from '$lib/components/ui/pagination';
-	import { Button, buttonVariants } from '$lib/components/ui/button';
-	import { Badge } from '$lib/components/ui/badge';
-	import { Input } from '$lib/components/ui/input';
-	import { Label } from '$lib/components/ui/label';
-	import { Checkbox } from '$lib/components/ui/checkbox';
-	import { Switch } from '$lib/components/ui/switch';
-	import { Slider } from '$lib/components/ui/slider';
-	import { Progress } from '$lib/components/ui/progress';
-	import { Skeleton } from '$lib/components/ui/skeleton';
+	import * as Card from '$lib/core/components/ui/card';
+	import * as Alert from '$lib/core/components/ui/alert';
+	import * as Select from '$lib/core/components/ui/select';
+	import * as Tabs from '$lib/core/components/ui/tabs';
+	import * as Accordion from '$lib/core/components/ui/accordion';
+	import * as Tooltip from '$lib/core/components/ui/tooltip';
+	import * as Popover from '$lib/core/components/ui/popover';
+	import * as HoverCard from '$lib/core/components/ui/hover-card';
+	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+	import * as Dialog from '$lib/core/components/ui/dialog';
+	import * as AlertDialog from '$lib/core/components/ui/alert-dialog';
+	import * as Avatar from '$lib/core/components/ui/avatar';
+	import * as RadioGroup from '$lib/core/components/ui/radio-group';
+	import * as Breadcrumb from '$lib/core/components/ui/breadcrumb';
+	import * as Pagination from '$lib/core/components/ui/pagination';
+	import { Button, buttonVariants } from '$lib/core/components/ui/button';
+	import { Badge } from '$lib/core/components/ui/badge';
+	import { Input } from '$lib/core/components/ui/input';
+	import { Label } from '$lib/core/components/ui/label';
+	import { Checkbox } from '$lib/core/components/ui/checkbox';
+	import { Switch } from '$lib/core/components/ui/switch';
+	import { Slider } from '$lib/core/components/ui/slider';
+	import { Progress } from '$lib/core/components/ui/progress';
+	import { Skeleton } from '$lib/core/components/ui/skeleton';
 	import {
 		DatePicker,
 		DateTimePicker,

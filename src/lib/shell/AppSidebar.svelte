@@ -2,16 +2,16 @@
 <script lang="ts">
 	import type { Pathname } from '$app/types';
 	import { mergeProps } from 'bits-ui';
-	import * as Sidebar from '$lib/components/ui/sidebar';
-	import { useSidebar } from '$lib/components/ui/sidebar';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import * as ContextMenu from '$lib/components/ui/context-menu';
-	import * as Avatar from '$lib/components/ui/avatar';
+	import * as Sidebar from '$lib/core/components/ui/sidebar';
+	import { useSidebar } from '$lib/core/components/ui/sidebar';
+	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+	import * as ContextMenu from '$lib/core/components/ui/context-menu';
+	import * as Avatar from '$lib/core/components/ui/avatar';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { auth } from '$lib/auth';
-	import { initials } from '$lib/utils/formatters';
+	import { initials } from '$lib/core/utils/formatters';
 	import { navGroups } from './nav';
 	import { tabs } from './tabs.svelte';
 	import { logoutDialog } from './logout-dialog.svelte';
@@ -90,7 +90,11 @@
 											{#snippet child({ props })}
 												<!-- mergeProps so the context-menu trigger props (oncontextmenu)
 												     compose with the button's class/data-active, not clobber them. -->
-												<a href={resolve(item.href)} onclick={handleNavClick} {...mergeProps(props, ctxProps)}>
+												<a
+													href={resolve(item.href)}
+													onclick={handleNavClick}
+													{...mergeProps(props, ctxProps)}
+												>
 													<item.icon />
 													<span>{item.title}</span>
 												</a>

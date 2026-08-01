@@ -17,7 +17,7 @@ session, in every clone.
 ## UI must come from the template's system
 
 - Compose pages from `$lib/components/shared/` (PageContainer, PageHeader,
-  DataTable, StatCard, EmptyState, ConfirmDialog, …) and `$lib/components/ui/`
+  DataTable, StatCard, EmptyState, ConfirmDialog, …) and `$lib/core/components/ui/`
   (shadcn-svelte). Do not introduce parallel component sets, raw hex colors,
   or ad-hoc spacing — use the design tokens.
 - i18n: every user-facing string via `t('…')`, keys added to **both**
@@ -29,8 +29,8 @@ session, in every clone.
 
 - `.agents/skills/` and `.claude/skills/` — reusable agent workflows and their
   client-specific discovery entries.
-- `src/lib/components/shared/` and `src/lib/components/ui/` — the component
-  library every page depends on.
+- `src/lib/core/` — the portable release root every page and downstream consumer depends on.
+- `src/lib/components/shared/` — starter-only component integrations.
 - `CLAUDE.md`, `docs/DEVELOPMENT.md`, `docs/COMPONENTS.md`, `docs/DESIGN.md`.
 
 Demo routes under `src/routes/(app)/` **may** be removed when building a real
@@ -39,5 +39,5 @@ depending on those demo routes remaining present.
 
 ## Definition of done
 
-`npm run check && npm run lint && npm run build` — all green before any page
+`npm run check && npm run lint && npm test && npm run build && npm run check:export` — all green before any page
 work is considered finished.

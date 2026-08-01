@@ -9,7 +9,7 @@
 	import { resolve } from '$app/paths';
 	import type { Pathname } from '$app/types';
 	import { PageContainer, PageHeader } from '$lib/components/shared';
-	import { cn } from '$lib/utils';
+	import { cn } from '$lib/core/utils';
 	import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
 	import Palette from '@lucide/svelte/icons/palette';
 	import Bell from '@lucide/svelte/icons/bell';

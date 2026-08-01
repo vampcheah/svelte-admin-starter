@@ -3,10 +3,10 @@
   cards. Everything lives in local $state (no backend) and Save shows a toast.
 -->
 <script lang="ts">
-	import * as Card from '$lib/components/ui/card';
-	import { Button } from '$lib/components/ui/button';
-	import { Switch } from '$lib/components/ui/switch';
-	import { Separator } from '$lib/components/ui/separator';
+	import * as Card from '$lib/core/components/ui/card';
+	import { Button } from '$lib/core/components/ui/button';
+	import { Switch } from '$lib/core/components/ui/switch';
+	import { Separator } from '$lib/core/components/ui/separator';
 	import { toast } from 'svelte-sonner';
 	import type { Component } from 'svelte';
 	import Mail from '@lucide/svelte/icons/mail';

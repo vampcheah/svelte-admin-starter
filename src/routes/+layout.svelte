@@ -10,7 +10,7 @@
 	import '@fontsource-variable/geist-mono';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Toaster } from '$lib/components/ui/sonner';
+	import { Toaster } from '$lib/core/components/ui/sonner';
 	import { auth } from '$lib/auth';
 	import { initLocale } from '$lib/i18n';
 	import { config } from '$lib/config';
