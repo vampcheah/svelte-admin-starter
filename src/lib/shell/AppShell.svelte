@@ -2,7 +2,8 @@
 <script lang="ts">
 	import type { Snippet } from 'svelte';
 	import type { Pathname } from '$app/types';
-	import { afterNavigate } from '$app/navigation';
+	import { afterNavigate, goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import * as Sidebar from '$lib/core/components/ui/sidebar';
 	import { config } from '$lib/config';
@@ -18,8 +19,20 @@
 
 	// Single wiring point: every navigation (sidebar, command menu, link, deep
 	// link, initial load) opens or focuses a tab for the landed route.
+	async function openCurrentRoute(): Promise<void> {
+		const pathname = page.url.pathname as Pathname;
+		if (tabs.open(pathname, page.data)) return;
+
+		const fallback = tabs.items.find((tab) => tab.id === tabs.active);
+		if (await tabs.confirmOverflow()) {
+			tabs.open(pathname, page.data, pathname, true);
+		} else if (fallback && fallback.href !== pathname) {
+			await goto(resolve(fallback.href), { replaceState: true });
+		}
+	}
+
 	afterNavigate(() => {
-		tabs.open(page.url.pathname as Pathname, page.data);
+		void openCurrentRoute();
 	});
 
 	// Single source of truth for the document title: kept-alive pages all mount at
