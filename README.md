@@ -113,6 +113,7 @@ Detailed guides live in [`docs/`](./docs):
 - [`docs/DEVELOPMENT.md`](./docs/DEVELOPMENT.md) — 开发指引 · project setup, conventions, common tasks, backend integration.
 - [`docs/COMPONENTS.md`](./docs/COMPONENTS.md) — 组件指引 · the three-layer component system, props & usage examples.
 - [`docs/DESIGN.md`](./docs/DESIGN.md) — 设计指引 · design tokens, color system, dark mode, theming.
+- [`docs/RELEASE.md`](./docs/RELEASE.md) — 稳定版本发布、export contract 与 GenesisOne 交接流程。
 
 ## 📝 License
 
