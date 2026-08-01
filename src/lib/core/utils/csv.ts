@@ -16,8 +16,8 @@ export function downloadBlob(content: BlobPart, filename: string, mime = 'text/p
 	document.body.appendChild(anchor);
 	anchor.click();
 	document.body.removeChild(anchor);
-	// Release the object URL once the download has been kicked off.
-	URL.revokeObjectURL(url);
+	// Let the browser consume the object URL after click dispatch before releasing it.
+	setTimeout(() => URL.revokeObjectURL(url), 0);
 }
 
 /** Escape a single CSV cell, quoting when it contains special characters. */
