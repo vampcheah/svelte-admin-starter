@@ -1,7 +1,7 @@
 <!-- Multi-tab strip under the header: open routes as switchable, closable tabs. -->
 <script lang="ts">
 	import { tick, untrack } from 'svelte';
-	import type { Tab, Tabs } from './tabs.svelte';
+	import type { Tab, TabsState } from './tabs.svelte';
 	import X from '@lucide/svelte/icons/x';
 	import PanelTopOpen from '@lucide/svelte/icons/panel-top-open';
 	import Copy from '@lucide/svelte/icons/copy';
@@ -15,7 +15,7 @@
 	import { cn } from '../utils';
 
 	interface Props {
-		tabs: Tabs;
+		tabs: TabsState;
 		currentUrl: string;
 		locale: string;
 		t: (key: string, values?: Record<string, string | number>) => string;

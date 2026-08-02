@@ -24,12 +24,12 @@
 	import { Button } from '../components/ui/button';
 	import Spinner from '../components/shared/Spinner.svelte';
 	import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
-	import type { Tabs } from './tabs.svelte';
+	import type { TabsState } from './tabs.svelte';
 	import LayoutChain from './LayoutChain.svelte';
 
 	interface Props {
 		children: Snippet;
-		tabs: Tabs;
+		tabs: TabsState;
 		currentUrl: string;
 		currentData: unknown;
 		routeError: unknown;
