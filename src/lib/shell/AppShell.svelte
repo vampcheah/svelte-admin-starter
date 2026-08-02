@@ -11,6 +11,7 @@
 	import AppHeader from './AppHeader.svelte';
 	import TabBar from './TabBar.svelte';
 	import KeepAliveOutlet from './KeepAliveOutlet.svelte';
+	import { openLandedRoute } from '$lib/core/shell/tabs.svelte';
 	import { tabs } from './tabs.svelte';
 
 	// `children` is only used to render +error.svelte on a load error; the outlet
@@ -21,14 +22,14 @@
 	// link, initial load) opens or focuses a tab for the landed route.
 	async function openCurrentRoute(): Promise<void> {
 		const pathname = page.url.pathname as Pathname;
-		if (tabs.open(pathname, page.data)) return;
-
-		const fallback = tabs.items.find((tab) => tab.id === tabs.active);
-		if (await tabs.confirmOverflow()) {
-			tabs.open(pathname, page.data, pathname, true);
-		} else if (fallback && fallback.href !== pathname) {
-			await goto(resolve(fallback.href), { replaceState: true });
-		}
+		const url = `${pathname}${page.url.search}`;
+		await openLandedRoute(tabs, pathname, page.data, url, async (fallback) => {
+			const queryAt = fallback.indexOf('?');
+			const fallbackPath = (queryAt === -1 ? fallback : fallback.slice(0, queryAt)) as Pathname;
+			const search = queryAt === -1 ? '' : fallback.slice(queryAt);
+			// eslint-disable-next-line svelte/no-navigation-without-resolve
+			await goto(`${resolve(fallbackPath)}${search}`, { replaceState: true });
+		});
 	}
 
 	afterNavigate(() => {

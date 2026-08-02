@@ -39,7 +39,9 @@
 | **shared** — 复用业务组件 | `src/lib/components/shared/`  | `import { DataTable } from '$lib/components/shared'`   | 跨页面复用、带有约定样式与行为的展示组件（页头、KPI 卡片、数据表、确认弹窗等）。它们组合 ui 原子，封装出统一的产品级模式。 |
 | **shell** — 布局外壳      | `src/lib/shell/`              | `import { AppShell } from '$lib/shell'`                | 整个 admin 后台的框架：侧边栏、顶栏、面包屑、通知菜单、导航模型。一般只在 layout 中出现一次。                              |
 
-依赖方向是单向的：`shell` 依赖 `shared` 与 `ui`，`shared` 依赖 `ui`，`ui` 不依赖上层。
+标签状态机、TabBar、keep-alive outlet 与路由注册器位于 `src/lib/core/shell/`，应用层 shell
+只注入导航、翻译、认证和 SvelteKit 状态。依赖方向保持单向：应用 shell 依赖 portable shell，
+portable shell 依赖 core 的 shared 与 ui，core 不依赖应用层。
 
 ---
 
