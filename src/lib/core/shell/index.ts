@@ -11,5 +11,6 @@ export {
 	openLandedRoute,
 	type Tab,
 	type TabDescriptor,
+	type TabsState,
 	type TabsOptions
 } from './tabs.svelte';

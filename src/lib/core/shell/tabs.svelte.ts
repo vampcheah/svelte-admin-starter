@@ -224,9 +224,13 @@ export class Tabs {
 	}
 }
 
+// Public structural view: consumers may resolve this portable module through
+// different workspace paths without inheriting the class's private identity.
+export type TabsState = Pick<Tabs, keyof Tabs>;
+
 /** Register a landed SvelteKit route and restore the previous URL when cancelled. */
 export async function openLandedRoute(
-	tabs: Tabs,
+	tabs: TabsState,
 	pathname: string,
 	data: unknown,
 	url: string,
