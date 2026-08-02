@@ -44,8 +44,7 @@
 
 	// Right-click → open a second, independent tab for the same route.
 	async function openInNewTab(href: Pathname): Promise<void> {
-		if (!(await tabs.confirmOverflow())) return;
-		tabs.openNew(href, undefined, href, true);
+		if (!(await tabs.openNew(href))) return;
 		if (href !== page.url.pathname) await goto(resolve(href));
 	}
 </script>

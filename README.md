@@ -78,6 +78,7 @@ src/
     │   ├── components/
     │   │   ├── ui/         # 47 shadcn-svelte primitives
     │   │   └── shared/     # portable composite components
+	│   ├── shell/            # portable tabs, keep-alive UI, route registry
     │   ├── hooks/  stores/  utils/
     │   ├── theme.css       # design tokens (OKLCH) + dark theme
     │   └── utils.ts        # cn() + shadcn type helpers
@@ -101,7 +102,9 @@ src/
 
 Stable releases expose only the paths in `svelte-admin-export.json`: `src/lib/core/**` and
 `LICENSE`. The core uses relative internal imports and is consumed by this demo directly.
-Shell, navigation, auth, i18n, notifications, routes, and mock data stay outside the export.
+The portable tab engine, tab bar, keep-alive outlet, and route registry live under
+`src/lib/core/shell`; application adapters, navigation, auth, i18n, notifications, routes, and
+mock data stay outside the export.
 
 Run `npm run check:export` before release. Downstream repositories should copy the manifest
 selection from an immutable `vX.Y.Z` tag without overlays or import rewrites.

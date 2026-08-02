@@ -27,8 +27,9 @@ npm run check:export
 - core 的内部 import 闭合，外部 package 均已声明；
 - 选中路径没有 symlink、submodule、目录逃逸或未跟踪文件。
 
-如果变更只影响 demo、route、mock auth、navigation 或 shell，应在 Release Notes 标明
-“core 无变化”；GenesisOne 不需要为此发布空版本。
+如果变更只影响 demo、route、mock auth、navigation 或 `src/lib/shell` 应用适配器，应在
+Release Notes 标明“core 无变化”；`src/lib/core/shell` 的改动属于 portable core，必须明确
+交给 GenesisOne 同步。
 
 ## 2. 发布稳定版本
 
