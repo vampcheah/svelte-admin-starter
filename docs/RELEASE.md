@@ -48,14 +48,3 @@ gh release create "$TAG" --verify-tag \
 ```
 
 稳定 tag 不得移动、删除或覆盖。发布后发现问题时保留原 tag，并发布新的 patch 版本。
-
-## 3. 交给 GenesisOne
-
-把正式 Release tag 交给 GenesisOne 维护者即可。GenesisOne 从自己的仓库运行：
-
-```bash
-make svelte-admin-sync REF=v1.0.1
-```
-
-GenesisOne 必须从 tag 的 Git tree 原样复制 export 集合。不要向 GenesisOne 或 OmniBOS
-发送 branch、commit SHA、手工文件包，也不要在本仓库维护下游路径或版本。
