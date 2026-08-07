@@ -6,11 +6,11 @@ session, in every clone.
 
 ## Creating or reworking pages
 
-- **Always use the `create-page` skill** (`.claude/skills/create-page/`) when
+- **Always use the `ui-manager` skill** (`.claude/skills/ui-manager/`) when
   adding a page/route/view or structurally reworking a page. Small copy,
   styling, example, or component-insertion edits can patch the target directly.
-- The canonical cross-client skill lives at `.agents/skills/create-page/`;
-  `.claude/skills/create-page/` is only the Claude Code discovery entry.
+- The canonical cross-client skill lives at `.agents/skills/ui-manager/`;
+  `.claude/skills/ui-manager/` is only the Claude Code discovery entry.
 - Inspect current routes and components as behavioral references. Do not copy
   an unrelated page wholesale or depend on frozen page snapshots.
 
