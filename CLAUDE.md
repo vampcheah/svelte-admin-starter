@@ -14,6 +14,13 @@ session, in every clone.
 - Inspect current routes and components as behavioral references. Do not copy
   an unrelated page wholesale or depend on frozen page snapshots.
 
+## Releasing
+
+- **Use the `release` skill** (`.claude/skills/release/`) when asked to bump
+  the version, cut a tag, or publish a GitHub release.
+- The canonical cross-client skill lives at `.agents/skills/release/`;
+  `.claude/skills/release/` is only the Claude Code discovery entry.
+
 ## UI must come from the template's system
 
 - Compose pages from `$lib/components/shared/` (PageContainer, PageHeader,
