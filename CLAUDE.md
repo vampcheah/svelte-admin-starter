@@ -16,10 +16,10 @@ session, in every clone.
 
 ## Releasing
 
-- **Use the `release` skill** (`.claude/skills/release/`) when asked to bump
+- **Use the `git-release` skill** (`.claude/skills/git-release/`) when asked to bump
   the version, cut a tag, or publish a GitHub release.
-- The canonical cross-client skill lives at `.agents/skills/release/`;
-  `.claude/skills/release/` is only the Claude Code discovery entry.
+- The canonical cross-client skill lives at `.agents/skills/git-release/`;
+  `.claude/skills/git-release/` is only the Claude Code discovery entry.
 
 ## UI must come from the template's system
 

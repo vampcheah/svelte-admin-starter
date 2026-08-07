@@ -1,4 +1,4 @@
 interface:
   display_name: 'Release Manager'
   short_description: 'Bump version, tag, push, and publish a GitHub release'
-  default_prompt: 'Use $release to bump the version and publish a GitHub release for this Svelte admin starter.'
+  default_prompt: 'Use $git-release to bump the version and publish a GitHub release for this Svelte admin starter.'

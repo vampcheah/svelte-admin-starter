@@ -1,5 +1,5 @@
 ---
-name: release
+name: git-release
 description: Bump the version, commit, tag, push, and publish a GitHub release for this SvelteKit admin starter. Use when asked to release a new version, bump the version, cut a tag, or publish a release. Do not use for ordinary code changes or commits.
 ---
 
