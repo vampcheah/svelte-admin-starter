@@ -111,11 +111,12 @@ function resolveRelative(from, specifier) {
 		`${target}/index.js`
 	];
 	if (target.endsWith('.js')) candidates.push(`${target.slice(0, -3)}.ts`);
-	if (target.endsWith('.svelte.js')) candidates.push(`${target.slice(0, -3)}.ts`);
 	if (!candidates.some((path) => selected.has(path))) {
 		fail(`unresolved core import: ${from} -> ${specifier}`);
 	}
 }
+
+const usedDependencies = new Set();
 
 for (const path of sourceFiles) {
 	const source = readFileSync(join(root, path), 'utf8');
@@ -140,7 +141,10 @@ for (const path of sourceFiles) {
 		if (!dependencies.has(dependency)) {
 			fail(`undeclared dependency: ${path} -> ${specifier}`);
 		}
+		usedDependencies.add(dependency);
 	}
 }
 
-console.log(`✓ export contract: ${selected.size} files, closed ${coreRoot}`);
+console.log(
+	`✓ export contract: ${selected.size} files, ${usedDependencies.size} dependencies, closed ${coreRoot}`
+);
