@@ -3,7 +3,7 @@
 	import type { Snippet } from 'svelte';
 	import { afterNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import * as Sidebar from '$lib/core/components/ui/sidebar';
+	import PortableAppShell from '$lib/core/shell/AppShell.svelte';
 	import { pageTitle } from '$lib/utils/page-title';
 	import AppSidebar from './AppSidebar.svelte';
 	import AppHeader from './AppHeader.svelte';
@@ -56,12 +56,17 @@
 	{/if}
 </svelte:head>
 
-<!-- Fixed viewport height + internal scroll, so each tab keeps its own scroll position. -->
-<Sidebar.Provider>
-	<AppSidebar />
-	<Sidebar.Inset class="h-svh overflow-hidden">
+<PortableAppShell>
+	{#snippet sidebar()}
+		<AppSidebar />
+	{/snippet}
+	{#snippet header()}
 		<AppHeader />
+	{/snippet}
+	{#snippet tabBar()}
 		<TabBar />
+	{/snippet}
+	{#snippet outlet()}
 		<KeepAliveOutlet {children} />
-	</Sidebar.Inset>
-</Sidebar.Provider>
+	{/snippet}
+</PortableAppShell>

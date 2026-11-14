@@ -1,217 +1,67 @@
 <!-- Admin sidebar: brand header, grouped nav with active highlighting, user footer dropdown. -->
 <script lang="ts">
-	/* eslint-disable svelte/no-navigation-without-resolve -- variable nav URLs use resolveAppUrl's $app/paths boundary. */
-	import type { Pathname } from '$app/types';
-	import { mergeProps } from 'bits-ui';
-	import * as Sidebar from '$lib/core/components/ui/sidebar';
-	import { useSidebar } from '$lib/core/components/ui/sidebar';
+	import PortableAppSidebar from '$lib/core/shell/AppSidebar.svelte';
 	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
-	import * as ContextMenu from '$lib/core/components/ui/context-menu';
-	import * as Avatar from '$lib/core/components/ui/avatar';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import type { Pathname } from '$app/types';
 	import { auth } from '$lib/auth';
-	import { initials } from '$lib/core/utils/formatters';
-	import { findNavItem, navGroups } from './nav';
-	import { tabs } from './tabs.svelte';
-	import { logoutDialog } from './logout-dialog.svelte';
 	import { config } from '$lib/config';
 	import { t } from '$lib/i18n';
-	import { resolveAppUrl, toAppPathname, toAppUrl } from './paths';
+	import { findNavItem, navGroups } from './nav';
 	import { navGroupLabel, navTitle, translatedLabel } from './labels';
-	import ChevronsUpDown from '@lucide/svelte/icons/chevrons-up-down';
+	import { resolveAppUrl, toAppPathname, toAppUrl } from './paths';
+	import { tabs } from './tabs.svelte';
+	import { logoutDialog } from './logout-dialog.svelte';
 	import UserIcon from '@lucide/svelte/icons/user';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
-	import LogOut from '@lucide/svelte/icons/log-out';
-	import Plus from '@lucide/svelte/icons/plus';
 
-	const sidebar = useSidebar();
-	const user = $derived(auth.user);
 	const pathname = $derived(toAppPathname(page.url.pathname));
 	const homeTitle = $derived.by(() => {
 		const item = findNavItem(config.app.homePath)?.item;
 		return item ? navTitle(item) : translatedLabel('nav.home', 'Home');
 	});
 
-	function isActive(href: string): boolean {
-		return pathname === href || pathname.startsWith(href + '/');
-	}
-
-	function handleNavClick(): void {
-		sidebar.setOpenMobile(false);
-	}
-
-	// Auto-close mobile sidebar whenever route navigation completes
-	$effect(() => {
-		// eslint-disable-next-line @typescript-eslint/no-unused-expressions
-		pathname;
-		sidebar.setOpenMobile(false);
-	});
-
-	// Right-click → open a second, independent tab for the same route.
-	async function openInNewTab(href: Pathname): Promise<void> {
-		if (!(await tabs.openNew(href))) return;
-		if (href !== toAppUrl(page.url)) await goto(resolveAppUrl(href));
+	async function openInNewTab(href: string): Promise<void> {
+		if (!(await tabs.openNew(href as Pathname))) return;
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- resolveAppUrl resolves through $app/paths boundary.
+		if (href !== toAppUrl(page.url)) await goto(resolveAppUrl(href as Pathname));
 	}
 </script>
 
-<Sidebar.Root collapsible="icon">
-	<Sidebar.Header>
-		<Sidebar.Menu>
-			<Sidebar.MenuItem>
-				<Sidebar.MenuButton size="lg">
-					{#snippet child({ props })}
-						<a href={resolve(config.app.homePath)} onclick={handleNavClick} {...props}>
-							<div
-								class="bg-primary text-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg text-base font-semibold"
-							>
-								{config.app.logo}
-							</div>
-							<div class="grid flex-1 text-left text-sm leading-tight">
-								<span class="truncate font-semibold">{config.app.name}</span>
-								<span class="text-sidebar-foreground/80 truncate text-xs">{homeTitle}</span>
-							</div>
-						</a>
-					{/snippet}
-				</Sidebar.MenuButton>
-			</Sidebar.MenuItem>
-		</Sidebar.Menu>
-	</Sidebar.Header>
-
-	<Sidebar.Content>
-		{#each navGroups as group (group.label)}
-			<Sidebar.Group>
-				<Sidebar.GroupLabel>{navGroupLabel(group)}</Sidebar.GroupLabel>
-				<Sidebar.Menu>
-					{#each group.items as item (item.href)}
-						<Sidebar.MenuItem>
-							<ContextMenu.Root>
-								<ContextMenu.Trigger>
-									{#snippet child({ props: ctxProps })}
-										<Sidebar.MenuButton
-											isActive={isActive(item.href)}
-											tooltipContent={navTitle(item)}
-											class="relative pl-3 transition-colors data-active:text-sidebar-primary data-active:before:absolute data-active:before:inset-y-1.5 data-active:before:left-0 data-active:before:w-0.5 data-active:before:rounded-full data-active:before:bg-sidebar-primary data-active:before:content-['']"
-										>
-											{#snippet child({ props })}
-												<!-- mergeProps so the context-menu trigger props (oncontextmenu)
-												     compose with the button's class/data-active, not clobber them. -->
-												<a
-													href={resolveAppUrl(item.href)}
-													onclick={handleNavClick}
-													{...mergeProps(props, ctxProps)}
-												>
-													<item.icon />
-													<span>{navTitle(item)}</span>
-												</a>
-											{/snippet}
-										</Sidebar.MenuButton>
-									{/snippet}
-								</ContextMenu.Trigger>
-								<ContextMenu.Content>
-									<ContextMenu.Item onSelect={() => openInNewTab(item.href)}>
-										<Plus class="size-4" />
-										{t('common.openInNewTab')}
-									</ContextMenu.Item>
-								</ContextMenu.Content>
-							</ContextMenu.Root>
-							{#if item.badge != null}
-								<Sidebar.MenuBadge>{item.badge}</Sidebar.MenuBadge>
-							{/if}
-						</Sidebar.MenuItem>
-					{/each}
-				</Sidebar.Menu>
-			</Sidebar.Group>
-		{/each}
-	</Sidebar.Content>
-
-	<Sidebar.Footer>
-		<Sidebar.Menu>
-			<Sidebar.MenuItem>
-				<DropdownMenu.Root>
-					<DropdownMenu.Trigger>
-						{#snippet child({ props })}
-							<Sidebar.MenuButton
-								size="lg"
-								class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-								{...props}
-							>
-								<Avatar.Root class="size-8 rounded-lg">
-									{#if user?.avatarUrl}
-										<Avatar.Image src={user.avatarUrl} alt={user.name} />
-									{/if}
-									<Avatar.Fallback class="rounded-lg">
-										{user ? initials(user.name) : '?'}
-									</Avatar.Fallback>
-								</Avatar.Root>
-								<div class="grid flex-1 text-left text-sm leading-tight">
-									<span class="truncate font-semibold"
-										>{user?.name ?? translatedLabel('common.guest', 'Guest')}</span
-									>
-									<span
-										class="text-sidebar-foreground/80 dark:text-muted-foreground truncate text-xs capitalize"
-									>
-										{user?.role ?? ''}
-									</span>
-								</div>
-								<ChevronsUpDown class="ml-auto size-4" />
-							</Sidebar.MenuButton>
-						{/snippet}
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Content
-						class="w-(--bits-dropdown-menu-anchor-width) min-w-56 rounded-lg"
-						side="right"
-						align="end"
-						sideOffset={4}
-					>
-						<DropdownMenu.Label class="p-0 font-normal">
-							<div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-								<Avatar.Root class="size-8 rounded-lg">
-									{#if user?.avatarUrl}
-										<Avatar.Image src={user.avatarUrl} alt={user.name} />
-									{/if}
-									<Avatar.Fallback class="rounded-lg">
-										{user ? initials(user.name) : '?'}
-									</Avatar.Fallback>
-								</Avatar.Root>
-								<div class="grid flex-1 text-left text-sm leading-tight">
-									<span class="truncate font-semibold"
-										>{user?.name ?? translatedLabel('common.guest', 'Guest')}</span
-									>
-									<span class="text-muted-foreground truncate text-xs">{user?.email ?? ''}</span>
-								</div>
-							</div>
-						</DropdownMenu.Label>
-						<DropdownMenu.Separator />
-						<DropdownMenu.Group>
-							<DropdownMenu.Item>
-								{#snippet child({ props })}
-									<a href={resolve('/profile')} onclick={handleNavClick} {...props}>
-										<UserIcon />
-										{t('common.profile')}
-									</a>
-								{/snippet}
-							</DropdownMenu.Item>
-							<DropdownMenu.Item>
-								{#snippet child({ props })}
-									<a href={resolve('/settings')} onclick={handleNavClick} {...props}>
-										<SettingsIcon />
-										{t('common.settings')}
-									</a>
-								{/snippet}
-							</DropdownMenu.Item>
-						</DropdownMenu.Group>
-						<DropdownMenu.Separator />
-						<DropdownMenu.Item variant="destructive" onSelect={() => (logoutDialog.open = true)}>
-							<LogOut />
-							{t('common.logout')}
-						</DropdownMenu.Item>
-					</DropdownMenu.Content>
-				</DropdownMenu.Root>
-			</Sidebar.MenuItem>
-		</Sidebar.Menu>
-	</Sidebar.Footer>
-
-	<Sidebar.Rail />
-</Sidebar.Root>
+<PortableAppSidebar
+	brand={{
+		name: config.app.name,
+		logo: config.app.logo,
+		subtitle: homeTitle,
+		href: config.app.homePath
+	}}
+	{navGroups}
+	{pathname}
+	user={auth.user}
+	groupLabel={navGroupLabel}
+	itemTitle={navTitle}
+	resolveHref={resolveAppUrl}
+	onOpenInNewTab={openInNewTab}
+	onLogout={() => (logoutDialog.open = true)}
+>
+	{#snippet accountMenuItems({ closeMobile })}
+		<DropdownMenu.Item>
+			{#snippet child({ props })}
+				<a href={resolve('/profile')} onclick={closeMobile} {...props}>
+					<UserIcon />
+					{t('common.profile')}
+				</a>
+			{/snippet}
+		</DropdownMenu.Item>
+		<DropdownMenu.Item>
+			{#snippet child({ props })}
+				<a href={resolve('/settings')} onclick={closeMobile} {...props}>
+					<SettingsIcon />
+					{t('common.settings')}
+				</a>
+			{/snippet}
+		</DropdownMenu.Item>
+	{/snippet}
+</PortableAppSidebar>

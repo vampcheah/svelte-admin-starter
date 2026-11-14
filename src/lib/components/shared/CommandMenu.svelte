@@ -26,7 +26,7 @@
 <CoreCommandMenu
 	bind:open
 	groups={navGroups}
-	groupLabel={(group) => navGroupLabel(group as Parameters<typeof navGroupLabel>[0])}
-	itemTitle={(item) => navTitle(item as Parameters<typeof navTitle>[0])}
+	groupLabel={navGroupLabel}
+	itemTitle={navTitle}
 	onSelect={handleSelect}
 />

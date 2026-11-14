@@ -1,3 +1,7 @@
+export { default as AppShell } from './AppShell.svelte';
+export { default as AppSidebar } from './AppSidebar.svelte';
+export { default as AppHeader } from './AppHeader.svelte';
+export { default as Breadcrumbs } from './Breadcrumbs.svelte';
 export { default as KeepAliveOutlet } from './KeepAliveOutlet.svelte';
 export { default as LayoutChain } from './LayoutChain.svelte';
 export { default as TabBar } from './TabBar.svelte';
@@ -15,3 +19,4 @@ export {
 	type TabsState,
 	type TabsOptions
 } from './tabs.svelte';
+export * from './nav';

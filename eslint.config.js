@@ -28,9 +28,9 @@ export default [
 		}
 	},
 	{
-		// shadcn-svelte generated primitives accept arbitrary (incl. external) hrefs,
-		// so the app-level "resolve() every navigation" rule doesn't apply to them.
-		files: ['src/lib/core/components/ui/**'],
+		// src/lib/core is portable and prohibited from importing $app/paths,
+		// receiving resolved URLs from callers, so the app-level resolve() rule does not apply.
+		files: ['src/lib/core/**'],
 		rules: {
 			'svelte/no-navigation-without-resolve': 'off'
 		}

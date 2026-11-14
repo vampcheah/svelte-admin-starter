@@ -1,8 +1,13 @@
 // Navigation model for the admin shell: grouped sidebar routes + lookup helper.
-import type { Component } from 'svelte';
 import type { Pathname } from '$app/types';
 import type { TranslationKey } from '$lib/i18n';
-import { toRouteId } from '$lib/core/shell/route-registry';
+import {
+	appRoutePaths,
+	filterNavGroups,
+	findNavItemInGroups,
+	type ShellNavGroup,
+	type ShellNavItem
+} from '$lib/core/shell/nav';
 import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
 import Users from '@lucide/svelte/icons/users';
 import CalendarDays from '@lucide/svelte/icons/calendar-days';
@@ -28,19 +33,8 @@ import Settings2 from '@lucide/svelte/icons/settings-2';
 import User from '@lucide/svelte/icons/user';
 import Settings from '@lucide/svelte/icons/settings';
 
-export interface NavItem {
-	title: string;
-	titleKey?: TranslationKey;
-	href: Pathname;
-	icon: Component;
-	badge?: string | number;
-}
-
-export interface NavGroup {
-	label: string;
-	labelKey?: TranslationKey;
-	items: NavItem[];
-}
+export type NavItem = ShellNavItem<Pathname, TranslationKey>;
+export type NavGroup = ShellNavGroup<Pathname, TranslationKey>;
 
 const configuredNavGroups: NavGroup[] = [
 	{
@@ -153,19 +147,7 @@ const configuredNavGroups: NavGroup[] = [
 	}
 ];
 
-export function filterNavGroups(groups: NavGroup[], routes: ReadonlySet<string>): NavGroup[] {
-	return groups
-		.map((group) => ({ ...group, items: group.items.filter((item) => routes.has(item.href)) }))
-		.filter((group) => group.items.length > 0);
-}
-
-export function appRoutePaths(files: Iterable<string>): Set<string> {
-	return new Set(
-		Array.from(files)
-			.filter((file) => file.includes('/(app)/'))
-			.map((file) => toRouteId(file, '/+page.svelte'))
-	);
-}
+export { filterNavGroups, appRoutePaths };
 
 const appRoutes = appRoutePaths(Object.keys(import.meta.glob('/src/routes/**/+page.svelte')));
 
@@ -174,12 +156,5 @@ export const navGroups = filterNavGroups(configuredNavGroups, appRoutes);
 
 /** Find the longest matching navigation path. */
 export function findNavItem(pathname: string): { group: NavGroup; item: NavItem } | undefined {
-	let best: { group: NavGroup; item: NavItem } | undefined;
-	for (const group of navGroups) {
-		for (const item of group.items) {
-			const isMatch = pathname === item.href || pathname.startsWith(item.href + '/');
-			if (isMatch && (!best || item.href.length > best.item.href.length)) best = { group, item };
-		}
-	}
-	return best;
+	return findNavItemInGroups(navGroups, pathname);
 }
