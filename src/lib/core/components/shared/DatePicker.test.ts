@@ -8,7 +8,7 @@ const calendar = vi.hoisted(() => ({
 	change: undefined as ((value: DateValue | undefined) => void) | undefined
 }));
 
-vi.mock('$lib/core/components/ui/calendar', () => ({
+vi.mock('../ui/calendar', () => ({
 	Calendar: (
 		_renderer: unknown,
 		props: { onValueChange?: (value: DateValue | undefined) => void }
@@ -18,9 +18,9 @@ vi.mock('$lib/core/components/ui/calendar', () => ({
 }));
 
 // Render the normally client-only popover content so tests can exercise calendar callbacks.
-vi.mock('$lib/core/components/ui/popover', async (importOriginal) => {
-	const original = await importOriginal<typeof import('$lib/core/components/ui/popover')>();
-	const { default: Content } = await import('./__test__/PickerContent.svelte');
+vi.mock('../ui/popover', async (importOriginal) => {
+	const original = await importOriginal<typeof import('../ui/popover')>();
+	const { default: Content } = await import('./PickerContent.test.svelte');
 	return { ...original, Content };
 });
 
