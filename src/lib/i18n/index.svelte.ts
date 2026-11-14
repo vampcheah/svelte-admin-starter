@@ -4,6 +4,7 @@
 
 import { browser } from '$app/environment';
 import { config } from '$lib/config';
+import { configureCoreI18n } from '$lib/core/i18n.svelte';
 import en from './locales/en';
 import zhCN from './locales/zh-CN';
 import type { Dictionary, Locale, TranslationKey, TranslationValues } from './types';
@@ -91,3 +92,14 @@ export function initLocale(): void {
 		// Keep the default locale.
 	}
 }
+
+configureCoreI18n({
+	get locale() {
+		return current;
+	},
+	locales: LOCALES,
+	t: translate,
+	setLocale: (l: string) => {
+		if (isLocale(l)) setLocale(l);
+	}
+});
