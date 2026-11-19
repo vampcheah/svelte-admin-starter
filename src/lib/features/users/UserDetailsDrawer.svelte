@@ -1,12 +1,12 @@
 <script lang="ts">
 	import Pencil from '@lucide/svelte/icons/pencil';
 	import X from '@lucide/svelte/icons/x';
-	import * as Sheet from '$lib/core/components/ui/sheet';
-	import { Button } from '$lib/core/components/ui/button';
-	import StatusBadge from '$lib/core/components/shared/StatusBadge.svelte';
-	import type { DemoUser } from '$lib/data/users';
-	import { formatDate, initials } from '$lib/i18n/formatters';
-	import { t } from '$lib/i18n';
+	import * as Sheet from '#lib/core/components/ui/sheet/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import StatusBadge from '#lib/core/components/shared/StatusBadge.svelte';
+	import type { DemoUser } from '#lib/data/users.ts';
+	import { formatDate, initials } from '#lib/i18n/formatters.ts';
+	import { t } from '#lib/i18n/index.ts';
 	import { roleLabel, roleTone, statusLabel, statusTone } from './presentation';
 
 	interface Props {

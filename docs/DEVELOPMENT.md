@@ -92,7 +92,7 @@ npm run dev      # 启动开发服务器（Vite），默认 http://localhost:517
 | `npm run verify`                        | PR、完整发布和 CI 共用的完整验证入口       |
 | `npm run format`                        | 格式化全仓库；小改动优先仅格式化受影响文件 |
 
-> `prepare` 是 npm 生命周期钩子，`npm ci` / `npm install` 后自动执行 `svelte-kit sync`（生成 `.svelte-kit/` 下的类型与 `$lib`/`$app` 别名），通常无需手动调用。
+> `prepare` 是 npm 生命周期钩子，`npm ci` / `npm install` 后自动执行 `svelte-kit sync`（生成 `.svelte-kit/` 与 `$app` 类型及内置 tsconfig），通常无需手动调用。
 
 格式化规则见 `.prettierrc`：使用 Tab 缩进、单引号、`trailingComma: none`、`printWidth: 100`，并启用 `prettier-plugin-svelte` 与 `prettier-plugin-tailwindcss`（后者会自动排序 Tailwind 类名）。
 
@@ -148,7 +148,7 @@ src/
 │           ├── appearance/+page.svelte
 │           └── notifications/+page.svelte
 │
-└── lib/                     # 可通过 $lib 别名导入
+└── lib/                     # 可通过 #lib 别名导入
     ├── core/                # portable export 边界，内部使用相对路径
     │   ├── components/ui/   # vendored shadcn-svelte 原语
     │   ├── components/shared/ # PageContainer / DataTable / ThemeToggle 等组合组件
@@ -192,7 +192,7 @@ templates/
 - **`lib/features/`**：按业务领域组织组件和规则。路由负责组合与交互入口；状态按实际共享范围创建，禁止直接修改模块级 mock 种子。Users 和通知状态在 app layout 内按会话共享，Inbox、Orders、Cart 与 Kanban 的演示交互在各页面实例内隔离。Cart 汇总复用纯金额规则；Kanban 同时支持拖放和键盘菜单移动；Calendar 按目标月份的真实天数生成月末种子日期；“今天”在标签页激活、窗口重新聚焦、页面恢复可见及本地午夜刷新，已有日程不会随刷新重新生成。月历支持方向键、Home/End、Page Up/Down 和单一 Tab 入口。领域 locale 片段汇入全局中英文字典，继续使用统一的 typed `t()`；设置语言选择直接读取全局 locale。订单列表、详情和 CSV 使用记录中的同一总额，不在详情中另行添加种子未提供的税费。
 - **`lib/core/hooks/` `lib/core/stores/` `lib/core/utils/`**：portable hooks、持久化容器与纯工具；auth、i18n、mock data 与 app shell 依赖留在 core 之外。
 
-> 别名（`$lib`/`$app`）由 SvelteKit 在 `svelte-kit sync` 时生成到 `.svelte-kit/tsconfig.json`；`tsconfig.json` 仅 `extends` 它。如需自定义别名，请在 `svelte.config.js` 的 `kit.alias` 中扩展（见文件内注释），不要手改生成文件。
+> `#lib` 通过 `package.json` 的 Node subpath imports（`imports` 字段）映射至 `src/lib`；`$app` 类型与基础 tsconfig 由 `svelte-kit sync` 生成，`tsconfig.json` 仅 `extends "$app/tsconfig"`，不要手改生成文件。
 
 ---
 
@@ -209,10 +209,10 @@ templates/
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Toaster } from '$lib/core/components/ui/sonner';
-	import { auth } from '$lib/auth';
-	import { initLocale } from '$lib/i18n';
-	import { config } from '$lib/config';
+	import { Toaster } from '#lib/core/components/ui/sonner';
+	import { auth } from '#lib/auth';
+	import { initLocale } from '#lib/i18n';
+	import { config } from '#lib/config';
 
 	let { children } = $props();
 
@@ -237,7 +237,7 @@ templates/
 ```ts
 import { redirect } from '@sveltejs/kit';
 import { resolve } from '$app/paths';
-import { config } from '$lib/config';
+import { config } from '#lib/config';
 
 export function load(): never {
 	throw redirect(307, resolve(config.app.homePath));
@@ -268,10 +268,10 @@ onMount(() => {
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { auth } from '$lib/auth';
-	import { config } from '$lib/config';
-	import { t } from '$lib/i18n';
-	import AppShell from '$lib/shell/AppShell.svelte';
+	import { auth } from '#lib/auth';
+	import { config } from '#lib/config';
+	import { t } from '#lib/i18n';
+	import AppShell from '#lib/shell/AppShell.svelte';
 
 	let { children } = $props();
 	let ready = $state(false);
@@ -291,9 +291,9 @@ onMount(() => {
 
 这是 mock 客户端守卫，不执行服务端认证；真实后端接入沿用第 8 节的接缝。`AppShell` 组合 sidebar、header、TabBar 与 KeepAliveOutlet。正常 app 页的 document title 由 AppShell 使用活动 tab 标签和 `pageTitle()` 统一生成；`+error.svelte` 在错误状态下自行提供标题，普通 app 页不要另写 `<title>`。
 
-Keep-alive 以 tab ID 保存组件实例和 `{ pathname, url, params, data, form }` 快照；进入错误页时隐藏缓存页并渲染 Kit 的错误 children，已加载页面继续挂载。动态页优先读取 LayoutChain 传入的可选 `params` prop（原生 Kit 渲染时可回退 `page.params`），或从 `$lib/core/shell/tab-route` 的 `TAB_ROUTE` context 读取该 tab 的路由状态。不要在缓存子树中直接依赖全局 `page.params` / `page.url` 来标识自己的记录。
+Keep-alive 以 tab ID 保存组件实例和 `{ pathname, url, params, data, form }` 快照；进入错误页时隐藏缓存页并渲染 Kit 的错误 children，已加载页面继续挂载。动态页优先读取 LayoutChain 传入的可选 `params` prop（原生 Kit 渲染时可回退 `page.params`），或从 `#lib/core/shell/tab-route` 的 `TAB_ROUTE` context 读取该 tab 的路由状态。不要在缓存子树中直接依赖全局 `page.params` / `page.url` 来标识自己的记录。
 
-应用边界用 `$lib/shell/paths` 的 `toAppPathname` / `toAppUrl` 去除浏览器 URL 的 base；存储的 tab 路径保持应用相对，实际导航由 `resolve` / `resolveAppUrl` 加回 base。导航与 keep-alive 注册器一致忽略 route group 目录名。
+应用边界用 `#lib/shell/paths` 的 `toAppPathname` / `toAppUrl` 去除浏览器 URL 的 base；存储的 tab 路径保持应用相对，实际导航由 `resolve` / `resolveAppUrl` 加回 base。导航与 keep-alive 注册器一致忽略 route group 目录名。
 
 ### 错误边界（两层）
 
@@ -354,20 +354,20 @@ Keep-alive 以 tab ID 保存组件实例和 `{ pathname, url, params, data, form
 
 - **UI 原语用命名空间导入**（每个原语目录是一个组件族）：
   ```ts
-  import * as Card from '$lib/core/components/ui/card';
-  import * as Sidebar from '$lib/core/components/ui/sidebar';
-  import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+  import * as Card from '#lib/core/components/ui/card';
+  import * as Sidebar from '#lib/core/components/ui/sidebar';
+  import * as DropdownMenu from '#lib/core/components/ui/dropdown-menu';
   // 用法：<Card.Root> <Card.Header> <Card.Title> ...
   ```
-  单组件原语用具名导入：`import { Button } from '$lib/core/components/ui/button';`、`import { Input } from '$lib/core/components/ui/input';`。
+  单组件原语用具名导入：`import { Button } from '#lib/core/components/ui/button';`、`import { Input } from '#lib/core/components/ui/input';`。
 - **图标按需单独导入**，路径为 `@lucide/svelte/icons/<kebab-case>`：
   ```ts
   import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
   import ChartLine from '@lucide/svelte/icons/chart-line';
   ```
-- **`cn()` 来自 `$lib/core/utils`**，用于合并/去重 Tailwind 类名：
+- **`cn()` 来自 `#lib/core/utils`**，用于合并/去重 Tailwind 类名：
   ```ts
-  import { cn } from '$lib/core/utils';
+  import { cn } from '#lib/core/utils';
   class={cn('overflow-hidden', className)}
   ```
 - **`page` 来自 `$app/state`**（注意是 `state` 不是已弃用的 `$app/stores`），直接读 `page.url.pathname` / `page.status`：
@@ -376,7 +376,7 @@ Keep-alive 以 tab ID 保存组件实例和 `{ pathname, url, params, data, form
   const pathname = $derived(page.url.pathname);
   ```
 - **`goto` 来自 `$app/navigation`**：`import { goto } from '$app/navigation';`。
-- **组合组件优先直接导入**：如 `import PageHeader from '$lib/core/components/shared/PageHeader.svelte';`；应用专用组件从 `src/lib/components/shared/` 导入。兼容 barrel 仍保留。
+- **组合组件优先直接导入**：如 `import PageHeader from '#lib/core/components/shared/PageHeader.svelte';`；应用专用组件从 `src/lib/components/shared/` 导入。兼容 barrel 仍保留。
 
 ### 设计 token 优先
 
@@ -413,9 +413,9 @@ Keep-alive 以 tab ID 保存组件实例和 `{ pathname, url, params, data, form
 <!-- src/routes/(app)/reports/+page.svelte -->
 <script lang="ts">
 	import Download from '@lucide/svelte/icons/download';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { Button } from '$lib/core/components/ui/button';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { Button } from '#lib/core/components/ui/button';
 </script>
 
 <PageContainer>
@@ -496,7 +496,7 @@ npx shadcn-svelte@latest add <name>
 npx shadcn-svelte@latest add data-table
 ```
 
-CLI 会按 `components.json` 的别名（`ui` → `$lib/core/components/ui`，`utils` → `$lib/core/utils`，`hooks` → `$lib/core/hooks`）把组件源码写入项目；之后即可 `import * as <Name> from '$lib/core/components/ui/<name>';`。注意：基础色为 `slate`，CSS 入口为 `src/lib/core/theme.css`。
+CLI 会按 `components.json` 的别名（`ui` → `#lib/core/components/ui`，`utils` → `#lib/core/utils`，`hooks` → `#lib/core/hooks`）把组件源码写入项目；之后即可 `import * as <Name> from '#lib/core/components/ui/<name>';`。注意：基础色为 `slate`，CSS 入口为 `src/lib/core/theme.css`。
 
 ### 7.5 使用 toast（svelte-sonner）
 
@@ -517,7 +517,7 @@ toast.success(next ? 'Compact density enabled' : 'Comfortable density enabled');
 在组件里导入并调用 `t()`，key 为 dot-path，支持 `{var}` 插值：
 
 ```ts
-import { t } from '$lib/i18n';
+import { t } from '#lib/i18n';
 
 t('common.search'); // -> "Search"
 t('dashboard.greeting', { name: firstName }); // -> "Welcome back, <name>"
@@ -540,7 +540,7 @@ nav: { /* ... */, reports: '报表' }
 
 ```ts
 // src/routes/(app)/users/[id]/+page.ts
-import { demoUsers } from '$lib/data/users';
+import { demoUsers } from '#lib/data/users';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = ({ params }) => {
@@ -597,7 +597,7 @@ export interface User {
 
 2. **实现认证 `AuthProvider`**（`src/lib/auth/provider.ts`）：文件已内置 `apiAuthProvider`（打 `config.api.baseUrl` 的 `/auth/*` 端点）与 `mockAuthProvider`，底部导出 `authProvider` 按 `baseUrl` 是否配置自动二选一。把 `apiAuthProvider` 里的端点路径与请求/响应 JSON 形状改成你后端的契约即可。`auth.svelte.ts` 只消费 `authProvider`，无须改动；`auth.user` / `auth.isAuthenticated` 等对外 getter 契约不变，守卫、侧边栏、顶栏都不用动。
 
-3. **实现数据层 `db`**（`src/lib/server/db.ts`，**仅服务端**）：在业务路由新增 `+page.server.ts`，通过 `load` 调用 `db`（如 `{ products: await db.products.list() }`；见 db.ts 顶部示例）。当前 `/tables/server` 仅模拟 DataTable 的外部分页回调，没有 server load。把每个方法体换成真实数据库/API 查询、保持签名不变，页面就不用改。`products.list` 已示范「有 `baseUrl` 就 `fetch`，否则回退 mock」的形态。此文件在 `$lib/server/`，连同它 import 的任何 DB 凭据都**不会**进浏览器包。
+3. **实现数据层 `db`**（`src/lib/server/db.ts`，**仅服务端**）：在业务路由新增 `+page.server.ts`，通过 `load` 调用 `db`（如 `{ products: await db.products.list() }`；见 db.ts 顶部示例）。当前 `/tables/server` 仅模拟 DataTable 的外部分页回调，没有 server load。把每个方法体换成真实数据库/API 查询、保持签名不变，页面就不用改。`products.list` 已示范「有 `baseUrl` 就 `fetch`，否则回退 mock」的形态。此文件在 `#lib/server/`，连同它 import 的任何 DB 凭据都**不会**进浏览器包。
 
 4. **增加服务端守卫**：当前守卫是纯客户端的，认证前仅显示骨架；真实访问控制仍需要服务端校验——在 `(app)/` 下新增 `+layout.server.ts`，在 `load` 中读取 cookie/session 并在未认证时 `throw redirect(302, '/login')`：
 
@@ -639,7 +639,7 @@ export type { Dictionary, Locale, TranslationKey, TranslationValues } from './ty
 切换语言的现成入口是共享组件 `LanguageToggle`（顶栏与 auth 布局已用），其内部即调用 `setLocale`：
 
 ```svelte
-import { LOCALES, setLocale, i18n, type Locale } from '$lib/i18n';
+import { LOCALES, setLocale, i18n, type Locale } from '#lib/i18n';
 // 遍历 LOCALES 渲染下拉，点击项调用 setLocale(locale.value)，
 // 并对 i18n.locale === locale.value 的项打勾。
 ```
@@ -665,19 +665,19 @@ npm run preview   # 本地预览生产构建
 
 ### Adapter
 
-`svelte.config.js` 默认使用 `@sveltejs/adapter-auto`：
+`vite.config.ts` 中的 `sveltekit(...)` 插件默认使用 `@sveltejs/adapter-auto`：
 
-```js
+```ts
 import adapter from '@sveltejs/adapter-auto';
+import { sveltekit } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
-const config = {
+sveltekit({
 	preprocess: vitePreprocess(),
-	kit: {
-		// adapter-auto detects the deployment target. Swap for a specific
-		// adapter (node, static, vercel, ...) when you know where this runs.
-		adapter: adapter()
-	}
-};
+	// adapter-auto detects the deployment target. Swap for a specific
+	// adapter (node, static, vercel, ...) when you know where this runs.
+	adapter: adapter()
+});
 ```
 
 `adapter-auto` 会在受支持的平台（Vercel/Netlify/Cloudflare 等）上自动选择适配器，**但不安装它们**。一旦确定部署目标，建议换成明确的 adapter：
@@ -690,13 +690,14 @@ const config = {
 
 换法（以 Node 为例）：
 
-```js
-// svelte.config.js
+```ts
+// vite.config.ts
 import adapter from '@sveltejs/adapter-node';
 // ...
-kit: {
-	adapter: adapter();
-}
+sveltekit({
+	preprocess: vitePreprocess(),
+	adapter: adapter()
+});
 ```
 
 > 注意：当前根布局 `+layout.ts` 设了 `ssr = true` 且鉴权守卫在客户端运行。若要用 `adapter-static` 完全静态化，需要确保没有依赖服务端的 `load`，并把整站 `prerender = true`（同时 mock 守卫的客户端跳转仍然有效，因为它在浏览器运行）。若接入真实后端的服务端守卫（第 8 节），则应使用 `adapter-node`/`adapter-vercel` 等支持 SSR 的适配器。

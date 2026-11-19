@@ -136,7 +136,7 @@ token 在 `src/lib/core/theme.css` 中分两步声明：
 <script lang="ts">
 	import '../app.css';
 	import { ModeWatcher } from 'mode-watcher';
-	import { config } from '$lib/config';
+	import { config } from '#lib/config';
 	// …
 </script>
 
@@ -158,7 +158,7 @@ token 在 `src/lib/core/theme.css` 中分两步声明：
 	import Sun from '@lucide/svelte/icons/sun';
 	import Moon from '@lucide/svelte/icons/moon';
 	import { toggleMode, mode } from 'mode-watcher';
-	import { Button } from '$lib/core/components/ui/button';
+	import { Button } from '#lib/core/components/ui/button';
 
 	const label = $derived(
 		mode.current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { createEmailSchema } from '$lib/core/utils/validators';
-import type { TranslationKey } from '$lib/i18n';
+import { createEmailSchema } from '#lib/core/utils/validators.ts';
+import type { TranslationKey } from '#lib/i18n/index.ts';
 
 export type UserValidationKey = Extract<TranslationKey, `validation.${string}`>;
 

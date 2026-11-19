@@ -1,4 +1,4 @@
-import type { Column } from '$lib/features/kanban/board';
+import type { Column } from '#lib/features/kanban/board.ts';
 
 /** Seed data; each mounted board clones its own tasks. */
 export const demoColumns: Column[] = [

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { Button } from '$lib/core/components/ui/button';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Label } from '$lib/core/components/ui/label';
-	import { Switch } from '$lib/core/components/ui/switch';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { Switch } from '#lib/core/components/ui/switch/index.ts';
 
 	let updates = $state(true);
 	let security = $state(true);

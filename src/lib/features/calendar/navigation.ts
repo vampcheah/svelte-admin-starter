@@ -1,4 +1,4 @@
-import { ymd } from '$lib/calendar';
+import { ymd } from '#lib/calendar.ts';
 
 export function dateForKey(key: string): Date {
 	const [year, month, day] = key.split('-').map(Number);

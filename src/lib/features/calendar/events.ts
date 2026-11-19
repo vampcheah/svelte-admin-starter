@@ -1,5 +1,5 @@
-import { demoCalendarEvents } from '$lib/data/calendar';
-import { ymd } from '$lib/calendar';
+import { demoCalendarEvents } from '#lib/data/calendar.ts';
+import { ymd } from '#lib/calendar.ts';
 import type { CalendarEvent, EventSeed } from './types';
 
 /** Keep each seed day where possible, clamping only to the actual month's last day. */

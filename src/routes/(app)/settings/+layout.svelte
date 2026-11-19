@@ -7,14 +7,13 @@
 	/* eslint-disable svelte/no-navigation-without-resolve -- variable nav URLs use resolveAppUrl's $app/paths boundary. */
 	import { getContext, type Snippet } from 'svelte';
 	import { page } from '$app/state';
-	import type { Pathname } from '$app/types';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { TAB_ROUTE, type TabRoute } from '$lib/core/shell/tab-route';
-	import { resolveAppUrl, toAppPathname } from '$lib/shell/paths';
-	import { translatedLabel } from '$lib/shell/labels';
-	import { t } from '$lib/i18n';
-	import { cn } from '$lib/core/utils';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { TAB_ROUTE, type TabRoute } from '#lib/core/shell/tab-route.ts';
+	import { resolveAppUrl, toAppPathname, type AppPathname } from '#lib/shell/paths.ts';
+	import { translatedLabel } from '#lib/shell/labels.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { cn } from '#lib/core/utils.ts';
 	import SlidersHorizontal from '@lucide/svelte/icons/sliders-horizontal';
 	import Palette from '@lucide/svelte/icons/palette';
 	import Bell from '@lucide/svelte/icons/bell';
@@ -31,7 +30,7 @@
 	interface SettingsNavItem {
 		title: string;
 		titleKey: string;
-		href: Pathname;
+		href: AppPathname;
 		icon: Component;
 	}
 

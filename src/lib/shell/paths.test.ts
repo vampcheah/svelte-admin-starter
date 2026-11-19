@@ -1,12 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('$app/paths', () => ({
-	base: '/admin',
-	resolve: (pathname: string) => `/admin${pathname === '/' ? '' : pathname}`
+	resolve: (pathname: string) =>
+		pathname === '/' ? '/admin/' : `/admin/${pathname.replace(/^\//, '')}`
 }));
 
 import { resolveAppUrl, toAppPathname, toAppUrl } from './paths';
-import { createRouteRegistry } from '$lib/core/shell/route-registry';
+import { createRouteRegistry } from '#lib/core/shell/route-registry.ts';
 import type { Component } from 'svelte';
 
 describe('app navigation paths', () => {

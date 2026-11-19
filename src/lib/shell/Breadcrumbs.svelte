@@ -1,12 +1,12 @@
 <!-- Breadcrumb trail derived from the current path + nav model. -->
 <script lang="ts">
-	import PortableBreadcrumbs from '$lib/core/shell/Breadcrumbs.svelte';
-	import { buildBreadcrumbTrail } from '$lib/core/shell/nav';
+	import PortableBreadcrumbs from '#lib/core/shell/Breadcrumbs.svelte';
+	import { buildBreadcrumbTrail } from '#lib/core/shell/nav.ts';
 	import { page } from '$app/state';
 	import { navGroups } from './nav';
 	import { navGroupLabel, navTitle, routeLabelFor, translatedLabel } from './labels';
 	import { resolveAppUrl, toAppPathname } from './paths';
-	import { config } from '$lib/config';
+	import { config } from '#lib/config/index.ts';
 
 	const crumbs = $derived.by(() => {
 		const pathname = toAppPathname(page.url.pathname);

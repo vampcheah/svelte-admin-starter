@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import { setLocale } from '$lib/i18n';
+import { setLocale } from '#lib/i18n/index.ts';
 import OrderStatusTimeline from './OrderStatusTimeline.svelte';
 
 afterEach(() => setLocale('en'));

@@ -6,15 +6,15 @@
   All data is mock and lives inline; CTAs simply fire a toast.
 -->
 <script lang="ts">
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Accordion from '$lib/core/components/ui/accordion';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { Separator } from '$lib/core/components/ui/separator';
-	import { cn } from '$lib/core/utils';
-	import { formatCurrency } from '$lib/i18n/formatters';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Accordion from '#lib/core/components/ui/accordion/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { Separator } from '#lib/core/components/ui/separator/index.ts';
+	import { cn } from '#lib/core/utils.ts';
+	import { formatCurrency } from '#lib/i18n/formatters.ts';
 	import { toast } from 'svelte-sonner';
 	import Check from '@lucide/svelte/icons/check';
 	import Minus from '@lucide/svelte/icons/minus';

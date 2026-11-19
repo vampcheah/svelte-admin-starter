@@ -4,24 +4,24 @@
   buttons (change plan, cancel, update card, download invoice) surface a toast.
 -->
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.ts';
 	import CreditCard from '@lucide/svelte/icons/credit-card';
 	import Download from '@lucide/svelte/icons/download';
 	import Check from '@lucide/svelte/icons/check';
 	import Sparkles from '@lucide/svelte/icons/sparkles';
 
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import DataTable from '$lib/core/components/shared/DataTable.svelte';
-	import StatusBadge from '$lib/core/components/shared/StatusBadge.svelte';
-	import type { Column } from '$lib/core/components/shared/DataTable.svelte';
-	import type { BadgeTone } from '$lib/core/components/shared/StatusBadge.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Progress } from '$lib/core/components/ui/progress';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import DataTable from '#lib/core/components/shared/DataTable.svelte';
+	import StatusBadge from '#lib/core/components/shared/StatusBadge.svelte';
+	import type { Column } from '#lib/core/components/shared/DataTable.svelte';
+	import type { BadgeTone } from '#lib/core/components/shared/StatusBadge.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Progress } from '#lib/core/components/ui/progress/index.ts';
 
-	import { formatCurrency, formatDate, formatNumber } from '$lib/i18n/formatters';
-	import { cn } from '$lib/core/utils';
+	import { formatCurrency, formatDate, formatNumber } from '#lib/i18n/formatters.ts';
+	import { cn } from '#lib/core/utils.ts';
 	import { toast } from 'svelte-sonner';
 
 	// --- Current plan (mock) ----------------------------------------------

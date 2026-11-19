@@ -6,18 +6,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { resolveAppUrl } from '#lib/shell/paths.ts';
 	import { toast } from 'svelte-sonner';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import PasswordInput from '$lib/core/components/shared/PasswordInput.svelte';
-	import Spinner from '$lib/core/components/shared/Spinner.svelte';
-	import { auth } from '$lib/auth';
-	import { loginSchema, fieldError } from '$lib/core/utils/validators';
-	import { config } from '$lib/config';
-	import { t } from '$lib/i18n';
-	import { pageTitle } from '$lib/utils/page-title';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import PasswordInput from '#lib/core/components/shared/PasswordInput.svelte';
+	import Spinner from '#lib/core/components/shared/Spinner.svelte';
+	import { auth } from '#lib/auth/index.ts';
+	import { loginSchema, fieldError } from '#lib/core/utils/validators.ts';
+	import { config } from '#lib/config/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { pageTitle } from '#lib/utils/page-title.ts';
 
 	let email = $state(config.auth.demo.email);
 	let password = $state(config.auth.demo.password);
@@ -49,7 +50,8 @@
 
 		if (result.ok) {
 			toast.success(t('auth.signedIn'));
-			void goto(resolve(config.app.homePath));
+			// eslint-disable-next-line svelte/no-navigation-without-resolve -- resolveAppUrl resolves through $app/paths boundary.
+			void goto(resolveAppUrl(config.app.homePath));
 		} else {
 			formError = result.error;
 			toast.error(formError);
@@ -105,7 +107,7 @@
 			<FormField label={t('auth.password')} error={errors.password}>
 				{#snippet labelAction()}
 					<a
-						href={resolve('/forgot-password')}
+						href={resolve('forgot-password')}
 						class="text-xs font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 					>
 						{t('auth.forgotPassword')}
@@ -144,7 +146,7 @@
 		<p class="text-sm text-muted-foreground">
 			{t('auth.noAccount')}
 			<a
-				href={resolve('/register')}
+				href={resolve('register')}
 				class="font-medium text-foreground underline-offset-4 hover:underline"
 			>
 				{t('auth.signUp')}

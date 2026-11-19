@@ -3,10 +3,10 @@
 	import FolderKanban from '@lucide/svelte/icons/folder-kanban';
 	import CircleCheck from '@lucide/svelte/icons/circle-check';
 	import Clock from '@lucide/svelte/icons/clock';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import StatCard from '$lib/core/components/shared/StatCard.svelte';
-	import * as Card from '$lib/core/components/ui/card';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import StatCard from '#lib/core/components/shared/StatCard.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
 
 	const stats = [
 		{ title: 'Members', value: 128, change: 8, icon: Users },

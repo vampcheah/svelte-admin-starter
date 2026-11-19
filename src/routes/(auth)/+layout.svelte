@@ -8,11 +8,12 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { auth } from '$lib/auth';
-	import { config } from '$lib/config';
-	import { t } from '$lib/i18n';
-	import ThemeToggle from '$lib/core/components/shared/ThemeToggle.svelte';
-	import LanguageToggle from '$lib/components/shared/LanguageToggle.svelte';
+	import { resolveAppUrl } from '#lib/shell/paths.ts';
+	import { auth } from '#lib/auth/index.ts';
+	import { config } from '#lib/config/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import ThemeToggle from '#lib/core/components/shared/ThemeToggle.svelte';
+	import LanguageToggle from '#lib/components/shared/LanguageToggle.svelte';
 	import Check from '@lucide/svelte/icons/check';
 
 	let { children } = $props();
@@ -26,7 +27,8 @@
 
 	onMount(() => {
 		auth.init();
-		if (auth.isAuthenticated) goto(resolve(config.app.homePath));
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- resolveAppUrl resolves through $app/paths boundary.
+		if (auth.isAuthenticated) goto(resolveAppUrl(config.app.homePath));
 	});
 </script>
 

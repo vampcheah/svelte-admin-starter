@@ -6,14 +6,14 @@
 	import { resolve } from '$app/paths';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import MailCheck from '@lucide/svelte/icons/mail-check';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import Spinner from '$lib/core/components/shared/Spinner.svelte';
-	import { emailSchema } from '$lib/core/utils/validators';
-	import { t } from '$lib/i18n';
-	import { pageTitle } from '$lib/utils/page-title';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import Spinner from '#lib/core/components/shared/Spinner.svelte';
+	import { emailSchema } from '#lib/core/utils/validators.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { pageTitle } from '#lib/utils/page-title.ts';
 
 	let email = $state('');
 	let submitting = $state(false);
@@ -58,7 +58,7 @@
 			</Card.Description>
 		</Card.Header>
 		<Card.Footer class="justify-center">
-			<Button href={resolve('/login')} variant="outline" class="w-full">
+			<Button href={resolve('login')} variant="outline" class="w-full">
 				<ArrowLeft class="size-4" aria-hidden="true" />
 				{t('auth.backToSignIn')}
 			</Button>
@@ -96,7 +96,7 @@
 
 		<Card.Footer class="justify-center">
 			<a
-				href={resolve('/login')}
+				href={resolve('login')}
 				class="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
 			>
 				<ArrowLeft class="size-4" aria-hidden="true" />

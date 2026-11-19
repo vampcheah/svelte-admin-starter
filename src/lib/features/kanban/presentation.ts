@@ -1,6 +1,6 @@
-import type { BadgeTone } from '$lib/core/components/shared/StatusBadge.svelte';
-import { t } from '$lib/i18n';
-import type { TranslationKey } from '$lib/i18n/types';
+import type { BadgeTone } from '#lib/core/components/shared/StatusBadge.svelte';
+import { t } from '#lib/i18n/index.ts';
+import type { TranslationKey } from '#lib/i18n/types.ts';
 import type { Column, Priority } from './board';
 
 export const PRIORITY_TONE: Record<Priority, BadgeTone> = {

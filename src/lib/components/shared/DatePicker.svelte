@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CoreDatePicker from '$lib/core/components/shared/DatePicker.svelte';
+	import CoreDatePicker from '#lib/core/components/shared/DatePicker.svelte';
 	import type { ComponentProps } from 'svelte';
 
 	type Props = ComponentProps<typeof CoreDatePicker>;

@@ -1,5 +1,5 @@
 import { untrack } from 'svelte';
-import { today } from '$lib/calendar';
+import { today } from '#lib/calendar.ts';
 import { millisecondsUntilTomorrow } from './navigation';
 
 /** Refresh on tab activation, browser focus/visibility, and local midnight. */

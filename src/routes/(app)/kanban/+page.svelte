@@ -3,14 +3,14 @@
 	import Plus from '@lucide/svelte/icons/plus';
 	import { tick } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { t } from '$lib/i18n';
-	import BoardColumn from '$lib/features/kanban/BoardColumn.svelte';
-	import { KanbanState } from '$lib/features/kanban/state.svelte';
-	import { columnTitle } from '$lib/features/kanban/presentation';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import BoardColumn from '#lib/features/kanban/BoardColumn.svelte';
+	import { KanbanState } from '#lib/features/kanban/state.svelte.ts';
+	import { columnTitle } from '#lib/features/kanban/presentation.ts';
 
 	const instanceId = $props.id();
 	const board = new KanbanState();

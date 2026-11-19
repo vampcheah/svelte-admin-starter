@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CoreDateRangePicker from '$lib/core/components/shared/DateRangePicker.svelte';
+	import CoreDateRangePicker from '#lib/core/components/shared/DateRangePicker.svelte';
 	import type { ComponentProps } from 'svelte';
 
 	type Props = ComponentProps<typeof CoreDateRangePicker>;

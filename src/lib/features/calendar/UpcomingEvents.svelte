@@ -2,11 +2,11 @@
 	import CalendarDays from '@lucide/svelte/icons/calendar-days';
 	import Clock from '@lucide/svelte/icons/clock';
 	import ArrowRight from '@lucide/svelte/icons/arrow-right';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { cn } from '$lib/core/utils';
-	import { i18n, t } from '$lib/i18n';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { cn } from '#lib/core/utils.ts';
+	import { i18n, t } from '#lib/i18n/index.ts';
 	import { CATEGORIES } from './presentation';
 	import type { CalendarEvent } from './types';
 	let { upcoming }: { upcoming: CalendarEvent[] } = $props();

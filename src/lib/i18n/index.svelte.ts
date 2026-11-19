@@ -2,9 +2,9 @@
 // interpolation, and persistence to localStorage 'admin-starter:locale'.
 // No external i18n library — just plain dictionaries.
 
-import { browser } from '$app/environment';
-import { config } from '$lib/config';
-import { configureCoreI18n } from '$lib/core/i18n.svelte';
+import { browser } from '$app/env';
+import { config } from '#lib/config/index.ts';
+import { configureCoreI18n } from '#lib/core/i18n.svelte.ts';
 import en from './locales/en';
 import zhCN from './locales/zh-CN';
 import type { Dictionary, Locale, TranslationKey, TranslationValues } from './types';

@@ -1,4 +1,4 @@
-import type { EventSeed } from '$lib/features/calendar/types';
+import type { EventSeed } from '#lib/features/calendar/types.ts';
 
 export const demoCalendarEvents: readonly EventSeed[] = [
 	{ day: 2, title: 'Sprint planning', category: 'meeting', time: '09:30' },

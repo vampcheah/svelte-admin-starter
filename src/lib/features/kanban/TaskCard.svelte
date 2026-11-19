@@ -5,15 +5,15 @@
 	import SignalLow from '@lucide/svelte/icons/signal-low';
 	import SignalMedium from '@lucide/svelte/icons/signal-medium';
 	import SignalHigh from '@lucide/svelte/icons/signal-high';
-	import StatusBadge from '$lib/core/components/shared/StatusBadge.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Avatar from '$lib/core/components/ui/avatar';
-	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { Button } from '$lib/core/components/ui/button';
-	import { cn } from '$lib/core/utils';
-	import { t } from '$lib/i18n';
-	import { initials } from '$lib/i18n/formatters';
+	import StatusBadge from '#lib/core/components/shared/StatusBadge.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Avatar from '#lib/core/components/ui/avatar/index.ts';
+	import * as DropdownMenu from '#lib/core/components/ui/dropdown-menu/index.ts';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { cn } from '#lib/core/utils.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { initials } from '#lib/i18n/formatters.ts';
 	import type { Column, Task } from './board';
 	import { columnTitle, PRIORITY_TONE } from './presentation';
 

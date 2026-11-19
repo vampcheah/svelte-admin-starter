@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { DateValue } from '@internationalized/date';
-import { isDateWithinBounds, parseDateValue } from '$lib/components/shared/date-time-utils';
+import { isDateWithinBounds, parseDateValue } from '#lib/components/shared/date-time-utils.ts';
 import type en from './locales/en';
 
 export type ProjectValidationKey = `projectForm.validation.${keyof typeof en.validation}`;

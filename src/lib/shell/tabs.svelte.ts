@@ -1,9 +1,9 @@
 import FileIcon from '@lucide/svelte/icons/file';
-import { confirm } from '$lib/confirm.svelte';
-import { Tabs, TAB_SOFT_LIMIT } from '$lib/core/shell/tabs.svelte';
-import { t } from '$lib/i18n';
+import { confirm } from '#lib/confirm.svelte.ts';
+import { Tabs, TAB_SOFT_LIMIT } from '#lib/core/shell/tabs.svelte.ts';
+import { t } from '#lib/i18n/index.ts';
 import { findNavItem } from './nav';
-import { config } from '$lib/config';
+import { config } from '#lib/config/index.ts';
 import { routeLabelFor, translatedLabel } from './labels';
 
 export function tabTitleFor(pathname: string, data?: unknown, override?: string): string {
@@ -35,4 +35,4 @@ export const tabs = new Tabs({
 });
 
 export { TAB_SOFT_LIMIT };
-export type { Tab } from '$lib/core/shell/tabs.svelte';
+export type { Tab } from '#lib/core/shell/tabs.svelte.ts';

@@ -1,7 +1,7 @@
 import { CalendarDate } from '@internationalized/date';
 import { afterEach, describe, expect, it } from 'vitest';
-import { fieldError } from '$lib/core/utils/validators';
-import { setLocale, t } from '$lib/i18n';
+import { fieldError } from '#lib/core/utils/validators.ts';
+import { setLocale, t } from '#lib/i18n/index.ts';
 import en from './locales/en';
 import zhCN from './locales/zh-CN';
 import { createProjectSchema } from './schema';

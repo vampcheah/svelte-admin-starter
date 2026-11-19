@@ -1,4 +1,4 @@
-import type { CartItem } from '$lib/data/cart';
+import type { CartItem } from '#lib/data/cart.ts';
 import { CART_PRICING } from './config';
 
 export interface CartTotals {

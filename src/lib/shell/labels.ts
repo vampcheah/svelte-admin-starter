@@ -1,7 +1,7 @@
-import { translate as t } from '$lib/i18n';
+import { translate as t } from '#lib/i18n/index.ts';
 import { leafCrumb } from './breadcrumb.svelte';
 import { findNavItem } from './nav';
-import { titleCase } from '$lib/core/shell/nav';
+import { titleCase } from '#lib/core/shell/nav.ts';
 
 export { titleCase };
 

@@ -4,17 +4,17 @@
 	import ShoppingCart from '@lucide/svelte/icons/shopping-cart';
 	import Package from '@lucide/svelte/icons/package';
 	import { toast } from 'svelte-sonner';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import EmptyState from '$lib/core/components/shared/EmptyState.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import CartItemRow from '$lib/features/cart/CartItemRow.svelte';
-	import CartSummary from '$lib/features/cart/CartSummary.svelte';
-	import { CartState } from '$lib/features/cart/state.svelte';
-	import { CART_PRICING } from '$lib/features/cart/config';
-	import { t } from '$lib/i18n';
-	import { formatCurrency, formatNumber } from '$lib/i18n/formatters';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import EmptyState from '#lib/core/components/shared/EmptyState.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import CartItemRow from '#lib/features/cart/CartItemRow.svelte';
+	import CartSummary from '#lib/features/cart/CartSummary.svelte';
+	import { CartState } from '#lib/features/cart/state.svelte.ts';
+	import { CART_PRICING } from '#lib/features/cart/config.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { formatCurrency, formatNumber } from '#lib/i18n/formatters.ts';
 
 	const cart = new CartState();
 	const totals = $derived(cart.totals);
@@ -57,7 +57,7 @@
 			description={t('cart.emptyDescription')}
 		>
 			{#snippet action()}
-				<Button href={resolve('/tables')}>
+				<Button href={resolve('tables')}>
 					<Package class="size-4" aria-hidden="true" />
 					{t('cart.browseProducts')}
 				</Button>

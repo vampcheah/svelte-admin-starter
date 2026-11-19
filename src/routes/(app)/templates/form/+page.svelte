@@ -1,11 +1,11 @@
 <script lang="ts">
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { Button } from '$lib/core/components/ui/button';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Label } from '$lib/core/components/ui/label';
-	import { Textarea } from '$lib/core/components/ui/textarea';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { Textarea } from '#lib/core/components/ui/textarea/index.ts';
 
 	let name = $state('');
 	let description = $state('');

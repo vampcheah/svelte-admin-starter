@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { demoUsers } from '$lib/data/users';
+import { demoUsers } from '#lib/data/users.ts';
 import { createUsersState, type UserDraft } from './state.svelte';
 
 const draft: UserDraft = {

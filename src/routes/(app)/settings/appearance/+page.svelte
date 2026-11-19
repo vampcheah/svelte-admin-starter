@@ -4,13 +4,13 @@
   interface density toggle persisted via the reusable `persisted` store.
 -->
 <script lang="ts">
-	import * as Card from '$lib/core/components/ui/card';
-	import { Label } from '$lib/core/components/ui/label';
-	import { Switch } from '$lib/core/components/ui/switch';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { Switch } from '#lib/core/components/ui/switch/index.ts';
 	import { setMode, mode, userPrefersMode } from 'mode-watcher';
-	import { setLocale, LOCALES, i18n, t } from '$lib/i18n';
-	import { persisted } from '$lib/core/stores/persisted.svelte';
-	import { cn } from '$lib/core/utils';
+	import { setLocale, LOCALES, i18n, t } from '#lib/i18n/index.ts';
+	import { persisted } from '#lib/core/stores/persisted.svelte.ts';
+	import { cn } from '#lib/core/utils.ts';
 	import { toast } from 'svelte-sonner';
 	import type { Component } from 'svelte';
 	import Sun from '@lucide/svelte/icons/sun';

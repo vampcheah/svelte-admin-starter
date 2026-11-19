@@ -6,13 +6,13 @@
   `@lucide/svelte/icons/<name>`.
 -->
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.ts';
 	import type { Component } from 'svelte';
 	import { toast } from 'svelte-sonner';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import SearchInput from '$lib/core/components/shared/SearchInput.svelte';
-	import EmptyState from '$lib/core/components/shared/EmptyState.svelte';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import SearchInput from '#lib/core/components/shared/SearchInput.svelte';
+	import EmptyState from '#lib/core/components/shared/EmptyState.svelte';
 	import SearchXIcon from '@lucide/svelte/icons/search-x';
 	import HouseIcon from '@lucide/svelte/icons/house';
 	import LayoutDashboardIcon from '@lucide/svelte/icons/layout-dashboard';

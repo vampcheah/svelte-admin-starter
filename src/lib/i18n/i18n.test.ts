@@ -10,7 +10,7 @@ import {
 	formatRelativeTime
 } from './formatters';
 
-vi.mock('$app/environment', () => ({ browser: true }));
+vi.mock('$app/env', () => ({ browser: true }));
 
 function leaves(dictionary: object, prefix = ''): Record<string, string> {
 	return Object.fromEntries(

@@ -1,7 +1,7 @@
 import { render } from 'svelte/server';
 import { afterEach, describe, expect, it } from 'vitest';
-import { setLocale } from '$lib/i18n';
-import { demoColumns } from '$lib/data/kanban';
+import { setLocale } from '#lib/i18n/index.ts';
+import { demoColumns } from '#lib/data/kanban.ts';
 import BoardColumn from './BoardColumn.svelte';
 
 afterEach(() => setLocale('en'));

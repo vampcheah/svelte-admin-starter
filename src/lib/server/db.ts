@@ -6,21 +6,21 @@
 //  `+page.server.ts` `load` function, e.g.:
 //
 //      // src/routes/(app)/tables/+page.server.ts
-//      import { db } from '$lib/server/db';
+//      import { db } from '#lib/server/db.ts';
 //      export const load = async () => ({ products: await db.products.list() });
 //
 //  Every method currently returns the in-memory mock fixtures from
-//  `$lib/data/*`. To go to production, replace the method bodies (keep the
+//  `#lib/data/*`. To go to production, replace the method bodies (keep the
 //  signatures) with your real queries — pages that consume `db` won't change.
 //
-//  This file lives in `$lib/server/`, so it — and any DB credentials it
+//  This file lives in `#lib/server/`, so it — and any DB credentials it
 //  imports — is NEVER bundled into the browser.
 // ============================================================================
 
-import { config } from '$lib/config';
-import { demoUsers, type DemoUser } from '$lib/data/users';
-import { demoProducts, type DemoProduct } from '$lib/data/products';
-import { stats, revenueSeries, recentActivity, trafficByChannel } from '$lib/data/dashboard';
+import { config } from '#lib/config/index.ts';
+import { demoUsers, type DemoUser } from '#lib/data/users.ts';
+import { demoProducts, type DemoProduct } from '#lib/data/products.ts';
+import { stats, revenueSeries, recentActivity, trafficByChannel } from '#lib/data/dashboard.ts';
 
 //  Base URL of your backend (empty string = mock mode). Replace the mock bodies
 //  below with real queries/fetches against it — `products.list` shows the shape.

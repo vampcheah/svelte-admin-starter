@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
-import { demoEmails } from '$lib/data/inbox';
+import { demoEmails } from '#lib/data/inbox.ts';
 import MessageList from './MessageList.svelte';
 
 describe('message list controls', () => {

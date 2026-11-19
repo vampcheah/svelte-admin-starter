@@ -36,9 +36,9 @@
 
 | 层                        | 目录                          | 导入路径                                               | 何时用                                                                                                                     |
 | ------------------------- | ----------------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| **ui** — shadcn 原子      | `src/lib/core/components/ui/` | `import * as Card from '$lib/core/components/ui/card'` | 需要无业务含义的基础控件（按钮、输入框、对话框、表格原语等）。这些由 shadcn-svelte CLI 生成，可直接修改源码。              |
-| **shared** — 复用业务组件 | `src/lib/components/shared/`  | `import { DataTable } from '$lib/components/shared'`   | 跨页面复用、带有约定样式与行为的展示组件（页头、KPI 卡片、数据表、确认弹窗等）。它们组合 ui 原子，封装出统一的产品级模式。 |
-| **shell** — 布局外壳      | `src/lib/shell/`              | `import { AppShell } from '$lib/shell'`                | 整个 admin 后台的框架：侧边栏、顶栏、面包屑、通知菜单、导航模型。一般只在 layout 中出现一次。                              |
+| **ui** — shadcn 原子      | `src/lib/core/components/ui/` | `import * as Card from '#lib/core/components/ui/card'` | 需要无业务含义的基础控件（按钮、输入框、对话框、表格原语等）。这些由 shadcn-svelte CLI 生成，可直接修改源码。              |
+| **shared** — 复用业务组件 | `src/lib/components/shared/`  | `import { DataTable } from '#lib/components/shared'`   | 跨页面复用、带有约定样式与行为的展示组件（页头、KPI 卡片、数据表、确认弹窗等）。它们组合 ui 原子，封装出统一的产品级模式。 |
+| **shell** — 布局外壳      | `src/lib/shell/`              | `import { AppShell } from '#lib/shell'`                | 整个 admin 后台的框架：侧边栏、顶栏、面包屑、通知菜单、导航模型。一般只在 layout 中出现一次。                              |
 
 标签状态机、TabBar、keep-alive outlet 与路由注册器位于 `src/lib/core/shell/`，应用层 shell
 只注入导航、翻译、认证和 SvelteKit 状态。依赖方向保持单向：应用 shell 依赖 portable shell，
@@ -77,9 +77,9 @@ toggle           toggle-group     tooltip
 
 ```svelte
 <script lang="ts">
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Table from '$lib/core/components/ui/table';
-	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+	import * as Card from '#lib/core/components/ui/card';
+	import * as Table from '#lib/core/components/ui/table';
+	import * as DropdownMenu from '#lib/core/components/ui/dropdown-menu';
 </script>
 
 <Card.Root>
@@ -92,21 +92,21 @@ toggle           toggle-group     tooltip
 
 ```svelte
 <script lang="ts">
-	import { Button, buttonVariants } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Badge } from '$lib/core/components/ui/badge';
+	import { Button, buttonVariants } from '#lib/core/components/ui/button';
+	import { Input } from '#lib/core/components/ui/input';
+	import { Badge } from '#lib/core/components/ui/badge';
 </script>
 ```
 
 `sonner` 族导出的是 `Toaster`（toast 的渲染入口，见 [第 6 节](#6-stores-与全局-helper)）：
 
 ```svelte
-import {Toaster} from '$lib/core/components/ui/sonner';
+import {Toaster} from '#lib/core/components/ui/sonner';
 ```
 
 ### 用 CLI 增删组件
 
-项目根目录的 `components.json` 已配置好别名（`ui` → `$lib/core/components/ui`，`utils` → `$lib/core/utils`，`hooks` → `$lib/core/hooks`），baseColor 为 `slate`，registry 指向 `https://shadcn-svelte.com/registry`。
+项目根目录的 `components.json` 已配置好别名（`ui` → `#lib/core/components/ui`，`utils` → `#lib/core/utils`，`hooks` → `#lib/core/hooks`），baseColor 为 `slate`，registry 指向 `https://shadcn-svelte.com/registry`。
 
 新增一个尚未安装的组件：
 
@@ -126,7 +126,7 @@ CLI 会把组件源码写入 `src/lib/core/components/ui/<component>/`。**删�
 
 ## 3. Shared 复用业务组件
 
-运行时代码优先从 canonical 文件直接导入，例如 `$lib/core/components/shared/PageHeader.svelte`；日期时间、确认与命令菜单等应用组件使用 `$lib/components/shared/<Name>.svelte`。下列兼容 barrel（`src/lib/components/shared/index.ts`）仍保留原 API：
+运行时代码优先从 canonical 文件直接导入，例如 `#lib/core/components/shared/PageHeader.svelte`；日期时间、确认与命令菜单等应用组件使用 `#lib/components/shared/<Name>.svelte`。下列兼容 barrel（`src/lib/components/shared/index.ts`）仍保留原 API：
 
 ```svelte
 import {
@@ -134,7 +134,7 @@ import {
   ConfirmDialog, ThemeToggle, LanguageToggle, Spinner, SearchInput, CommandMenu,
   DatePicker, TimePicker, DateTimePicker,
   type Column, type BadgeTone
-} from '$lib/components/shared';
+} from '#lib/components/shared';
 ```
 
 > 类型 `Column` 由 `DataTable.svelte` 导出、`BadgeTone` 由 `StatusBadge.svelte` 导出，均经 barrel 再导出。
@@ -203,7 +203,7 @@ import {
 
 ```svelte
 <script lang="ts">
-	import { StatCard } from '$lib/components/shared';
+	import { StatCard } from '#lib/components/shared';
 	import DollarSign from '@lucide/svelte/icons/dollar-sign';
 </script>
 
@@ -216,7 +216,7 @@ import {
 
 `src/lib/core/components/shared/StatusBadge.svelte` — 统一上色的状态/角色药丸（pill）。在基础 `Badge` 原语之上，按语义化的 `tone` 解析出柔和底色 + 匹配文字色，把全站「角色 / 状态」标签的配色约定收敛到**单一来源**：页面只选 `tone`，不再各自手写颜色类。Users / Tables / Orders / Billing 等页面均复用它来渲染角色与状态。
 
-`StatusBadge` 与类型 `BadgeTone` 都从 `$lib/components/shared` barrel 导出。
+`StatusBadge` 与类型 `BadgeTone` 都从 `#lib/components/shared` barrel 导出。
 
 | prop       | 类型        | 默认值      | bindable | 说明                         |
 | ---------- | ----------- | ----------- | -------- | ---------------------------- |
@@ -242,7 +242,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { StatusBadge, type BadgeTone } from '$lib/components/shared';
+	import { StatusBadge, type BadgeTone } from '#lib/components/shared';
 
 	// 页面把领域状态映射到语义 tone，配色约定仍只活在 StatusBadge 内。
 	function statusTone(status: 'active' | 'invited' | 'suspended'): BadgeTone {
@@ -271,8 +271,8 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { EmptyState } from '$lib/components/shared';
-	import { Button } from '$lib/core/components/ui/button';
+	import { EmptyState } from '#lib/components/shared';
+	import { Button } from '#lib/core/components/ui/button';
 	import Inbox from '@lucide/svelte/icons/inbox';
 </script>
 
@@ -313,7 +313,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { SearchInput } from '$lib/components/shared';
+	import { SearchInput } from '#lib/components/shared';
 	let query = $state('');
 </script>
 
@@ -330,8 +330,8 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import { Input } from '$lib/core/components/ui/input';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import { Input } from '#lib/core/components/ui/input';
 	let email = $state('');
 	let error = $state<string>();
 </script>
@@ -372,7 +372,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { DatePicker, TimePicker, DateTimePicker } from '$lib/components/shared';
+	import { DatePicker, TimePicker, DateTimePicker } from '#lib/components/shared';
 
 	let date = $state('');
 	let time = $state('');
@@ -402,7 +402,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { ConfirmDialog } from '$lib/components/shared';
+	import { ConfirmDialog } from '#lib/components/shared';
 	let deleteOpen = $state(false);
 	function confirmDelete() {
 		/* 删除逻辑 */
@@ -427,7 +427,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { ThemeToggle } from '$lib/components/shared';
+	import { ThemeToggle } from '#lib/components/shared';
 </script>
 
 <ThemeToggle />
@@ -443,19 +443,19 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { LanguageToggle } from '$lib/components/shared';
+	import { LanguageToggle } from '#lib/components/shared';
 </script>
 
 <LanguageToggle />
 ```
 
-> locale 列表与切换逻辑来自 `$lib/i18n`（见 [第 6 节](#6-stores-与全局-helper)）。
+> locale 列表与切换逻辑来自 `#lib/i18n`（见 [第 6 节](#6-stores-与全局-helper)）。
 
 ---
 
 ### CommandMenu
 
-`src/lib/components/shared/CommandMenu.svelte` — ⌘K / Ctrl+K 命令面板。基于 `$lib/shell/nav` 的 `navGroups` 分组列出所有导航路由，选中即 `goto` 跳转。组件挂载时注册全局 `keydown`，因此任意位置可唤起；`open` 可绑定，便于父组件（如顶栏搜索按钮）也能控制。
+`src/lib/components/shared/CommandMenu.svelte` — ⌘K / Ctrl+K 命令面板。基于 `#lib/shell/nav` 的 `navGroups` 分组列出所有导航路由，选中即 `goto` 跳转。组件挂载时注册全局 `keydown`，因此任意位置可唤起；`open` 可绑定，便于父组件（如顶栏搜索按钮）也能控制。
 
 | prop   | 类型      | 默认值  | bindable | 说明                  |
 | ------ | --------- | ------- | -------- | --------------------- |
@@ -463,7 +463,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 
 ```svelte
 <script lang="ts">
-	import { CommandMenu } from '$lib/components/shared';
+	import { CommandMenu } from '#lib/components/shared';
 	let commandOpen = $state(false);
 </script>
 
@@ -487,7 +487,7 @@ type BadgeTone = 'neutral' | 'outline' | 'brand' | 'success' | 'warning' | 'dang
 - 可选行选择（复选框列，`selected` 可绑定）
 - 加载骨架态；无数据时渲染 `EmptyState`
 - 自定义单元格（`cell`）、每行操作（`actions`）、工具栏（`toolbar`）三个 snippet 钩子
-- 可选 `text` 翻译回调，portable core 默认英文；应用传入 `$lib/i18n` 的 `translate` 桥接本地字典
+- 可选 `text` 翻译回调，portable core 默认英文；应用传入 `#lib/i18n` 的 `translate` 桥接本地字典
 - 排序表头通过 `aria-sort` 反映当前方向
 
 **视觉约定（来自源码）：**
@@ -649,7 +649,7 @@ const columns: Column<DemoUser>[] = [
 
 #### 推荐模式：用 Sheet 抽屉做增/改/查（来自 Users 页）
 
-Users 页的 add / edit / view 已从居中的 `Dialog` 改为右侧 **`Sheet` 抽屉**（`$lib/core/components/ui/sheet`）。这是表单/详情类交互的推荐写法——更适合较长的表单，且不遮挡主内容。约定结构：
+Users 页的 add / edit / view 已从居中的 `Dialog` 改为右侧 **`Sheet` 抽屉**（`#lib/core/components/ui/sheet`）。这是表单/详情类交互的推荐写法——更适合较长的表单，且不遮挡主内容。约定结构：
 
 - `Sheet.Content` 传 `side="right" class="gap-0 sm:max-w-lg!"`；
 - `Sheet.Header` 加 `border-b`；
@@ -658,7 +658,7 @@ Users 页的 add / edit / view 已从居中的 `Dialog` 改为右侧 **`Sheet` �
 
 ```svelte
 <script lang="ts">
-  import * as Sheet from '$lib/core/components/ui/sheet';
+  import * as Sheet from '#lib/core/components/ui/sheet';
   let dialogOpen = $state(false);
 </script>
 
@@ -691,9 +691,9 @@ Users 页的 add / edit / view 已从居中的 `Dialog` 改为右侧 **`Sheet` �
 运行时代码优先直接导入组件；`src/lib/shell/index.ts` 保留兼容导出：
 
 ```ts
-import AppShell from '$lib/shell/AppShell.svelte';
-import { navGroups, findNavItem } from '$lib/shell/nav';
-import type { NavItem, NavGroup } from '$lib/shell/nav';
+import AppShell from '#lib/shell/AppShell.svelte';
+import { navGroups, findNavItem } from '#lib/shell/nav';
+import type { NavItem, NavGroup } from '#lib/shell/nav';
 ```
 
 ### AppShell 组合方式
@@ -707,7 +707,7 @@ import type { NavItem, NavGroup } from '$lib/shell/nav';
 ```svelte
 <!-- 典型用法：在 (app) 路由组的 +layout.svelte 中 -->
 <script lang="ts">
-	import AppShell from '$lib/shell/AppShell.svelte';
+	import AppShell from '#lib/shell/AppShell.svelte';
 	let { children } = $props();
 </script>
 
@@ -727,7 +727,7 @@ import type { NavItem, NavGroup } from '$lib/shell/nav';
 </Sidebar.Provider>
 ```
 
-每个 tab 以独立 ID 保留 DOM 与路由快照；错误页出现时缓存页仍挂载，只切换可见性。`LayoutChain` 继续传递 `data`，并增加可选 `params` / `url` / `form` props；`TAB_ROUTE` context（`$lib/core/shell/tab-route`）提供该 tab 的 `pathname`、`url`、`params`、`data`、`form`。动态缓存页应消费这些值，避免让全局 `$app/state.page` 改变隐藏 tab 对应的记录。`TAB_ACTIVITY` 仍提供活动状态。
+每个 tab 以独立 ID 保留 DOM 与路由快照；错误页出现时缓存页仍挂载，只切换可见性。`LayoutChain` 继续传递 `data`，并增加可选 `params` / `url` / `form` props；`TAB_ROUTE` context（`#lib/core/shell/tab-route`）提供该 tab 的 `pathname`、`url`、`params`、`data`、`form`。动态缓存页应消费这些值，避免让全局 `$app/state.page` 改变隐藏 tab 对应的记录。`TAB_ACTIVITY` 仍提供活动状态。
 
 AppShell 是正常 app 页唯一的 `<title>` 所有者，使用活动 tab 标签和 `pageTitle()` 加品牌；错误子树自行提供标题。新增 app 页面不要重复声明 `<title>`。表单 ID、SVG gradient 与 DOM 查询需用 `$props.id()` 加后缀，并保持 label / ARIA / fragment 引用成对，才能安全克隆同一路由。
 
@@ -740,7 +740,7 @@ AppShell 是正常 app 页唯一的 `<title>` 所有者，使用活动 tab 标�
 ```ts
 import type { Component } from 'svelte';
 import type { Pathname } from '$app/types';
-import type { TranslationKey } from '$lib/i18n';
+import type { TranslationKey } from '#lib/i18n';
 
 export interface NavItem {
 	title: string;
@@ -945,7 +945,7 @@ export function useNotificationsState(): NotificationsStore;
 可用成员：`notifications.items`（条目数组）、`notifications.unread`（未读数）、`markRead(id)`、`markAllRead()`、`remove(id)`。
 
 ```ts
-import { useNotificationsState } from '$lib/stores/notifications.svelte';
+import { useNotificationsState } from '#lib/stores/notifications.svelte';
 
 const notifications = useNotificationsState();
 const unread = $derived(notifications.unread);
@@ -956,7 +956,7 @@ notifications.markAllRead();
 
 ### toast — `svelte-sonner`
 
-toast 提示来自 `svelte-sonner`。渲染入口 `<Toaster />`（`$lib/core/components/ui/sonner`）已挂在根 layout：
+toast 提示来自 `svelte-sonner`。渲染入口 `<Toaster />`（`#lib/core/components/ui/sonner`）已挂在根 layout：
 
 ```svelte
 <!-- src/routes/+layout.svelte -->
@@ -995,12 +995,12 @@ const preference = userPrefersMode.current; // light / dark / system 的用户�
 
 > 顶栏 ThemeToggle 与 Appearance 控件共用上述状态和持久化；无需额外 theme-pref store。
 
-### i18n — `$lib/i18n`
+### i18n — `#lib/i18n`
 
 轻量自研 i18n（无外部库），响应式 `locale` + 点路径 `t()` 查找 + `{var}` 插值 + 持久化到 `localStorage` 键 `admin-starter:locale`。支持 `en` 与 `zh-CN`。
 
 ```ts
-import { t, translate, setLocale, initLocale, i18n, LOCALES, type Locale } from '$lib/i18n';
+import { t, translate, setLocale, initLocale, i18n, LOCALES, type Locale } from '#lib/i18n';
 ```
 
 | 导出                    | 说明                                                                                                                  |
@@ -1016,7 +1016,7 @@ import { t, translate, setLocale, initLocale, i18n, LOCALES, type Locale } from 
 
 ```svelte
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n';
 </script>
 
 <span>{t('common.search')}</span>
@@ -1043,7 +1043,7 @@ import { t, translate, setLocale, initLocale, i18n, LOCALES, type Locale } from 
 | `initials`           | `(name: string) => string`                                                                           | 取最多两位大写首字母（"Jane Doe" → "JD"）                       |
 
 ```ts
-import { formatCurrency, formatDate, initials } from '$lib/core/utils/formatters';
+import { formatCurrency, formatDate, initials } from '#lib/core/utils/formatters';
 
 formatCurrency(48200); // "$48,200.00"
 formatDate('2026-06-09'); // "Jun 9, 2026"
@@ -1064,7 +1064,7 @@ initials('Jane Doe'); // "JD"
 真实用法（来自 users 页）：
 
 ```ts
-import { exportToCsv } from '$lib/core/utils/csv';
+import { exportToCsv } from '#lib/core/utils/csv';
 
 exportToCsv(rows, 'users.csv', [
 	{ key: 'name', header: 'Name' },
@@ -1092,7 +1092,7 @@ exportToCsv(rows, 'users.csv', [
 真实用法（来自 users 页）：
 
 ```ts
-import { userSchema, fieldError } from '$lib/core/utils/validators';
+import { userSchema, fieldError } from '#lib/core/utils/validators';
 import { z } from 'zod';
 
 let errors = $state<z.ZodError | null>(null);
@@ -1114,4 +1114,4 @@ function save() {
 {/if}
 ```
 
-> `cn()`（合并/去重 Tailwind 类名）从 `$lib/core/utils` 导出，被几乎所有组件用于合并 `class` prop。
+> `cn()`（合并/去重 Tailwind 类名）从 `#lib/core/utils` 导出，被几乎所有组件用于合并 `class` prop。

@@ -27,19 +27,19 @@ Use `PageContainer` as the normal page boundary and `PageHeader` for the title, 
 Keep server-only access behind this direction of dependency:
 
 ```text
-+page.server.ts -> $lib/server/db.ts -> API, database, or mock data
++page.server.ts -> #lib/server/db.ts -> API, database, or mock data
 +page.svelte    <- typed load data
 ```
 
-Do not import `$lib/server/*` from a `.svelte` file. Pages with purely local demo or transient UI state do not need a server load.
+Do not import `#lib/server/*` from a `.svelte` file. Pages with purely local demo or transient UI state do not need a server load.
 
 ## Cross-cutting systems
 
 - Navigation: register top-level destinations in `src/lib/shell/nav.ts`; configured entries are automatically hidden if their route is deleted. Use `resolve()` from `$app/paths` for internal links and programmatic navigation.
 - Home route: `config.app.homePath` is the single destination used by `/`, login, breadcrumbs, errors, sidebar branding, and tabs. Point it to an existing `(app)` route before deleting the current home page.
 - Localization: call `t()` for new user-facing strings and mirror keys in `src/lib/i18n/locales/en.ts` and `zh-CN.ts`.
-- Authentication: rely on the existing `(app)` layout and `$lib/auth`; do not add page-local authentication shells.
-- Components: import page patterns from `$lib/components/shared` and primitives from `$lib/core/components/ui`; use props and snippets before creating variants.
+- Authentication: rely on the existing `(app)` layout and `#lib/auth`; do not add page-local authentication shells.
+- Components: import page patterns from `#lib/components/shared` and primitives from `#lib/core/components/ui`; use props and snippets before creating variants.
 
 ## Source-of-truth files
 

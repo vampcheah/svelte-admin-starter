@@ -1,4 +1,4 @@
-import type { DemoOrder } from '$lib/data/orders';
+import type { DemoOrder } from '#lib/data/orders.ts';
 
 export function itemCount(order: Pick<DemoOrder, 'items'>): number {
 	return order.items.reduce((sum, item) => sum + item.qty, 0);

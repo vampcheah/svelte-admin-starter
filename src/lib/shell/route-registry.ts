@@ -1,4 +1,4 @@
-import { createRouteRegistry } from '$lib/core/shell/route-registry';
+import { createRouteRegistry } from '#lib/core/shell/route-registry.ts';
 
 const registry = createRouteRegistry(
 	import.meta.glob('/src/routes/**/+page.svelte'),
@@ -6,4 +6,4 @@ const registry = createRouteRegistry(
 );
 
 export const { loadRoute, invalidateRoute } = registry;
-export { assertSupportedLayouts, toRouteId } from '$lib/core/shell/route-registry';
+export { assertSupportedLayouts, toRouteId } from '#lib/core/shell/route-registry.ts';

@@ -5,14 +5,14 @@
 // The swap point for a real backend is provider.ts — not this file. This store's
 // public API (`auth.user`, `auth.login`, …) stays stable, so pages never change.
 
-import { browser } from '$app/environment';
+import { browser } from '$app/env';
 import { goto } from '$app/navigation';
-import { resolve } from '$app/paths';
 import { isUser, type User } from './types';
 import { authProvider, type AuthResult } from './provider';
-import { config } from '$lib/config';
-import { t } from '$lib/i18n';
-import { tabs } from '$lib/shell/tabs.svelte';
+import { config } from '#lib/config/index.ts';
+import { t } from '#lib/i18n/index.ts';
+import { resolveAppUrl } from '#lib/shell/paths.ts';
+import { tabs } from '#lib/shell/tabs.svelte.ts';
 
 const SESSION_KEY = config.auth.sessionKey;
 
@@ -112,7 +112,8 @@ class AuthStore {
 		} finally {
 			this.#clear();
 			tabs.reset();
-			void goto(resolve(config.auth.afterLogout));
+			// eslint-disable-next-line svelte/no-navigation-without-resolve -- resolveAppUrl resolves through $app/paths boundary.
+			void goto(resolveAppUrl(config.auth.afterLogout));
 		}
 	}
 }

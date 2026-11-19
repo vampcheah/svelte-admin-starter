@@ -1,9 +1,9 @@
 // App defaults follow the active locale. The portable helpers keep native Intl
 // behavior and their English defaults for consumers outside this application.
-import * as formatters from '$lib/core/utils/formatters';
+import * as formatters from '#lib/core/utils/formatters.ts';
 import { i18n } from './index.svelte';
 
-export { initials, toISODate } from '$lib/core/utils/formatters';
+export { initials, toISODate } from '#lib/core/utils/formatters.ts';
 
 export function formattingLocale(): string {
 	return i18n.locale === 'en' ? 'en-US' : i18n.locale;

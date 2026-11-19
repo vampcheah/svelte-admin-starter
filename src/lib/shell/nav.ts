@@ -1,13 +1,13 @@
 // Navigation model for the admin shell: grouped sidebar routes + lookup helper.
-import type { Pathname } from '$app/types';
-import type { TranslationKey } from '$lib/i18n';
+import type { AppPathname } from '#lib/shell/paths.ts';
+import type { TranslationKey } from '#lib/i18n/index.ts';
 import {
 	appRoutePaths,
 	filterNavGroups,
 	findNavItemInGroups,
 	type ShellNavGroup,
 	type ShellNavItem
-} from '$lib/core/shell/nav';
+} from '#lib/core/shell/nav.ts';
 import LayoutDashboard from '@lucide/svelte/icons/layout-dashboard';
 import Users from '@lucide/svelte/icons/users';
 import CalendarDays from '@lucide/svelte/icons/calendar-days';
@@ -33,8 +33,8 @@ import Settings2 from '@lucide/svelte/icons/settings-2';
 import User from '@lucide/svelte/icons/user';
 import Settings from '@lucide/svelte/icons/settings';
 
-export type NavItem = ShellNavItem<Pathname, TranslationKey>;
-export type NavGroup = ShellNavGroup<Pathname, TranslationKey>;
+export type NavItem = ShellNavItem<AppPathname, TranslationKey>;
+export type NavGroup = ShellNavGroup<AppPathname, TranslationKey>;
 
 const configuredNavGroups: NavGroup[] = [
 	{

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { demoColumns } from '$lib/data/kanban';
+import { demoColumns } from '#lib/data/kanban.ts';
 import { moveTask, type Column, type Task } from './board';
 import { insertionIndex, KanbanState } from './state.svelte';
 

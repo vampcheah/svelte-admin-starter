@@ -5,15 +5,15 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import { resolve } from '$app/paths';
-	import { Button } from '$lib/core/components/ui/button';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
+	import { resolveAppUrl } from '#lib/shell/paths.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
 	import TriangleAlert from '@lucide/svelte/icons/triangle-alert';
 	import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
 	import House from '@lucide/svelte/icons/house';
-	import { config } from '$lib/config';
-	import { t } from '$lib/i18n';
-	import { pageTitle } from '$lib/utils/page-title';
+	import { config } from '#lib/config/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { pageTitle } from '#lib/utils/page-title.ts';
 
 	const headline = $derived(
 		page.status === 404
@@ -59,7 +59,7 @@
 				<RotateCcw class="size-4" aria-hidden="true" />
 				{t('common.retry')}
 			</Button>
-			<Button href={resolve(config.app.homePath)} variant="outline">
+			<Button href={resolveAppUrl(config.app.homePath)} variant="outline">
 				<House class="size-4" aria-hidden="true" />
 				{t('error.backHome')}
 			</Button>

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import StatCard from '$lib/core/components/shared/StatCard.svelte';
-	import * as Card from '$lib/core/components/ui/card';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import StatCard from '#lib/core/components/shared/StatCard.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
 
 	const stats = [
 		{ title: 'Total', value: 0 },

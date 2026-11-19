@@ -1,12 +1,12 @@
 <!-- Bell button with unread badge and a keyboard-accessible popover listing app notifications. -->
 <script lang="ts">
-	import * as Popover from '$lib/core/components/ui/popover';
-	import { Separator } from '$lib/core/components/ui/separator';
-	import { t } from '$lib/i18n';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { cn } from '$lib/core/utils';
-	import { useNotificationsState, type AppNotification } from '$lib/stores/notifications.svelte';
+	import * as Popover from '#lib/core/components/ui/popover/index.ts';
+	import { Separator } from '#lib/core/components/ui/separator/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { cn } from '#lib/core/utils.ts';
+	import { useNotificationsState, type AppNotification } from '#lib/stores/notifications.svelte.ts';
 	import Bell from '@lucide/svelte/icons/bell';
 	import Info from '@lucide/svelte/icons/info';
 	import CircleCheck from '@lucide/svelte/icons/circle-check';

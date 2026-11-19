@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { cn } from '$lib/core/utils';
-	import { i18n, t } from '$lib/i18n';
+	import { cn } from '#lib/core/utils.ts';
+	import { i18n, t } from '#lib/i18n/index.ts';
 	import { tick } from 'svelte';
 	import { dateForKey, keyboardDay } from './navigation';
-	import type { DayCell } from '$lib/calendar';
+	import type { DayCell } from '#lib/calendar.ts';
 	import type { CalendarEvent } from './types';
 	import { CATEGORIES, CATEGORY_ORDER } from './presentation';
 	let {

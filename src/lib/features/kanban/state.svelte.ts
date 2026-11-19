@@ -1,4 +1,4 @@
-import { demoColumns } from '$lib/data/kanban';
+import { demoColumns } from '#lib/data/kanban.ts';
 import { moveTask, type Column, type Task } from './board';
 
 export interface DraggedTask {

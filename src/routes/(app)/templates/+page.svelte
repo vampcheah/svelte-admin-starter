@@ -5,37 +5,37 @@
 	import FormInput from '@lucide/svelte/icons/form-input';
 	import FileText from '@lucide/svelte/icons/file-text';
 	import Settings2 from '@lucide/svelte/icons/settings-2';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import * as Card from '$lib/core/components/ui/card';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
 
 	const templates = [
 		{
-			href: '/templates/list',
+			href: 'templates/list',
 			title: 'List',
 			description: 'Search, filters and tabular data.',
 			icon: List
 		},
 		{
-			href: '/templates/form',
+			href: 'templates/form',
 			title: 'Form',
 			description: 'Grouped fields and actions.',
 			icon: FormInput
 		},
 		{
-			href: '/templates/detail',
+			href: 'templates/detail',
 			title: 'Detail',
 			description: 'Record summary and metadata.',
 			icon: FileText
 		},
 		{
-			href: '/templates/dashboard',
+			href: 'templates/dashboard',
 			title: 'Dashboard',
 			description: 'Metrics and overview panels.',
 			icon: LayoutDashboard
 		},
 		{
-			href: '/templates/settings',
+			href: 'templates/settings',
 			title: 'Settings',
 			description: 'Section navigation and preferences.',
 			icon: Settings2

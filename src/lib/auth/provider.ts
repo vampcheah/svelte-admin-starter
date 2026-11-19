@@ -10,8 +10,8 @@
 // ============================================================================
 
 import { isUser, type User } from './types';
-import { config } from '$lib/config';
-import { t } from '$lib/i18n';
+import { config } from '#lib/config/index.ts';
+import { t } from '#lib/i18n/index.ts';
 
 export type AuthResult = { ok: true; user: User } | { ok: false; error: string };
 
@@ -30,7 +30,7 @@ export interface AuthProvider {
 
 const MIN_PASSWORD_LENGTH = config.auth.minPasswordLength;
 //  Base URL of your backend (empty string = mock mode). Shared with the data
-//  layer ($lib/server/db.ts) — both read it from `config.api.baseUrl`.
+//  layer (#lib/server/db.ts) — both read it from `config.api.baseUrl`.
 const API_BASE_URL = config.api.baseUrl;
 
 /** Derive a display name from the local-part of an email address. */

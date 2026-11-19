@@ -1,5 +1,5 @@
-import type { MailLabel } from '$lib/data/inbox';
-import { t } from '$lib/i18n';
+import type { MailLabel } from '#lib/data/inbox.ts';
+import { t } from '#lib/i18n/index.ts';
 
 export const LABEL_TONE: Record<MailLabel, string> = {
 	work: 'bg-primary/10 text-primary',

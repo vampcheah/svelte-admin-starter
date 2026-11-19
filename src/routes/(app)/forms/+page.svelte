@@ -1,27 +1,27 @@
 <!-- Local project-form demo with shared fields and inline validation. -->
 <script lang="ts">
-	import { t } from '$lib/i18n';
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Select from '$lib/core/components/ui/select';
-	import * as RadioGroup from '$lib/core/components/ui/radio-group';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Label } from '$lib/core/components/ui/label';
-	import { Textarea } from '$lib/core/components/ui/textarea';
-	import { Checkbox } from '$lib/core/components/ui/checkbox';
-	import { Switch } from '$lib/core/components/ui/switch';
-	import { Slider } from '$lib/core/components/ui/slider';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import PasswordInput from '$lib/core/components/shared/PasswordInput.svelte';
-	import DatePicker from '$lib/components/shared/DatePicker.svelte';
+	import { t } from '#lib/i18n/index.ts';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Select from '#lib/core/components/ui/select/index.ts';
+	import * as RadioGroup from '#lib/core/components/ui/radio-group/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { Textarea } from '#lib/core/components/ui/textarea/index.ts';
+	import { Checkbox } from '#lib/core/components/ui/checkbox/index.ts';
+	import { Switch } from '#lib/core/components/ui/switch/index.ts';
+	import { Slider } from '#lib/core/components/ui/slider/index.ts';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import PasswordInput from '#lib/core/components/shared/PasswordInput.svelte';
+	import DatePicker from '#lib/components/shared/DatePicker.svelte';
 	import {
 		createProjectSchema,
 		PROJECT_CATEGORIES,
 		PROJECT_VISIBILITIES
-	} from '$lib/features/project-form/schema';
-	import { fieldError } from '$lib/core/utils/validators';
+	} from '#lib/features/project-form/schema.ts';
+	import { fieldError } from '#lib/core/utils/validators.ts';
 	import { toast } from 'svelte-sonner';
 	import type { z } from 'zod';
 	import { getLocalTimeZone, today } from '@internationalized/date';

@@ -3,23 +3,23 @@
 //
 //  Edit this one file and the whole app updates: name & logo, default theme and
 //  language, auth behaviour (session key, redirects, demo credentials), and a
-//  few UI defaults. Read it anywhere with `import { config } from '$lib/config'`.
+//  few UI defaults. Read it anywhere with `import { config } from '#lib/config/index.ts'`.
 //
 //  Two things live elsewhere by design:
 //    • Design tokens (colors, fonts) → src/lib/core/theme.css
-//    • Auth / data backends (the "how", not the "what") → $lib/auth/provider.ts
-//      and $lib/server/db.ts
+//    • Auth / data backends (the "how", not the "what") → #lib/auth/provider.ts
+//      and #lib/server/db.ts
 // ============================================================================
 
-import type { Locale } from '$lib/i18n';
+import type { Locale } from '#lib/i18n/index.ts';
 
 export const config = {
 	/** Backend connection — shared by BOTH the auth provider and the data layer.
 	 *  This is "where the backend is"; auth strategy ("how") lives in `auth` below. */
 	api: {
 		/** Base URL of your backend API. Empty string = mock mode (no backend).
-		 *  When you wire a real AuthProvider ($lib/auth/provider.ts) and/or the db
-		 *  ($lib/server/db.ts), point them at this. In production you'll usually
+		 *  When you wire a real AuthProvider (#lib/auth/provider.ts) and/or the db
+		 *  (#lib/server/db.ts), point them at this. In production you'll usually
 		 *  source it from an env var (e.g. PUBLIC_API_URL via $env/dynamic/public)
 		 *  rather than hardcoding it here. */
 		baseUrl: ''
@@ -43,13 +43,13 @@ export const config = {
 		defaultMode: 'system' as 'light' | 'dark' | 'system'
 	},
 
-	/** Localization. Dictionaries live in $lib/i18n/locales. */
+	/** Localization. Dictionaries live in #lib/i18n/locales. */
 	i18n: {
 		defaultLocale: 'en' as Locale
 	},
 
 	/** Authentication strategy. The backend address lives in `api.baseUrl` above;
-	 *  the provider implementation is $lib/auth/provider.ts. */
+	 *  the provider implementation is #lib/auth/provider.ts. */
 	auth: {
 		/** localStorage key for the cached session. */
 		sessionKey: 'admin-starter:session',

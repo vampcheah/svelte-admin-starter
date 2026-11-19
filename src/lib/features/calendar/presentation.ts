@@ -1,4 +1,4 @@
-import type { TranslationKey } from '$lib/i18n';
+import type { TranslationKey } from '#lib/i18n/index.ts';
 import type { Category } from './types';
 export const CATEGORIES: Record<Category, { labelKey: TranslationKey; chip: string; dot: string }> =
 	{

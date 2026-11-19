@@ -8,12 +8,12 @@
   stays on layerchart's PieChart. Fed by mock dashboard data — no backend.
 -->
 <script lang="ts">
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Chart from '$lib/core/components/ui/chart';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { revenueSeries, trafficByChannel } from '$lib/data/dashboard';
-	import { formatCurrency, formatDate, formatNumber } from '$lib/i18n/formatters';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Chart from '#lib/core/components/ui/chart/index.ts';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { revenueSeries, trafficByChannel } from '#lib/data/dashboard.ts';
+	import { formatCurrency, formatDate, formatNumber } from '#lib/i18n/formatters.ts';
 	import { PieChart } from 'layerchart';
 
 	// Turn the "2025-06" month strings into short labels like "Jun" for the axes.

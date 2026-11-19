@@ -1,8 +1,9 @@
-import type { RequestEvent, ResolveOptions } from '@sveltejs/kit';
+import type { RequestEvent } from '@sveltejs/kit';
+import type { ResolveOptions } from '@sveltejs/kit/hooks';
 import { describe, expect, it, vi } from 'vitest';
 import { handle } from './hooks.server';
 
-vi.mock('$lib/config', () => ({ config: { i18n: { defaultLocale: 'zh-CN' } } }));
+vi.mock('#lib/config/index.ts', () => ({ config: { i18n: { defaultLocale: 'zh-CN' } } }));
 
 describe('server locale', () => {
 	it('renders the configured default before a client preference is available', async () => {

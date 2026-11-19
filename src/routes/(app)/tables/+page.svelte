@@ -1,9 +1,9 @@
 <script lang="ts">
 	/* eslint-disable svelte/no-navigation-without-resolve -- typed nav paths are already validated by SvelteKit. */
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import { navGroups } from '$lib/shell/nav';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { navGroups } from '#lib/shell/nav.ts';
 
 	const examples = navGroups.find((group) => group.label === 'Data Tables')?.items ?? [];
 </script>

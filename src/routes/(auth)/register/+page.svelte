@@ -5,18 +5,19 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { resolveAppUrl } from '#lib/shell/paths.ts';
 	import { toast } from 'svelte-sonner';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import PasswordInput from '$lib/core/components/shared/PasswordInput.svelte';
-	import Spinner from '$lib/core/components/shared/Spinner.svelte';
-	import { auth } from '$lib/auth';
-	import { emailSchema } from '$lib/core/utils/validators';
-	import { config } from '$lib/config';
-	import { t } from '$lib/i18n';
-	import { pageTitle } from '$lib/utils/page-title';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import PasswordInput from '#lib/core/components/shared/PasswordInput.svelte';
+	import Spinner from '#lib/core/components/shared/Spinner.svelte';
+	import { auth } from '#lib/auth/index.ts';
+	import { emailSchema } from '#lib/core/utils/validators.ts';
+	import { config } from '#lib/config/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { pageTitle } from '#lib/utils/page-title.ts';
 
 	let name = $state('');
 	let email = $state('');
@@ -56,7 +57,8 @@
 
 		if (result.ok) {
 			toast.success(t('auth.registered'));
-			void goto(resolve(config.app.homePath));
+			// eslint-disable-next-line svelte/no-navigation-without-resolve -- resolveAppUrl resolves through $app/paths boundary.
+			void goto(resolveAppUrl(config.app.homePath));
 		} else {
 			formError = result.error;
 			toast.error(formError);
@@ -147,7 +149,7 @@
 		<p class="text-sm text-muted-foreground">
 			{t('auth.haveAccount')}
 			<a
-				href={resolve('/login')}
+				href={resolve('login')}
 				class="font-medium text-foreground underline-offset-4 hover:underline"
 			>
 				{t('auth.signIn')}

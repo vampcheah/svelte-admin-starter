@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { moveTask, type Column, type Task } from './board';
-import { moveTask as featureMoveTask } from '$lib/features/kanban/board';
+import { moveTask as featureMoveTask } from '#lib/features/kanban/board.ts';
 
 const task = (id: string): Task => ({
 	id,

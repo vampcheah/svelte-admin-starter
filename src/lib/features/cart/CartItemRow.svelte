@@ -3,10 +3,10 @@
 	import Plus from '@lucide/svelte/icons/plus';
 	import Trash2 from '@lucide/svelte/icons/trash-2';
 	import Package from '@lucide/svelte/icons/package';
-	import { Button } from '$lib/core/components/ui/button';
-	import type { CartItem } from '$lib/data/cart';
-	import { t } from '$lib/i18n';
-	import { formatCurrency, formatNumber } from '$lib/i18n/formatters';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import type { CartItem } from '#lib/data/cart.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { formatCurrency, formatNumber } from '#lib/i18n/formatters.ts';
 
 	interface Props {
 		item: CartItem;

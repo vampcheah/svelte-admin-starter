@@ -1,7 +1,7 @@
 import { CalendarDate } from '@internationalized/date';
 import { render } from 'svelte/server';
 import { afterEach, describe, expect, it } from 'vitest';
-import { setLocale } from '$lib/i18n';
+import { setLocale } from '#lib/i18n/index.ts';
 import DatePicker from './DatePicker.svelte';
 import DateRangePicker from './DateRangePicker.svelte';
 import DateTimePicker from './DateTimePicker.svelte';

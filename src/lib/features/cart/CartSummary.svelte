@@ -2,14 +2,14 @@
 	import { resolve } from '$app/paths';
 	import ShoppingCart from '@lucide/svelte/icons/shopping-cart';
 	import Tag from '@lucide/svelte/icons/tag';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Separator } from '$lib/core/components/ui/separator';
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import { cn } from '$lib/core/utils';
-	import { t } from '$lib/i18n';
-	import { formatCurrency, formatNumber } from '$lib/i18n/formatters';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import { Separator } from '#lib/core/components/ui/separator/index.ts';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import { cn } from '#lib/core/utils.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { formatCurrency, formatNumber } from '#lib/i18n/formatters.ts';
 	import { CART_PRICING } from './config';
 	import type { CartTotals } from './totals';
 
@@ -114,7 +114,7 @@
 			{t('cart.checkout')}
 		</Button>
 		<Button
-			href={resolve('/tables')}
+			href={resolve('tables')}
 			variant="link"
 			class="text-muted-foreground hover:text-foreground"
 		>

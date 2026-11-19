@@ -6,13 +6,13 @@ Use the narrowest existing layer that owns the required responsibility. Read `do
 
 | Layer  | Import area                 | Responsibility                                                  |
 | ------ | --------------------------- | --------------------------------------------------------------- |
-| Shell  | `$lib/shell`                | Application-wide sidebar, header, breadcrumbs, tabs, and outlet |
-| Shared | `$lib/components/shared`    | Reusable product patterns composed across pages                 |
-| UI     | `$lib/core/components/ui/*` | Low-level shadcn-svelte and Bits UI primitives                  |
+| Shell  | `#lib/shell`                | Application-wide sidebar, header, breadcrumbs, tabs, and outlet |
+| Shared | `#lib/components/shared`    | Reusable product patterns composed across pages                 |
+| UI     | `#lib/core/components/ui/*` | Low-level shadcn-svelte and Bits UI primitives                  |
 
 Pages consume the shell but do not reconstruct it. Shared components may depend on UI primitives. UI primitives must not depend on feature pages or shared business patterns.
 
-There is no separate component-template layer. Adjust an existing component with its props, snippets, and installed variants. Keep a one-off composition in the page; promote it to `$lib/components/shared` only after the same product behavior recurs.
+There is no separate component-template layer. Adjust an existing component with its props, snippets, and installed variants. Keep a one-off composition in the page; promote it to `#lib/components/shared` only after the same product behavior recurs.
 
 ## Shared patterns
 

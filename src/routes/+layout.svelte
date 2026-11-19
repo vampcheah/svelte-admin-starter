@@ -10,10 +10,10 @@
 	import '@fontsource-variable/geist-mono';
 	import { onMount } from 'svelte';
 	import { ModeWatcher } from 'mode-watcher';
-	import { Toaster } from '$lib/core/components/ui/sonner';
-	import { auth } from '$lib/auth';
-	import { initLocale, i18n } from '$lib/i18n';
-	import { config } from '$lib/config';
+	import { Toaster } from '#lib/core/components/ui/sonner/index.ts';
+	import { auth } from '#lib/auth/index.ts';
+	import { initLocale, i18n } from '#lib/i18n/index.ts';
+	import { config } from '#lib/config/index.ts';
 
 	let { children } = $props();
 

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import PenSquare from '@lucide/svelte/icons/pen-square';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { Button } from '$lib/core/components/ui/button';
-	import * as Resizable from '$lib/core/components/ui/resizable';
-	import { t } from '$lib/i18n';
-	import MessageList from '$lib/features/inbox/MessageList.svelte';
-	import MessageReader from '$lib/features/inbox/MessageReader.svelte';
-	import { InboxState } from '$lib/features/inbox/state.svelte';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import * as Resizable from '#lib/core/components/ui/resizable/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import MessageList from '#lib/features/inbox/MessageList.svelte';
+	import MessageReader from '#lib/features/inbox/MessageReader.svelte';
+	import { InboxState } from '#lib/features/inbox/state.svelte.ts';
 
 	const inbox = new InboxState();
 </script>

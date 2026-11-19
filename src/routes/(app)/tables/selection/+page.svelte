@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.ts';
 	import Trash2 from '@lucide/svelte/icons/trash-2';
 	import { toast } from 'svelte-sonner';
-	import DataTable from '$lib/core/components/shared/DataTable.svelte';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import { Button } from '$lib/core/components/ui/button';
-	import { demoProducts } from '$lib/data/products';
+	import DataTable from '#lib/core/components/shared/DataTable.svelte';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { demoProducts } from '#lib/data/products.ts';
 	import ProductCell from '../ProductCell.svelte';
 	import { columns } from '../demo';
 

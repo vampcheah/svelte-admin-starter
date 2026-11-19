@@ -5,14 +5,14 @@
 -->
 <script lang="ts">
 	import { page } from '$app/state';
-	import { resolve } from '$app/paths';
-	import { Button } from '$lib/core/components/ui/button';
+	import { resolveAppUrl } from '#lib/shell/paths.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
 	import House from '@lucide/svelte/icons/house';
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import RotateCcw from '@lucide/svelte/icons/rotate-ccw';
-	import { config } from '$lib/config';
-	import { t } from '$lib/i18n';
-	import { pageTitle } from '$lib/utils/page-title';
+	import { config } from '#lib/config/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { pageTitle } from '#lib/utils/page-title.ts';
 
 	const isNotFound = $derived(page.status === 404);
 
@@ -76,7 +76,7 @@
 	</div>
 
 	<div class="relative mt-6 flex flex-wrap items-center justify-center gap-2">
-		<Button href={resolve(config.app.homePath)}>
+		<Button href={resolveAppUrl(config.app.homePath)}>
 			<House class="size-4" aria-hidden="true" />
 			{t('error.goHome')}
 		</Button>

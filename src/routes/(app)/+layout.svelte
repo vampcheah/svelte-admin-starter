@@ -8,18 +8,21 @@
 <script lang="ts">
 	import { onMount, setContext } from 'svelte';
 	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { auth } from '$lib/auth';
-	import AppShell from '$lib/shell/AppShell.svelte';
-	import { logoutDialog } from '$lib/shell/logout-dialog.svelte';
-	import { leafCrumb } from '$lib/shell/breadcrumb.svelte';
-	import { tabs } from '$lib/shell/tabs.svelte';
-	import ConfirmDialog from '$lib/components/shared/ConfirmDialog.svelte';
-	import ConfirmHost from '$lib/components/shared/ConfirmHost.svelte';
-	import { config } from '$lib/config';
-	import { t } from '$lib/i18n';
-	import { USERS_STATE, createUsersState } from '$lib/features/users/state.svelte';
-	import { NOTIFICATIONS_STATE, createNotificationsState } from '$lib/stores/notifications.svelte';
+	import { resolveAppUrl } from '#lib/shell/paths.ts';
+	import { auth } from '#lib/auth/index.ts';
+	import AppShell from '#lib/shell/AppShell.svelte';
+	import { logoutDialog } from '#lib/shell/logout-dialog.svelte.ts';
+	import { leafCrumb } from '#lib/shell/breadcrumb.svelte.ts';
+	import { tabs } from '#lib/shell/tabs.svelte.ts';
+	import ConfirmDialog from '#lib/components/shared/ConfirmDialog.svelte';
+	import ConfirmHost from '#lib/components/shared/ConfirmHost.svelte';
+	import { config } from '#lib/config/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { USERS_STATE, createUsersState } from '#lib/features/users/state.svelte.ts';
+	import {
+		NOTIFICATIONS_STATE,
+		createNotificationsState
+	} from '#lib/stores/notifications.svelte.ts';
 
 	let { children } = $props();
 	let ready = $state(false);
@@ -30,7 +33,8 @@
 		leafCrumb.clear();
 		tabs.refreshTitles();
 		auth.init();
-		if (!auth.isAuthenticated) goto(resolve(config.auth.afterLogout));
+		// eslint-disable-next-line svelte/no-navigation-without-resolve -- resolveAppUrl resolves through $app/paths boundary.
+		if (!auth.isAuthenticated) goto(resolveAppUrl(config.auth.afterLogout));
 		else ready = true;
 	});
 </script>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { demoCartItems } from '$lib/data/cart';
+import { demoCartItems } from '#lib/data/cart.ts';
 import { CartState } from './state.svelte';
 
 describe('local cart state', () => {

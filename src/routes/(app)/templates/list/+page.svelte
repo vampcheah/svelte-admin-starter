@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { t } from '$lib/i18n';
+	import { t } from '#lib/i18n/index.ts';
 	import Plus from '@lucide/svelte/icons/plus';
 	import Download from '@lucide/svelte/icons/download';
-	import DataTable from '$lib/core/components/shared/DataTable.svelte';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import StatusBadge from '$lib/core/components/shared/StatusBadge.svelte';
-	import type { Column } from '$lib/core/components/shared/DataTable.svelte';
-	import { Button } from '$lib/core/components/ui/button';
+	import DataTable from '#lib/core/components/shared/DataTable.svelte';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import StatusBadge from '#lib/core/components/shared/StatusBadge.svelte';
+	import type { Column } from '#lib/core/components/shared/DataTable.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
 
 	type Project = { id: number; name: string; owner: string; status: 'Active' | 'Draft' };
 

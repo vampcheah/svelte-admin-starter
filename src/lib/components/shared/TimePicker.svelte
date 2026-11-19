@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CoreTimePicker from '$lib/core/components/shared/TimePicker.svelte';
+	import CoreTimePicker from '#lib/core/components/shared/TimePicker.svelte';
 	import type { ComponentProps } from 'svelte';
 
 	type Props = ComponentProps<typeof CoreTimePicker>;

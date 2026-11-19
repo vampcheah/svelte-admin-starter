@@ -1,7 +1,7 @@
 <script lang="ts">
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import * as Select from '$lib/core/components/ui/select';
-	import { i18n, LOCALES, setLocale, t } from '$lib/i18n';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import * as Select from '#lib/core/components/ui/select/index.ts';
+	import { i18n, LOCALES, setLocale, t } from '#lib/i18n/index.ts';
 
 	const label = $derived(LOCALES.find((locale) => locale.value === i18n.locale)?.label);
 

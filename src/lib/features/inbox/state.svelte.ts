@@ -1,4 +1,4 @@
-import { demoEmails, type Email } from '$lib/data/inbox';
+import { demoEmails, type Email } from '#lib/data/inbox.ts';
 
 export type InboxFilter = 'all' | 'unread';
 

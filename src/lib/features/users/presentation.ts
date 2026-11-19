@@ -1,6 +1,6 @@
-import type { DemoUser } from '$lib/data/users';
-import type { BadgeTone } from '$lib/core/components/shared/StatusBadge.svelte';
-import { t, type TranslationKey } from '$lib/i18n';
+import type { DemoUser } from '#lib/data/users.ts';
+import type { BadgeTone } from '#lib/core/components/shared/StatusBadge.svelte';
+import { t, type TranslationKey } from '#lib/i18n/index.ts';
 
 export const USER_ROLES = {
 	admin: { label: 'users.roles.admin', tone: 'brand' },

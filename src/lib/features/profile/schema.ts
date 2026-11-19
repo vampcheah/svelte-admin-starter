@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { createEmailSchema } from '$lib/core/utils/validators';
+import { createEmailSchema } from '#lib/core/utils/validators.ts';
 import type en from './locales/en';
 
 export type ProfileValidationKey = `profile.validation.${keyof typeof en.validation}`;

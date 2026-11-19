@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { demoOrders, type DemoOrder, type OrderStatus } from '$lib/data/orders';
+import { demoOrders, type DemoOrder, type OrderStatus } from '#lib/data/orders.ts';
 import { canShipOrder, itemCount, orderSummary, shipOrder } from './model';
 
 describe('order summary', () => {

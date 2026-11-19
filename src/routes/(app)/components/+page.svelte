@@ -6,41 +6,41 @@
 -->
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Alert from '$lib/core/components/ui/alert';
-	import * as Select from '$lib/core/components/ui/select';
-	import * as Tabs from '$lib/core/components/ui/tabs';
-	import * as Accordion from '$lib/core/components/ui/accordion';
-	import * as Tooltip from '$lib/core/components/ui/tooltip';
-	import * as Popover from '$lib/core/components/ui/popover';
-	import * as HoverCard from '$lib/core/components/ui/hover-card';
-	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
-	import * as Dialog from '$lib/core/components/ui/dialog';
-	import * as AlertDialog from '$lib/core/components/ui/alert-dialog';
-	import * as Avatar from '$lib/core/components/ui/avatar';
-	import * as RadioGroup from '$lib/core/components/ui/radio-group';
-	import * as Breadcrumb from '$lib/core/components/ui/breadcrumb';
-	import * as Pagination from '$lib/core/components/ui/pagination';
-	import { Button, buttonVariants } from '$lib/core/components/ui/button';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Label } from '$lib/core/components/ui/label';
-	import { Checkbox } from '$lib/core/components/ui/checkbox';
-	import { Switch } from '$lib/core/components/ui/switch';
-	import { Slider } from '$lib/core/components/ui/slider';
-	import { Progress } from '$lib/core/components/ui/progress';
-	import { Skeleton } from '$lib/core/components/ui/skeleton';
-	import DatePicker from '$lib/components/shared/DatePicker.svelte';
-	import DateRangePicker from '$lib/components/shared/DateRangePicker.svelte';
-	import DateTimePicker from '$lib/components/shared/DateTimePicker.svelte';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import PasswordInput from '$lib/core/components/shared/PasswordInput.svelte';
-	import TimePicker from '$lib/components/shared/TimePicker.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Alert from '#lib/core/components/ui/alert/index.ts';
+	import * as Select from '#lib/core/components/ui/select/index.ts';
+	import * as Tabs from '#lib/core/components/ui/tabs/index.ts';
+	import * as Accordion from '#lib/core/components/ui/accordion/index.ts';
+	import * as Tooltip from '#lib/core/components/ui/tooltip/index.ts';
+	import * as Popover from '#lib/core/components/ui/popover/index.ts';
+	import * as HoverCard from '#lib/core/components/ui/hover-card/index.ts';
+	import * as DropdownMenu from '#lib/core/components/ui/dropdown-menu/index.ts';
+	import * as Dialog from '#lib/core/components/ui/dialog/index.ts';
+	import * as AlertDialog from '#lib/core/components/ui/alert-dialog/index.ts';
+	import * as Avatar from '#lib/core/components/ui/avatar/index.ts';
+	import * as RadioGroup from '#lib/core/components/ui/radio-group/index.ts';
+	import * as Breadcrumb from '#lib/core/components/ui/breadcrumb/index.ts';
+	import * as Pagination from '#lib/core/components/ui/pagination/index.ts';
+	import { Button, buttonVariants } from '#lib/core/components/ui/button/index.ts';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { Checkbox } from '#lib/core/components/ui/checkbox/index.ts';
+	import { Switch } from '#lib/core/components/ui/switch/index.ts';
+	import { Slider } from '#lib/core/components/ui/slider/index.ts';
+	import { Progress } from '#lib/core/components/ui/progress/index.ts';
+	import { Skeleton } from '#lib/core/components/ui/skeleton/index.ts';
+	import DatePicker from '#lib/components/shared/DatePicker.svelte';
+	import DateRangePicker from '#lib/components/shared/DateRangePicker.svelte';
+	import DateTimePicker from '#lib/components/shared/DateTimePicker.svelte';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import PasswordInput from '#lib/core/components/shared/PasswordInput.svelte';
+	import TimePicker from '#lib/components/shared/TimePicker.svelte';
 	import type { DateRange } from 'bits-ui';
 	import { CalendarDate } from '@internationalized/date';
-	import { t } from '$lib/i18n';
-	import { config } from '$lib/config';
+	import { t } from '#lib/i18n/index.ts';
+	import { config } from '#lib/config/index.ts';
 	import { toast } from 'svelte-sonner';
 	import InfoIcon from '@lucide/svelte/icons/info';
 	import AlertTriangleIcon from '@lucide/svelte/icons/triangle-alert';
@@ -570,7 +570,7 @@
 						</Breadcrumb.Item>
 						<Breadcrumb.Separator />
 						<Breadcrumb.Item>
-							<Breadcrumb.Link href={resolve('/components')}>Components</Breadcrumb.Link>
+							<Breadcrumb.Link href={resolve('components')}>Components</Breadcrumb.Link>
 						</Breadcrumb.Item>
 						<Breadcrumb.Separator />
 						<Breadcrumb.Item>

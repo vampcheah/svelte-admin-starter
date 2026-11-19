@@ -1,6 +1,6 @@
-import type { BadgeTone } from '$lib/core/components/shared/StatusBadge.svelte';
-import type { OrderStatus } from '$lib/data/orders';
-import { t, type TranslationKey } from '$lib/i18n';
+import type { BadgeTone } from '#lib/core/components/shared/StatusBadge.svelte';
+import type { OrderStatus } from '#lib/data/orders.ts';
+import { t, type TranslationKey } from '#lib/i18n/index.ts';
 
 export const ORDER_STATUSES = {
 	pending: { label: 'orders.statuses.pending', tone: 'warning' },

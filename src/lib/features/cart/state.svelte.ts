@@ -1,4 +1,4 @@
-import { demoCartItems, type CartItem } from '$lib/data/cart';
+import { demoCartItems, type CartItem } from '#lib/data/cart.ts';
 import { calculateCartTotals, parsePromoCode } from './totals';
 
 /** One cart per mounted page; separate tabs never mutate each other's demo cart. */

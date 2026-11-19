@@ -4,21 +4,21 @@
   All mutations operate on local $state — there is no backend.
 -->
 <script lang="ts">
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Select from '$lib/core/components/ui/select';
-	import * as Avatar from '$lib/core/components/ui/avatar';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import FormField from '$lib/core/components/shared/FormField.svelte';
-	import LanguageSelect from '$lib/features/settings/LanguageSelect.svelte';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { Separator } from '$lib/core/components/ui/separator';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Select from '#lib/core/components/ui/select/index.ts';
+	import * as Avatar from '#lib/core/components/ui/avatar/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import FormField from '#lib/core/components/shared/FormField.svelte';
+	import LanguageSelect from '#lib/features/settings/LanguageSelect.svelte';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { Separator } from '#lib/core/components/ui/separator/index.ts';
 	import { toast } from 'svelte-sonner';
-	import { auth } from '$lib/auth';
-	import { logoutDialog } from '$lib/shell';
-	import { t } from '$lib/i18n';
-	import { roleLabel } from '$lib/features/users/presentation';
-	import { initials } from '$lib/i18n/formatters';
+	import { auth } from '#lib/auth/index.ts';
+	import { logoutDialog } from '#lib/shell/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { roleLabel } from '#lib/features/users/presentation.ts';
+	import { initials } from '#lib/i18n/formatters.ts';
 	import Save from '@lucide/svelte/icons/save';
 
 	// A small, static list of common timezones for the mock Select.

@@ -1,13 +1,15 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { config } from '$lib/config';
-import { t } from '$lib/i18n';
+import { config } from '#lib/config/index.ts';
+import { t } from '#lib/i18n/index.ts';
 
-vi.mock('$app/environment', () => ({ browser: true }));
+vi.mock('$app/env', () => ({ browser: true }));
 vi.mock('$app/navigation', () => ({ goto: vi.fn() }));
-vi.mock('$app/paths', () => ({ resolve: (path: string) => path }));
-vi.mock('$lib/shell/tabs.svelte', () => ({ tabs: { reset: vi.fn() } }));
-vi.mock('$lib/config', async (importOriginal) => {
-	const actual = await importOriginal<typeof import('$lib/config')>();
+vi.mock('$app/paths', () => ({
+	resolve: (path: string) => (path.startsWith('/') ? path : `/${path}`)
+}));
+vi.mock('#lib/shell/tabs.svelte.ts', () => ({ tabs: { reset: vi.fn() } }));
+vi.mock('#lib/config/index.ts', async (importOriginal) => {
+	const actual = await importOriginal<typeof import('#lib/config/index.ts')>();
 	return {
 		...actual,
 		config: {

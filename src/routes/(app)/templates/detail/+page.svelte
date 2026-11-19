@@ -1,11 +1,11 @@
 <script lang="ts">
 	import ArrowLeft from '@lucide/svelte/icons/arrow-left';
 	import Pencil from '@lucide/svelte/icons/pencil';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import StatusBadge from '$lib/core/components/shared/StatusBadge.svelte';
-	import { Button } from '$lib/core/components/ui/button';
-	import * as Card from '$lib/core/components/ui/card';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import StatusBadge from '#lib/core/components/shared/StatusBadge.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
 
 	const fields = [
 		['Owner', 'Olivia Martin'],

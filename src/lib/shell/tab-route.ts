@@ -1,1 +1,1 @@
-export { TAB_ROUTE, type TabRoute } from '$lib/core/shell/tab-route';
+export { TAB_ROUTE, type TabRoute } from '#lib/core/shell/tab-route.ts';

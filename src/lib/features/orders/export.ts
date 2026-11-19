@@ -1,6 +1,6 @@
-import { exportToCsv } from '$lib/core/utils/csv';
-import type { DemoOrder } from '$lib/data/orders';
-import { t } from '$lib/i18n';
+import { exportToCsv } from '#lib/core/utils/csv.ts';
+import type { DemoOrder } from '#lib/data/orders.ts';
+import { t } from '#lib/i18n/index.ts';
 import { itemCount } from './model';
 import { statusLabel } from './presentation';
 

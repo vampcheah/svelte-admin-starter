@@ -7,11 +7,11 @@
 
 <script lang="ts">
 	import UserPlus from '@lucide/svelte/icons/user-plus';
-	import * as Dialog from '$lib/core/components/ui/dialog';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Label } from '$lib/core/components/ui/label';
-	import { t } from '$lib/i18n';
+	import * as Dialog from '#lib/core/components/ui/dialog/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { t } from '#lib/i18n/index.ts';
 	import { toast } from 'svelte-sonner';
 
 	interface Props {

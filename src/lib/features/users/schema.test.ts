@@ -1,11 +1,11 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { fieldError } from '$lib/core/utils/validators';
-import { setLocale, t } from '$lib/i18n';
-import en from '$lib/i18n/locales/en';
-import zhCN from '$lib/i18n/locales/zh-CN';
+import { fieldError } from '#lib/core/utils/validators.ts';
+import { setLocale, t } from '#lib/i18n/index.ts';
+import en from '#lib/i18n/locales/en.ts';
+import zhCN from '#lib/i18n/locales/zh-CN.ts';
 import { createUserSchema } from './schema';
 
-vi.mock('$app/environment', () => ({ browser: false }));
+vi.mock('$app/env', () => ({ browser: false }));
 
 afterEach(() => setLocale('en'));
 

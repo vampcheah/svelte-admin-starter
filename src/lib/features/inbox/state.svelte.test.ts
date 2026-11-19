@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { demoEmails } from '$lib/data/inbox';
+import { demoEmails } from '#lib/data/inbox.ts';
 import { InboxState } from './state.svelte';
 
 describe('inbox state', () => {

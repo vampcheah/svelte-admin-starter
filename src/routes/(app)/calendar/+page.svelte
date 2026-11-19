@@ -1,35 +1,35 @@
 <!--
   Calendar — a month-view schedule page. Month grid (6 weeks) computed via
-  $lib/calendar.ts helpers to stay clean and reactivity-warning free. Includes
+  #lib/calendar.ts helpers to stay clean and reactivity-warning free. Includes
   month jump selector, today highlight, selected cell focus, chip overflows,
   and upcoming event stream.
 -->
 <script lang="ts">
 	import { getContext, untrack } from 'svelte';
-	import { TAB_ACTIVITY, type TabActivity } from '$lib/shell/tab-activity';
-	import { useCalendarToday } from '$lib/features/calendar/today.svelte';
-	import { dateForKey } from '$lib/features/calendar/navigation';
-	import MonthGrid from '$lib/features/calendar/MonthGrid.svelte';
-	import UpcomingEvents from '$lib/features/calendar/UpcomingEvents.svelte';
+	import { TAB_ACTIVITY, type TabActivity } from '#lib/shell/tab-activity.ts';
+	import { useCalendarToday } from '#lib/features/calendar/today.svelte.ts';
+	import { dateForKey } from '#lib/features/calendar/navigation.ts';
+	import MonthGrid from '#lib/features/calendar/MonthGrid.svelte';
+	import UpcomingEvents from '#lib/features/calendar/UpcomingEvents.svelte';
 	import {
 		createEvents,
 		groupEventsByDay,
 		countEventsInMonth,
 		upcomingEvents
-	} from '$lib/features/calendar/events';
+	} from '#lib/features/calendar/events.ts';
 	import ChevronLeft from '@lucide/svelte/icons/chevron-left';
 	import ChevronRight from '@lucide/svelte/icons/chevron-right';
 	import Plus from '@lucide/svelte/icons/plus';
 	import CalendarDays from '@lucide/svelte/icons/calendar-days';
 
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Label } from '$lib/core/components/ui/label';
-	import { i18n, t } from '$lib/i18n';
-	import { buildGrid, monthLabel, shiftMonth, weekdayLabels } from '$lib/calendar';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { i18n, t } from '#lib/i18n/index.ts';
+	import { buildGrid, monthLabel, shiftMonth, weekdayLabels } from '#lib/calendar.ts';
 
 	const activity = getContext<TabActivity | undefined>(TAB_ACTIVITY);
 	const calendarToday = useCalendarToday(() => activity?.active ?? true);

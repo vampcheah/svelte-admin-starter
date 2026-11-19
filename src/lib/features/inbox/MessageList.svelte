@@ -1,16 +1,16 @@
 <script lang="ts">
 	import Star from '@lucide/svelte/icons/star';
 	import Mail from '@lucide/svelte/icons/mail';
-	import { t } from '$lib/i18n';
-	import type { Email } from '$lib/data/inbox';
+	import { t } from '#lib/i18n/index.ts';
+	import type { Email } from '#lib/data/inbox.ts';
 	import type { InboxFilter } from './state.svelte';
 	import { LABEL_TONE, labelText } from './presentation';
-	import SearchInput from '$lib/core/components/shared/SearchInput.svelte';
-	import EmptyState from '$lib/core/components/shared/EmptyState.svelte';
-	import * as Avatar from '$lib/core/components/ui/avatar';
-	import { Button } from '$lib/core/components/ui/button';
-	import { initials } from '$lib/i18n/formatters';
-	import { cn } from '$lib/core/utils';
+	import SearchInput from '#lib/core/components/shared/SearchInput.svelte';
+	import EmptyState from '#lib/core/components/shared/EmptyState.svelte';
+	import * as Avatar from '#lib/core/components/ui/avatar/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { initials } from '#lib/i18n/formatters.ts';
+	import { cn } from '#lib/core/utils.ts';
 
 	interface Props {
 		emails: Email[];

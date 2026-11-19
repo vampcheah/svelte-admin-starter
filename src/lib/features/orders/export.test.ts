@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { demoOrders } from '$lib/data/orders';
-import { setLocale } from '$lib/i18n';
+import { demoOrders } from '#lib/data/orders.ts';
+import { setLocale } from '#lib/i18n/index.ts';
 import { exportOrdersToCsv } from './export';
 import { shipOrder } from './model';
 

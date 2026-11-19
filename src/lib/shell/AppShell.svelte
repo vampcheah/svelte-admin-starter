@@ -3,14 +3,14 @@
 	import type { Snippet } from 'svelte';
 	import { afterNavigate, goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import PortableAppShell from '$lib/core/shell/AppShell.svelte';
-	import { pageTitle } from '$lib/utils/page-title';
+	import PortableAppShell from '#lib/core/shell/AppShell.svelte';
+	import { pageTitle } from '#lib/utils/page-title.ts';
 	import AppSidebar from './AppSidebar.svelte';
 	import AppHeader from './AppHeader.svelte';
 	import TabBar from './TabBar.svelte';
 	import KeepAliveOutlet from './KeepAliveOutlet.svelte';
-	import { openLandedRoute } from '$lib/core/shell/tabs.svelte';
-	import type { TabRoute } from '$lib/core/shell/tab-route';
+	import { openLandedRoute } from '#lib/core/shell/tabs.svelte.ts';
+	import type { TabRoute } from '#lib/core/shell/tab-route.ts';
 	import { tabs } from './tabs.svelte';
 	import { resolveAppUrl, toAppPathname, toAppUrl } from './paths';
 
@@ -27,7 +27,7 @@
 			? null
 			: {
 					pathname,
-					url: new URL(page.url),
+					url: new URL(page.url.href),
 					params: { ...page.params },
 					data: page.data,
 					form: page.form

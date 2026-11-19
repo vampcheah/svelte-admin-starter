@@ -1,1 +1,1 @@
-export { logoutDialog } from '$lib/core/shell/logout-dialog.svelte';
+export { logoutDialog } from '#lib/core/shell/logout-dialog.svelte.ts';

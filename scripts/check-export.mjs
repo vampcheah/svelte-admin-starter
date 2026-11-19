@@ -133,7 +133,7 @@ for (const path of sourceFiles) {
 			resolveRelative(path, specifier);
 			continue;
 		}
-		if (specifier.startsWith('$') || specifier.startsWith('/')) {
+		if (specifier.startsWith('$') || specifier.startsWith('#') || specifier.startsWith('/')) {
 			fail(`forbidden application import: ${path} -> ${specifier}`);
 		}
 		const parts = specifier.split('/');

@@ -6,16 +6,16 @@
 	import Paperclip from '@lucide/svelte/icons/paperclip';
 	import Send from '@lucide/svelte/icons/send';
 	import Mail from '@lucide/svelte/icons/mail';
-	import type { Email } from '$lib/data/inbox';
-	import { t } from '$lib/i18n';
+	import type { Email } from '#lib/data/inbox.ts';
+	import { t } from '#lib/i18n/index.ts';
 	import { LABEL_TONE, labelText } from './presentation';
-	import EmptyState from '$lib/core/components/shared/EmptyState.svelte';
-	import * as Avatar from '$lib/core/components/ui/avatar';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Separator } from '$lib/core/components/ui/separator';
-	import { Textarea } from '$lib/core/components/ui/textarea';
-	import { initials } from '$lib/i18n/formatters';
-	import { cn } from '$lib/core/utils';
+	import EmptyState from '#lib/core/components/shared/EmptyState.svelte';
+	import * as Avatar from '#lib/core/components/ui/avatar/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Separator } from '#lib/core/components/ui/separator/index.ts';
+	import { Textarea } from '#lib/core/components/ui/textarea/index.ts';
+	import { initials } from '#lib/i18n/formatters.ts';
+	import { cn } from '#lib/core/utils.ts';
 
 	let { selected, replyText = $bindable('') }: { selected: Email | null; replyText?: string } =
 		$props();

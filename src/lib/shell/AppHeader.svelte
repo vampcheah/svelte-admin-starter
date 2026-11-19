@@ -1,15 +1,15 @@
 <!-- Sticky top bar inside the inset: trigger, breadcrumbs, search, notifications, toggles, user menu. -->
 <script lang="ts">
-	import PortableAppHeader from '$lib/core/shell/AppHeader.svelte';
-	import * as DropdownMenu from '$lib/core/components/ui/dropdown-menu';
+	import PortableAppHeader from '#lib/core/shell/AppHeader.svelte';
+	import * as DropdownMenu from '#lib/core/components/ui/dropdown-menu/index.ts';
 	import { resolve } from '$app/paths';
-	import { auth } from '$lib/auth';
-	import { t } from '$lib/i18n';
+	import { auth } from '#lib/auth/index.ts';
+	import { t } from '#lib/i18n/index.ts';
 	import { logoutDialog } from './logout-dialog.svelte';
 	import Breadcrumbs from './Breadcrumbs.svelte';
 	import NotificationsMenu from './NotificationsMenu.svelte';
-	import LanguageToggle from '$lib/components/shared/LanguageToggle.svelte';
-	import CommandMenu from '$lib/components/shared/CommandMenu.svelte';
+	import LanguageToggle from '#lib/components/shared/LanguageToggle.svelte';
+	import CommandMenu from '#lib/components/shared/CommandMenu.svelte';
 	import UserIcon from '@lucide/svelte/icons/user';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
 
@@ -33,7 +33,7 @@
 	{#snippet accountMenuItems()}
 		<DropdownMenu.Item>
 			{#snippet child({ props })}
-				<a href={resolve('/profile')} {...props}>
+				<a href={resolve('profile')} {...props}>
 					<UserIcon />
 					{t('common.profile')}
 				</a>
@@ -41,7 +41,7 @@
 		</DropdownMenu.Item>
 		<DropdownMenu.Item>
 			{#snippet child({ props })}
-				<a href={resolve('/settings')} {...props}>
+				<a href={resolve('settings')} {...props}>
 					<SettingsIcon />
 					{t('common.settings')}
 				</a>

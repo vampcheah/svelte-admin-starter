@@ -3,9 +3,9 @@
 	import Clock from '@lucide/svelte/icons/clock';
 	import Truck from '@lucide/svelte/icons/truck';
 	import CircleCheckBig from '@lucide/svelte/icons/circle-check-big';
-	import { cn } from '$lib/core/utils';
-	import type { OrderStatus } from '$lib/data/orders';
-	import { t } from '$lib/i18n';
+	import { cn } from '#lib/core/utils.ts';
+	import type { OrderStatus } from '#lib/data/orders.ts';
+	import { t } from '#lib/i18n/index.ts';
 	import { statusLabel } from './presentation';
 
 	let { status }: { status: OrderStatus } = $props();

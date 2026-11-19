@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest';
 import { render } from 'svelte/server';
 import UserDetail from './+page.svelte';
-import { createUsersState, USERS_STATE, type UsersState } from '$lib/features/users/state.svelte';
+import {
+	createUsersState,
+	USERS_STATE,
+	type UsersState
+} from '#lib/features/users/state.svelte.ts';
 
 function detail(state: UsersState, id: string): string {
 	return render(UserDetail, {

@@ -1,5 +1,5 @@
-import type { Column } from '$lib/core/components/shared/DataTable.svelte';
-import type { DemoProduct } from '$lib/data/products';
+import type { Column } from '#lib/core/components/shared/DataTable.svelte';
+import type { DemoProduct } from '#lib/data/products.ts';
 
 export const columns: Column<DemoProduct>[] = [
 	{ key: 'name', header: 'Product', sortable: true, searchable: true },

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Plus from '@lucide/svelte/icons/plus';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Badge } from '$lib/core/components/ui/badge';
-	import { cn } from '$lib/core/utils';
-	import { t } from '$lib/i18n';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Badge } from '#lib/core/components/ui/badge/index.ts';
+	import { cn } from '#lib/core/utils.ts';
+	import { t } from '#lib/i18n/index.ts';
 	import type { Column } from './board';
 	import { insertionIndex, type DraggedTask, type DropTarget } from './state.svelte';
 	import { columnTitle } from './presentation';

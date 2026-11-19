@@ -1,5 +1,5 @@
 import { getContext } from 'svelte';
-import { demoUsers, type DemoUser } from '$lib/data/users';
+import { demoUsers, type DemoUser } from '#lib/data/users.ts';
 
 export type UserDraft = Pick<DemoUser, 'name' | 'email' | 'role' | 'status'>;
 

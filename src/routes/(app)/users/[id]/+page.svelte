@@ -26,26 +26,31 @@
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import StatCard from '$lib/core/components/shared/StatCard.svelte';
-	import StatusBadge from '$lib/core/components/shared/StatusBadge.svelte';
-	import EmptyState from '$lib/core/components/shared/EmptyState.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Avatar from '$lib/core/components/ui/avatar';
-	import * as Tabs from '$lib/core/components/ui/tabs';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Switch } from '$lib/core/components/ui/switch';
-	import { Label } from '$lib/core/components/ui/label';
-	import { Separator } from '$lib/core/components/ui/separator';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import StatCard from '#lib/core/components/shared/StatCard.svelte';
+	import StatusBadge from '#lib/core/components/shared/StatusBadge.svelte';
+	import EmptyState from '#lib/core/components/shared/EmptyState.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Avatar from '#lib/core/components/ui/avatar/index.ts';
+	import * as Tabs from '#lib/core/components/ui/tabs/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Switch } from '#lib/core/components/ui/switch/index.ts';
+	import { Label } from '#lib/core/components/ui/label/index.ts';
+	import { Separator } from '#lib/core/components/ui/separator/index.ts';
 
-	import { useUsersState, type UserDraft } from '$lib/features/users/state.svelte';
-	import UserEditor from '$lib/features/users/UserEditor.svelte';
-	import { roleLabel, roleTone, statusLabel, statusTone } from '$lib/features/users/presentation';
-	import { formatDate, initials } from '$lib/i18n/formatters';
-	import { t, type TranslationKey } from '$lib/i18n';
-	import { leafCrumb } from '$lib/shell/breadcrumb.svelte';
-	import { tabs as appTabs } from '$lib/shell/tabs.svelte';
-	import { cn } from '$lib/core/utils';
+	import { useUsersState, type UserDraft } from '#lib/features/users/state.svelte.ts';
+	import UserEditor from '#lib/features/users/UserEditor.svelte';
+	import {
+		roleLabel,
+		roleTone,
+		statusLabel,
+		statusTone
+	} from '#lib/features/users/presentation.ts';
+	import { formatDate, initials } from '#lib/i18n/formatters.ts';
+	import { t, type TranslationKey } from '#lib/i18n/index.ts';
+	import { leafCrumb } from '#lib/shell/breadcrumb.svelte.ts';
+	import { tabs as appTabs } from '#lib/shell/tabs.svelte.ts';
+	import { cn } from '#lib/core/utils.ts';
 	import { toast } from 'svelte-sonner';
 
 	let { params }: { params?: Record<string, string> } = $props();
@@ -240,7 +245,7 @@
 				class="w-full max-w-md"
 			>
 				{#snippet action()}
-					<Button href={resolve('/users')} variant="outline">
+					<Button href={resolve('users')} variant="outline">
 						<ArrowLeft class="size-4" />
 						{t('users.back')}
 					</Button>
@@ -250,7 +255,7 @@
 	{:else}
 		<!-- Breadcrumb / back link -->
 		<a
-			href={resolve('/users')}
+			href={resolve('users')}
 			class="text-muted-foreground hover:text-foreground -mb-2 inline-flex w-fit items-center gap-1.5 text-sm font-medium transition-colors"
 		>
 			<ArrowLeft class="size-4" aria-hidden="true" />

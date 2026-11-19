@@ -6,20 +6,25 @@
 	import Pencil from '@lucide/svelte/icons/pencil';
 	import Eye from '@lucide/svelte/icons/eye';
 	import { resolve } from '$app/paths';
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import PageHeader from '$lib/core/components/shared/PageHeader.svelte';
-	import DataTable, { type Column } from '$lib/core/components/shared/DataTable.svelte';
-	import StatusBadge from '$lib/core/components/shared/StatusBadge.svelte';
-	import ConfirmDialog from '$lib/components/shared/ConfirmDialog.svelte';
-	import { Button } from '$lib/core/components/ui/button';
-	import UserEditor from '$lib/features/users/UserEditor.svelte';
-	import UserDetailsDrawer from '$lib/features/users/UserDetailsDrawer.svelte';
-	import { useUsersState, type UserDraft } from '$lib/features/users/state.svelte';
-	import { roleLabel, roleTone, statusLabel, statusTone } from '$lib/features/users/presentation';
-	import type { DemoUser } from '$lib/data/users';
-	import { exportToCsv } from '$lib/core/utils/csv';
-	import { formatDate, initials } from '$lib/i18n/formatters';
-	import { t, translate } from '$lib/i18n';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import PageHeader from '#lib/core/components/shared/PageHeader.svelte';
+	import DataTable, { type Column } from '#lib/core/components/shared/DataTable.svelte';
+	import StatusBadge from '#lib/core/components/shared/StatusBadge.svelte';
+	import ConfirmDialog from '#lib/components/shared/ConfirmDialog.svelte';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import UserEditor from '#lib/features/users/UserEditor.svelte';
+	import UserDetailsDrawer from '#lib/features/users/UserDetailsDrawer.svelte';
+	import { useUsersState, type UserDraft } from '#lib/features/users/state.svelte.ts';
+	import {
+		roleLabel,
+		roleTone,
+		statusLabel,
+		statusTone
+	} from '#lib/features/users/presentation.ts';
+	import type { DemoUser } from '#lib/data/users.ts';
+	import { exportToCsv } from '#lib/core/utils/csv.ts';
+	import { formatDate, initials } from '#lib/i18n/formatters.ts';
+	import { t, translate } from '#lib/i18n/index.ts';
 	import { toast } from 'svelte-sonner';
 
 	const directory = useUsersState();
@@ -160,7 +165,7 @@
 						{initials(row.name)}
 					</span>
 					<a
-						href={resolve(`/users/${row.id}`)}
+						href={resolve(`users/${row.id}`)}
 						class="hover:text-primary font-medium text-foreground hover:underline"
 					>
 						{row.name}

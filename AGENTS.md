@@ -14,7 +14,7 @@ For substantial work, track remaining steps and verification; skip formal planni
 - `src/lib/core` is the portable export boundary. Keep app auth, i18n, mock data, and shell integrations outside it; preserve the export contract in `svelte-admin-export.json`.
 - Use semantic colors from `src/lib/core/theme.css`; theme changes belong in tokens. Preserve responsive layout, keyboard access, focus visibility, and light/dark contrast.
 - Add new app strings to both locale dictionaries. Resolve internal navigation with `$app/paths`; top-level destinations belong in `src/lib/shell/nav.ts`. Keep `config.app.homePath` pointed at an existing route.
-- Keep server-only access behind `$lib/server` and typed route loads. Local demo state does not require a server load.
+- Keep server-only access behind `#lib/server` and typed route loads. Local demo state does not require a server load.
 
 ## Task guidance
 

@@ -16,17 +16,17 @@
 	import Download from '@lucide/svelte/icons/download';
 	import type { Component } from 'svelte';
 
-	import PageContainer from '$lib/core/components/shared/PageContainer.svelte';
-	import StatCard from '$lib/core/components/shared/StatCard.svelte';
-	import * as Card from '$lib/core/components/ui/card';
-	import * as Avatar from '$lib/core/components/ui/avatar';
-	import { Button } from '$lib/core/components/ui/button';
+	import PageContainer from '#lib/core/components/shared/PageContainer.svelte';
+	import StatCard from '#lib/core/components/shared/StatCard.svelte';
+	import * as Card from '#lib/core/components/ui/card/index.ts';
+	import * as Avatar from '#lib/core/components/ui/avatar/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
 
-	import { auth } from '$lib/auth';
-	import { t } from '$lib/i18n';
-	import { stats, revenueSeries, recentActivity, trafficByChannel } from '$lib/data/dashboard';
-	import { formatDate, formatNumber, initials } from '$lib/i18n/formatters';
-	import { exportToCsv } from '$lib/core/utils/csv';
+	import { auth } from '#lib/auth/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { stats, revenueSeries, recentActivity, trafficByChannel } from '#lib/data/dashboard.ts';
+	import { formatDate, formatNumber, initials } from '#lib/i18n/formatters.ts';
+	import { exportToCsv } from '#lib/core/utils/csv.ts';
 
 	// Map each stat to a Lucide icon (data stays icon-free per the contract).
 	const statIcons: Component[] = [DollarSign, Users, CreditCard, Activity];

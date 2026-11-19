@@ -7,14 +7,14 @@
 <script lang="ts">
 	import Plus from '@lucide/svelte/icons/plus';
 	import Trash2 from '@lucide/svelte/icons/trash-2';
-	import * as Table from '$lib/core/components/ui/table';
-	import * as Select from '$lib/core/components/ui/select';
-	import { Input } from '$lib/core/components/ui/input';
-	import { Textarea } from '$lib/core/components/ui/textarea';
-	import { Button } from '$lib/core/components/ui/button';
-	import { Checkbox } from '$lib/core/components/ui/checkbox';
-	import { t } from '$lib/i18n';
-	import { formatNumber } from '$lib/i18n/formatters';
+	import * as Table from '#lib/core/components/ui/table/index.ts';
+	import * as Select from '#lib/core/components/ui/select/index.ts';
+	import { Input } from '#lib/core/components/ui/input/index.ts';
+	import { Textarea } from '#lib/core/components/ui/textarea/index.ts';
+	import { Button } from '#lib/core/components/ui/button/index.ts';
+	import { Checkbox } from '#lib/core/components/ui/checkbox/index.ts';
+	import { t } from '#lib/i18n/index.ts';
+	import { formatNumber } from '#lib/i18n/formatters.ts';
 	import {
 		nextLineItemId,
 		availableCatalogItems,

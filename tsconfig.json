@@ -1,5 +1,7 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json",
+	"extends": "$app/tsconfig",
+	"include": ["src", "*"],
+	"exclude": ["src/service-worker"],
 	"compilerOptions": {
 		"allowJs": true,
 		"checkJs": true,
@@ -14,6 +16,4 @@
 		// no type declarations; TS 6 turns this check on by default, so opt back out.
 		"noUncheckedSideEffectImports": false
 	}
-	// Path aliases ($lib) are handled by SvelteKit; see svelte.config.js.
-	// To add aliases, extend the generated .svelte-kit/tsconfig.json via kit.alias.
 }
